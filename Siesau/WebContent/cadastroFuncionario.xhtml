@@ -1,0 +1,351 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+<h:body style="margin:0px; border:0; background-color:#E8E8E8;">
+	<ui:insert name="header">
+		<ui:include src="Template/header.jsf" />
+
+	</ui:insert>
+
+	<ui:insert name="menu">
+		<ui:include src="Template/menu.jsf" />
+	</ui:insert>
+	<div
+		style="position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px;">
+
+		<p:tabView id="tabView"
+			style="margin-top:10px;position:relative; width:1112px;background-color:#E8E8E8;">
+			<p:tab title="Cadastro" style="position:relative;">
+				<h:form id="form1">
+					<p:panel header="Dados Pessoais" style="background-color:#F0F4F9;">
+						<h:panelGrid columns="3" layout="grid">
+						<p:column>
+							<p:outputPanel id="photo">
+									<p:graphicImage 
+										value="#{pageContext.servletContext.contextPath}/resources/fotos/#{mbFuncionario.foto}"
+										rendered="#{not empty mbFuncionario.foto}" />										
+								</p:outputPanel>
+								<p:commandButton value="Capturar Foto" type="button"
+									onclick="PF('webcan').show();" />
+
+								<p:dialog header="Fotagrafia" widgetVar="webcan" minHeight="40">
+																	
+								<p:photoCam widgetVar="pc" listener="#{mbFuncionario.oncapture}"
+									update=":tabView:form1:photo" />
+								<p:commandButton type="button" value="Fotografar"
+									onclick="PF('pc').capture()" />
+								<p:growl></p:growl>
+								</p:dialog>
+
+							</p:column>
+
+							<p:column>
+
+								<h:outputText value="Nome:" style="color:#000000;" />
+								<br />
+								<p:inputText value="#{mbFuncionario.funcionario.nome}"
+									required="true" size="60" />
+								<br />
+
+								<h:panelGrid columns="2">
+
+									<p:column>
+										<h:outputText value="Usuário:" style="color:#000000;" />
+										<br />
+										<p:inputText value="#{mbFuncionario.funcionario.login}"
+											required="true" size="20" />
+										<br />
+
+										<p:outputLabel for="cargo" value="Cargo:"
+											style="color:#000000;" />
+										<br />
+										<p:selectOneMenu id="cargo"
+											value="#{mbFuncionario.funcionario.cargo.cdCargo}" style="">
+											<f:selectItems value="#{mbFuncionario.mostraCargos}" />
+										</p:selectOneMenu>
+
+									</p:column>
+
+									<p:column>
+										<h:outputText value="Senha:" style="color:#000000;" />
+										<br />
+										<p:password value="#{mbFuncionario.funcionario.senha}"
+											required="true" size="20" />
+										<br />
+
+										<h:outputText value="Telefone:" style="color:#000000;" />
+										<br />
+										<p:inputMask mask="(99)9999-9999" value="#{mbFuncionario.funcionario.telRes}" />
+									</p:column>
+
+								</h:panelGrid>
+
+							</p:column>
+
+							<p:column>
+								<h:outputText value="CPF:" style="color:#000000;" />
+								<br />
+								<p:inputMask mask="999.999.99-99" value="#{mbFuncionario.funcionario.cpf}"
+									required="true" />
+								<br />
+
+								<h:outputText value="RG:" style="color:#000000;" />
+								<br />
+								<p:inputMask mask="99.999.999-99"  value="#{mbFuncionario.funcionario.rg}" />
+								<br />
+
+								<h:panelGrid columns="2">
+
+									<p:column>
+										<p:outputLabel for="estado_civil" value="Estado Civil: "
+											style="color:#000000;" />
+										<br />
+										<p:selectOneMenu id="estado_civil"
+											value="#{mbFuncionario.funcionario.estadoCivil}"
+											required="true">
+											<f:selectItem itemLabel="Casado" itemValue="CASADO"></f:selectItem>
+											<f:selectItem itemLabel="Solteiro" itemValue="SOLTEIRO"></f:selectItem>
+											<f:selectItem itemLabel="Viuvo" itemValue="VIUVO"></f:selectItem>
+											<f:selectItem itemLabel="Divorciado" itemValue="DIVORCIADO"></f:selectItem>
+										</p:selectOneMenu>
+									</p:column>
+
+									<p:column>
+										<p:outputLabel for="sexo" value="Sexo: "
+											style="color:#000000;" />
+										<br />
+										<p:selectOneMenu id="sexo"
+											value="#{mbFuncionario.funcionario.sexo}" required="true">
+											<f:selectItem itemLabel="Masculino" itemValue="M"></f:selectItem>
+											<f:selectItem itemLabel="Feminino" itemValue="F"></f:selectItem>
+											<f:selectItem itemLabel="Outros" itemValue="O"></f:selectItem>
+										</p:selectOneMenu>
+									</p:column>
+
+								</h:panelGrid>
+								<h:selectOneMenu id="console"
+									value="#{mbFuncionario.funcionario.unidadeSaudes}">
+									<f:selectItems value="#{mbUnidadeSaude.unidadeSaudes}"
+										var="unidade" itemLabel="#{unidade.fantasia}" itemValue="#{unidade}" />
+								</h:selectOneMenu>
+							</p:column>
+
+
+						</h:panelGrid>
+					</p:panel>
+					<p:panel id="end" header="Endereço"
+						style=" margin-top:20px; background-color:#F0F4F9;color:#000000;">
+
+
+						<h:panelGrid columns="3">
+							<p:column>
+								<h:outputText value="CEP: " style="color:#000000;" />
+								<br />
+								<p:inputText maxlength="8" requiredMessage="Favor preencha o CEP" value="#{mbFuncionario.funcionario.cep}"
+									required="true">
+									<p:ajax event="keyup" update="cidade, endereco, bairro, uf"
+										listener="#{mbFuncionario.buscaCep}" />
+								</p:inputText>
+
+
+							</p:column>
+
+							<p:column>
+								<h:outputText value="Rua:" style="color:#000000;" />
+								<br />
+								<p:inputText disabled="true"
+									value="#{mbFuncionario.funcionario.endereco}" required="true"
+									id="endereco" size="60" />
+							</p:column>
+
+							<p:column>
+								<h:outputText value="Número:" style="color:#000000;" />
+								<br />
+
+								<p:inputText value="#{mbFuncionario.funcionario.numero}"
+									required="true" id="numero" size="10" />
+							</p:column>
+						</h:panelGrid>
+
+						<h:panelGrid columns="4">
+
+							<p:column>
+								<h:outputText value="Bairro:" style="color:#000000;" />
+								<br />
+								<p:inputText disabled="true"
+									value="#{mbFuncionario.funcionario.bairro}" required="true"
+									id="bairro" size="30" />
+							</p:column>
+
+							<p:column>
+								<h:outputText value="Cidade:" style="color:#000000;" />
+								<br />
+								<p:inputText disabled="true"
+									value="#{mbFuncionario.funcionario.cidade}" required="true"
+									id="cidade" size="30" />
+							</p:column>
+
+							<p:column>
+								<h:outputText value="UF:" style="color:#000000;" />
+								<br />
+								<p:inputText id="uf" disabled="true"
+									value="#{mbFuncionario.funcionario.uf}" required="true"
+									size="10" />
+							</p:column>
+
+						</h:panelGrid>
+
+
+					</p:panel>
+
+
+
+					<p:panel id="pos_botao"
+						style=" padding-bottom:15px;background-color:#E8E8E8; height:50;position: relative; max-width: 1120px; margin-right: auto; margin-left: auto;">
+						<p:commandButton value="Salvar"
+							style="margin-top:-20; float:right;"
+							action="#{mbFuncionario.salvar}" ajax="true"
+							update=":tabView:form1, :tabView:form2" />
+
+						<p:commandButton value="Limpar" style="margin-top:0;float:right"
+							type="reset" />
+					</p:panel>
+
+				</h:form>
+
+
+			</p:tab>
+
+			<p:tab title="Consulta">
+				<h:form id="form2">
+					<p:growl id="msgs" showDetail="true" />
+					<p:dataTable id="dataTable" var="linha" editable="true"
+						reflow="true" value="#{mbFuncionario.funcionarios}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+						paginator="true" rows="10" style="margin-bottom:20px">
+
+						<p:ajax event="rowEdit" listener="#{mbFuncionario.editarLinha}"
+							update="tabView:form2:msgs" />
+
+						<f:facet name="{Exporters}">
+							<h:commandLink>
+								<p:graphicImage name="/demo/images/excel.png" width="24" />
+								<p:dataExporter type="xls" target="tbl" fileName="cars" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage name="/demo/images/pdf.png" width="24" />
+								<p:dataExporter type="pdf" target="tbl" fileName="cars" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage name="/demo/images/csv.png" width="24" />
+								<p:dataExporter type="csv" target="tbl" fileName="cars" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage name="/demo/images/xml.png" width="24" />
+								<p:dataExporter type="xml" target="tbl" fileName="cars" />
+							</h:commandLink>
+						</f:facet>
+
+						<p:column width="20">
+							<f:facet name="header">
+								<h:outputText value="ID" />
+							</f:facet>
+							<h:outputText value="#{linha.cdFunc}" />
+						</p:column>
+
+						<p:column width="20" headerText="Usuario">
+							<p:cellEditor>
+
+								<f:facet name="output">
+									<h:outputText value="#{linha.login}" />
+								</f:facet>
+
+								<f:facet name="input">
+									<p:inputText value="#{linha.login}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column width="20" headerText="Nome">
+							<p:cellEditor>
+
+								<f:facet name="output">
+									<h:outputText value="#{linha.nome}" />
+								</f:facet>
+
+								<f:facet name="input">
+									<p:inputText value="#{linha.nome}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+
+						<p:column headerText="Exclusão" width="5"
+							styleClass="text-align:center">
+							<p:commandButton action="#{mbFuncionario.excluir}"
+								update=":tabView:form2,tabView:form2:dataTable" process="@this"
+								icon="ui-icon-trash" ajax="true">
+								<f:setPropertyActionListener value="#{linha}"
+									target="#{mbFuncionario.funcionario}"></f:setPropertyActionListener>
+								<p:confirm icon="ui-icon-alert" message="Deseja Excluir ?"
+									header="Confirma?" />
+							</p:commandButton>
+						</p:column>
+
+						<p:column width="20" headerText="Edição">
+							<p:rowEditor />
+						</p:column>
+					</p:dataTable>
+
+
+					<p:confirmDialog appendTo="@(body)" global="true">
+						<p:commandButton process="@this" value="Sim"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
+						<p:commandButton process="@this" value="Não"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
+					</p:confirmDialog>
+
+					<h3>Export Page Data Only</h3>
+					<h:commandLink>
+						<p:graphicImage name="/demo/images/excel.png" />
+						<p:dataExporter type="xls" target="tbl" fileName="cars"
+							pageOnly="true" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage name="/demo/images/pdf.png" />
+						<p:dataExporter type="pdf" target="tbl" fileName="cars"
+							pageOnly="true" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage name="/demo/images/csv.png" />
+						<p:dataExporter type="csv" target="tbl" fileName="cars"
+							pageOnly="true" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage name="/demo/images/xml.png" />
+						<p:dataExporter type="xml" target="tbl" fileName="cars"
+							pageOnly="true" />
+					</h:commandLink>
+				</h:form>
+			</p:tab>
+		</p:tabView>
+	</div>
+	<ui:insert name="footer">
+		<ui:include src="Template/footer.jsf" />
+	</ui:insert>
+</h:body>
+</html>

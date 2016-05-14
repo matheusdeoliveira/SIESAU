@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+<link rel="stylesheet" type="text/css"  href="estilo.css"/>
+</h:head>
+<h:body style="margin:0;padding:0;height:100%;">
+
+<h:form>
+<ui:composition>
+
+<div style="background-color:#4A708B;positon:relative;max-width:1120px;margin-right:auto; margin-left:auto;bottom:-10px;">
+
+ <h:panelGrid columns="5" layout="grid" style="margin:auto; border:none;">
+	
+	<p:row>
+	<p:column>
+			<h:panelGrid columns="2" layout="grid" style="margin-left:0px;margin-top:0px;border:none;padding:0px;">
+			<p:column>
+				<a href="index.xhtml" style="text-decoration:none;">
+				<p:row><p style="font-size:11px;font-family:arial;color:white;width:110px;margin-top:10px;">Home</p>
+				</p:row>
+				</a>
+				<a href="cadastroPaciente.xhtml" style="text-decoration:none;">
+				<p:row><p style="font-size:11px;font-family:arial;color:white;width:110px;margin-top:-2px;">Cadastro</p>
+				</p:row>
+				</a>
+				<a href="cadastroProntuario.xhtml" style="text-decoration:none;">
+				<p:row><p style="font-size:11px;font-family:arial;color:white;width:110px;margin-top:-2px;">Médico</p>
+				</p:row>
+				</a>
+				<a href="unidadeSaude.xhtml" style="text-decoration:none;">
+				<p:row><p style="font-size:11px;font-family:arial;color:white;width:110px;margin-top:-2px;">Unidades de Saúde</p>
+				</p:row>
+				</a>
+				<a href="cadastroMedicamentos.xhtml" style="text-decoration:none;">
+				<p:row><p style="font-size:11px;font-family:arial;color:white;width:110px;margin-top:-2px;">Medicamentos</p>
+				</p:row>
+				</a>
+				<a href="index.xhtml" style="text-decoration:none;">
+				<p:row><p style="font-size:11px;font-family:arial;color:white;width:110px;margin-top:-2px;">Importação</p>
+				</p:row>
+				</a>
+				<a href="geoLocal.xhtml" style="text-decoration:none;">
+				<p:row><p style="font-size:11px;font-family:arial;color:white;width:110px;margin-top:-2px;">Observatório</p>
+				</p:row>
+				</a>
+			</p:column>
+			<p:column>
+				<p:row><p style="font-size:11px;font-family:arial;color:white;width:220px;margin-top:10px;">&nbsp;</p></p:row>
+				<p:row><p style="font-size:11px;font-family:arial;color:white;width:220px;margin-top:-2px;">
+				<a href="cadastroPaciente.xhtml" style="color:white;text-decoration:none;">Paciente</a> | 
+				<a href="cadastroMedicos.xhtml" style="color:white;text-decoration:none;">Médico</a> | 
+				<a href="cadastroFuncionario.xhtml" style="color:white;text-decoration:none;">Funcionário</a> | 
+				<a href="cadastroFornecedor.xhtml" style="color:white;text-decoration:none;">Fornecedor</a></p>
+				</p:row>
+				<p:row><p style="font-size:11px;font-family:arial;color:white;width:220px;margin-top:-2px;">
+				<a href="cadastroProntuario.xhtml" style="color:white;text-decoration:none;">Prontuário</a> | 
+				<a href="laudo.xhtml" style="color:white;text-decoration:none;">Laudo</a> | 
+				<a href="receita.xhtml" style="color:white;text-decoration:none;">Receita</a> | 
+				<a href="exameComplementar.xhtml" style="color:white;text-decoration:none;">Exame</a></p>
+				</p:row>
+				<p:row><p style="font-size:11px;font-family:arial;color:white;width:220px;margin-top:-2px;">
+				<a href="unidadeSaude.xhtml" style="color:white;text-decoration:none;">Cadastro de Unidade</a></p>
+				</p:row>
+				<p:row><p style="font-size:11px;font-family:arial;color:white;width:220px;margin-top:-2px;">
+				<a href="cadastroMedicamentos.xhtml" style="color:white;text-decoration:none;">Requerimento</a> | 
+				<a href="" style="color:white;text-decoration:none;">Estoque</a></p>
+				</p:row>
+				<p:row><p style="font-size:11px;font-family:arial;color:white;width:220px;margin-top:-2px;">
+				&nbsp;</p>
+				</p:row>
+				<p:row><p style="font-size:11px;font-family:arial;color:white;width:220px;margin-top:-2px;">
+				<a href="geoLocal.xhtml" style="color:white;text-decoration:none;">Mapa de Doenças</a> | 
+				<a href="relatorio.xhtml" style="color:white;text-decoration:none;">Relatório</a></p>
+				</p:row>
+			</p:column>
+			</h:panelGrid>
+	</p:column>
+	</p:row>
+	
+	<p:row>
+	<p:column>
+	</p:column>
+	</p:row>
+	
+	<p:row>
+		<p:column>
+		<h3 style="font-size:12px;font-family:arial;color:white;width:320px;margin-left:32px;">Estr. Dr. Plínio Casado, 1466<br/> Centro - Nova Iguaçu - RJ. CEP 26220-099<br/>
+			Telefones: (21) 2669-5695 / 2669-7485 / 2669-5824<br/><br/>Copyright 2016 SIESAU Todos os direitos reservados</h3>
+		</p:column>
+	</p:row>
+		
+		
+	<p:row>	
+	<p:column>
+	<h3 style="margin:0px 0px 0px 0px;border:0;padding:0px;width:130px;height:180px;margin-left:25px;"><h:graphicImage value="/imagem/logo110x180.png" width="110px" height="180px" /></h3>
+	</p:column>
+	</p:row>	
+			
+	<p:row>	
+	<p:column>
+	<h3 style="margin:0px 0px 0px 0px;border:0;padding:0px;width:250px;height:180px;"><h:graphicImage value="/imagem/mapa250x180.png" width="250px" height="180px"/></h3>
+	</p:column>
+	</p:row>
+	
+	</h:panelGrid>
+
+</div>
+</ui:composition>
+</h:form>
+</h:body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+<h:body style="margin:0px; border:0; background-color:#E8E8E8;">
+	<ui:insert name="header">
+		<ui:include src="Template/header.jsf" />
+
+	</ui:insert>
+
+	<ui:insert name="menu">
+		<ui:include src="Template/menu.jsf" />
+	</ui:insert>
+	<p:growl id="msgs" showDetail="true" />
+
+	<div
+		style="position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px;">
+		<p:tabView id="tabView"
+			style="margin-top:10px;position:relative; width:1112px;background-color:#E8E8E8;">
+
+			<p:tab title="Cadastro de medicamentos" style="position:relative;">
+				<h:form id="form1">
+
+					<p:panel id="medicamento" header="Especificações"
+						style="background-color:#F0F4F9; color:#000000;">
+						<h:panelGrid columns="3" layout="grid">
+							<p:row>
+								<h:outputText value="Nome do Medicamento:"
+									style="color:#000000;" />
+								<br />
+								<p:column>
+									<p:inputText value="#{mbMedicamento.medicamento.nomeRef}"
+										required="true" size="45" />
+								</p:column>
+							</p:row>
+
+
+							<p:row>
+								<h:outputText value="Substância Ativa:" style="color:#000000;" />
+								<br />
+								<p:column>
+									<p:inputText value="#{mbMedicamento.medicamento.subst}"
+										required="true" size="45" />
+								</p:column>
+							</p:row>
+
+							<p />
+
+							<p:row>
+								<h:outputText value="Codigo do Laboratório:"
+									style="color:#000000;" />
+								<br />
+								<p:column>
+									<p:inputText
+										value="#{mbMedicamento.medicamento.fabricante.cdFabric}"
+										required="true" size="45" />
+								</p:column>
+							</p:row>
+
+							<p:row>
+								<h:outputText value="Genérico:" style="color:#000000;" />
+								<br />
+								<p:inputText value="#{mbMedicamento.medicamento.forma}"
+									size="45" />
+								<tr />
+							</p:row>
+
+						</h:panelGrid>
+
+						<h:panelGrid>
+
+							<p:row>
+								<h:outputText value="Contra Indicações:" style="color:#000000;" />
+								<br />
+								<p:inputTextarea value="#{mbMedicamento.medicamento.ms}"
+									required="true" rows="6" cols="98" maxlength="500"
+									autoResize="false" />
+							</p:row>
+
+
+						</h:panelGrid>
+
+					</p:panel>
+
+					<br />
+					<p:panel id="pos_botao"
+						style="padding-bottom:15px; background-color:#E8E8E8; height:50;position: relative; max-width: 1120px; margin-right: auto; margin-left: auto;">
+
+						<p:commandButton value="Salvar"
+							style="margin-top:-20; float:right;"
+							action="#{mbMedicamento.salvar}" ajax="true"
+							update="tabView:form1, tabView:form_con" />
+						<p:growl></p:growl>
+
+						<p:commandButton value="Limpar" style="margin-top:0;float:right"
+							type="reset" />
+						<p:growl></p:growl>
+
+					</p:panel>
+				</h:form>
+			</p:tab>
+
+			<p:tab title="Consulta de medicamentos">
+				<h:form id="form_con">
+					<p:dataTable id="tbl" var="linha"
+						value="#{mbMedicamento.medicamentos}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+						paginator="true" rows="10" style="margin-bottom:20px">
+
+						<f:facet name="{Exporters}">
+							<h:commandLink>
+								<p:graphicImage name="/demo/images/excel.png" width="24" />
+								<p:dataExporter type="xls" target="tbl" fileName="cars" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage name="/demo/images/pdf.png" width="24" />
+								<p:dataExporter type="pdf" target="tbl" fileName="cars" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage name="/demo/images/csv.png" width="24" />
+								<p:dataExporter type="csv" target="tbl" fileName="cars" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage name="/demo/images/xml.png" width="24" />
+								<p:dataExporter type="xml" target="tbl" fileName="cars" />
+							</h:commandLink>
+						</f:facet>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Nome do Medicamento" />
+							</f:facet>
+							<h:outputText value="#{linha.nomeRef}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Medicamento" />
+							</f:facet>
+							<h:outputText value="#{linha.forma}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Nome do Laboratório" />
+							</f:facet>
+							<h:outputText value="#{linha.fabricante.fantasia}" />
+						</p:column>
+
+						<p:column headerText="Edição">
+							<p:rowEditor />
+						</p:column>
+
+						<p:column headerText="Exclusão" styleClass="text-align:center">
+							<p:commandButton action="#{mbMedicamento.excluir}"
+								update=":tabView:form1,tabView:form_con:tbl" process="@this"
+								icon="ui-icon-trash" ajax="true">
+								<f:setPropertyActionListener value="#{linha}"
+									target="#{mbMedicamento.medicamento}"></f:setPropertyActionListener>
+								<p:confirm icon="ui-icon-alert" message="Deseja Excluir ?"
+									header="Confirma?" />
+							</p:commandButton>
+						</p:column>
+
+
+
+					</p:dataTable>
+
+					<p:confirmDialog appendTo="@(body)" global="true">
+						<p:commandButton process="@this" value="Sim"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
+						<p:commandButton process="@this" value="Não"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
+					</p:confirmDialog>
+
+
+					<h3>Export Page Data Only</h3>
+					<h:commandLink>
+						<p:graphicImage name="/demo/images/excel.png" />
+						<p:dataExporter type="xls" target="tbl" fileName="cars"
+							pageOnly="true" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage name="/demo/images/pdf.png" />
+						<p:dataExporter type="pdf" target="tbl" fileName="cars"
+							pageOnly="true" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage name="/demo/images/csv.png" />
+						<p:dataExporter type="csv" target="tbl" fileName="cars"
+							pageOnly="true" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage name="/demo/images/xml.png" />
+						<p:dataExporter type="xml" target="tbl" fileName="cars"
+							pageOnly="true" />
+					</h:commandLink>
+				</h:form>
+			</p:tab>
+		</p:tabView>
+
+	</div>
+	<ui:insert name="footer">
+		<ui:include src="Template/footer.jsf" />
+	</ui:insert>
+</h:body>
+</html>

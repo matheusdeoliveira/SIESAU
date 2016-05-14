@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+<link rel="stylesheet" type="text/css"  href="estilo.css"/>
+</h:head>
+<h:body style="margin:opx; border:0;">
+	<ui:composition>
+		<div style="background-color:#B0E2FF; max-width: 1120px;height:80px;positon:relative;margin-right:auto; margin-left:auto;">
+			
+			<div style="position:absolute;display:block;left:130px;padding-right:10px;top:10px;"><h:graphicImage value="/imagem/logo-60.png" /></div>
+			<h1 style="position:relative;display:block;top:15px;right:20px;float:right;padding-left:350px;font-family:arial;color:#4A708B;font-size:20px;">Sistema Estratégico de Saúde Urbana</h1>
+			
+		</div>
+	</ui:composition>
+</h:body>
+</html>

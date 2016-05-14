@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+<h:body style="margin:0px; border:0; background-color:#E8E8E8;">
+	<ui:insert name="header">
+		<ui:include src="Template/header.jsf" />
+
+	</ui:insert>
+
+	<ui:insert name="menu">
+		<ui:include src="Template/menu.jsf" />
+	</ui:insert>
+
+	<div
+		style="position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px;">
+
+<h:form id="form">
+
+ <p:growl id="msgs" showDetail="true" />
+
+  <p:tabView style="margin-top:10px;position:relative; width:1112px;background-color:#E8E8E8;">
+
+   <p:tab title="Unidade de Saúde" style="position:relative;">			
+
+	<h:form id="form1">
+
+           <p:panel id="dados_gerais" header="Dados Gerais" style="background-color:#F0F4F9; color:#000000;">
+                        <h:panelGrid STYLE="background-color:#F0F4F9;" columns="3" layout="grid">
+                            <p:row>
+                                <h:outputText value="Nome Unidade de Saúde:" style="color:#000000;"/>
+                                <br />
+                               
+                                    <p:inputText value="#{mbUnidadeSaude.unidadeSaude.fantasia}"
+                                        required="true" size="60"/>
+                                
+                            </p:row>
+
+                            <p:row>
+                                <h:outputText value="CNPJ:" style="color:#000000;"/>
+                                <br />
+                                <p:inputText value="#{mbUnidadeSaude.unidadeSaude.cnpj}"
+                                    required="true" size="50"/>
+                            </p:row>
+                           
+                            <p:row>
+                                <h:outputText value="Situação:" style="color:#000000;"/>
+								<br />
+								<p:selectOneMenu value="#{mbUnidadeSaude.unidadeSaude.ativo}"
+									required="true" style="width:125px">
+									<f:selectItem itemValue="selecione" itemLabel="Selecione"></f:selectItem>
+									<f:selectItem itemValue="true" itemLabel="Ativa"></f:selectItem>
+									<f:selectItem itemValue="false" itemLabel="Inativa"></f:selectItem>
+									
+									
+								</p:selectOneMenu>
+                            </p:row>
+
+                            
+
+                        </h:panelGrid>
+                      
+                      </p:panel>
+                      				
+				
+		<p:panel id="end" header="Endereço"
+						style="width:500px; margin-top:20px; background-color:#F0F4F9;color:#000000;">
+						<h:outputText value="Rua: " style="color:#000000;" />
+						<br />
+						<p:inputText id="endereco" value="#{mbUnidadeSaude.unidadeSaude.endereco}"
+							required="true" size="60" />
+				
+
+						<h:panelGrid columns="2">
+						<p:column><h:outputText value="Número: " style="color:#000000;"/>
+						<br />
+						<p:inputText value="#{mbUnidadeSaude.unidadeSaude.numero}" required="true"
+							size="15" />
+						</p:column>
+						
+						<p:column>
+						<h:outputText value="Complemento: " style="color:#000000;" />
+						<br />
+						<p:inputText value="#{mbUnidadeSaude.unidadeSaude.complemento}"
+							required="true" size="30" />
+						</p:column>
+						</h:panelGrid>
+						
+
+						<h:outputText value="Bairro" style="color:#000000;" />
+						<br />
+						<p:inputText id="bairro" value="#{mbUnidadeSaude.unidadeSaude.bairro}" required="true"
+							size="40" /><br/>
+
+						 <h:panelGrid columns="2">
+                     
+                     <p:column> 	
+                    
+                     <h:outputText value="Cidade:"  style="color:#000000;"/>
+						<br />
+						<p:inputText id="cidade" value="#{mbUnidadeSaude.unidadeSaude.cidade}" required="true"
+							size="30" /><br />
+								                    
+                     	
+						<h:outputText value="CEP: " size="30" style="color:#000000;" /><br/>
+						
+						<p:inputText value="#{mbUnidadeSaude.unidadeSaude.cep}" required="true" >
+						<p:ajax event="keyup" update="cidade, endereco, bairro"
+										listener="#{mbUnidadeSaude.buscaCep}" />
+						</p:inputText>
+                    </p:column>
+								
+                       
+								<p:column>
+									<p:outputLabel for="estado" value="Estado:" style="color:#000000;"/><br/>
+								<p:selectOneMenu id="estado" value="#{mbUnidadeSaude.unidadeSaude.uf}"
+									style="width:143px">
+									<f:selectItem itemLabel="Selecione" itemValue="" />
+									<f:selectItem itemValue="AC" itemLabel="Acre" />
+									<f:selectItem itemValue="AL" itemLabel="Alagoas" />
+									<f:selectItem itemValue="AM" itemLabel="Amazonas" />
+									<f:selectItem itemValue="AP" itemLabel="Amapa" />
+									<f:selectItem itemValue="BA" itemLabel="Bahia" />
+									<f:selectItem itemValue="CE" itemLabel="Ceara" />
+									<f:selectItem itemValue="DF" itemLabel="Didtrito Federal" />
+									<f:selectItem itemValue="ES" itemLabel="Espirito Santo" />
+									<f:selectItem itemValue="GO" itemLabel="Goias" />
+									<f:selectItem itemValue="MA" itemLabel="Maranhao" />
+									<f:selectItem itemValue="MG" itemLabel="Minas Gerais" />
+									<f:selectItem itemValue="MS" itemLabel="Mato Grosso do Sul" />
+									<f:selectItem itemValue="MT" itemLabel="Mato Grosso" />
+									<f:selectItem itemValue="PA" itemLabel="Para" />
+									<f:selectItem itemValue="PB" itemLabel="Paraiba" />
+									<f:selectItem itemValue="PE" itemLabel="Pernambuco" />
+									<f:selectItem itemValue="PI" itemLabel="Piaui" />
+									<f:selectItem itemValue="PR" itemLabel="Parana" />
+									<f:selectItem itemValue="RJ" itemLabel="Rio de Janeiro" />
+									<f:selectItem itemValue="RN" itemLabel="Rio Grande do Norte" />
+									<f:selectItem itemValue="RO" itemLabel="Rondonia" />
+									<f:selectItem itemValue="RR" itemLabel="Roraima" />
+									<f:selectItem itemValue="RS" itemLabel="Rio Grande do Sul" />
+									<f:selectItem itemValue="SC" itemLabel="Santa Catarina" />
+									<f:selectItem itemValue="SE" itemLabel="Sergipe" />
+									<f:selectItem itemValue="SP" itemLabel="Sao Paulo" />
+									<f:selectItem itemValue="TO" itemLabel="Tocantins" />
+								</p:selectOneMenu>
+									<br />
+									<br />
+									<br />
+									
+								 </p:column>
+					
+						
+					              
+								</h:panelGrid>
+						
+						
+					</p:panel>
+					
+					<p:panel id="cont" header="Contato"  
+						style="postion:relative;float:right;width:500px;height:315px;margin-top:-320px;background-color:#F0F4F9;">
+						<h:panelGrid columns="2">
+						<p:column>
+						<h:outputText value="Telefone:" style="color:#000000;" /><br/>
+						<p:inputText value="#{mbUnidadeSaude.unidadeSaude.tel}" required="true" />
+						</p:column>
+						
+						</h:panelGrid>
+						
+						<h:outputText value="Email: " style="color:#000000;" /><br/>
+						<p:inputText value="#{mbUnidadeSaude.unidadeSaude.email}" required="true" size="50" /><br/>
+					</p:panel>
+             				
+				<br/>
+				  
+				  <p:panel id="pos_botao" style="padding-bottom:15px;background-color:#E8E8E8; height:20;position: relative; max-width: 1120px; margin-right: auto; margin-left: auto;">
+					
+					<p:commandButton value="Limpar" style="margin-top:-20;float:right" type="reset" />	
+					
+					<p:commandButton value="Salvar" style="margin-top:0;float:right"
+					action="#{mbUnidadeSaude.salvar}" ajax="true" update=":form" />
+				</p:panel>
+						
+	         </h:form>
+	     </p:tab>
+		
+		</p:tabView>
+	</h:form>
+		
+</div>
+
+	<ui:insert name="footer">
+		<ui:include src="Template/footer.jsf" />
+	</ui:insert>
+</h:body>
+</html>

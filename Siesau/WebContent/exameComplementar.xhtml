@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<!--Rafael_p_Ferreira-->
+</h:head>
+
+<h:body style="margin:0px; border:0; background-color:#E8E8E8;">
+	<ui:insert name="header">
+		<ui:include src="Template/header.jsf" />
+	</ui:insert>
+
+	<ui:insert name="menu">
+		<ui:include src="Template/menu.jsf" />
+	</ui:insert>
+
+	<div
+		style="position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px;">
+
+		<p:fieldset legend="Cadastro de Medicos"
+			style="position:relative;background-color:#E8E8E8;color:black;width:400px;">
+			<!--Rafael_p_Ferreira-->
+
+			<h:form id="form_cad">
+
+				<h:panelGrid columns="3" layout="grid">
+
+					<p:row>
+						<h:outputText value="Nome do Exame Complementar: " />
+						<p:inputText value="#{mbExameComplementar}" required="true" />
+					</p:row>
+
+				</h:panelGrid>
+
+				<h3>Observacoes:</h3>
+				<p:inputTextarea rows="10" cols="115"
+					completeMethod="#{inputTextareaView.completeArea}" queryDelay="250"
+					minQueryLength="4" />
+				<tr>
+				</tr>
+
+				<h:form>
+					<p:growl id="growl" life="2000" />
+					<p:commandButton value="Limpar" id="ajax" update="growl"
+						actionListener="#{buttonView.buttonAction}"
+						styleClass="ui-priority-primary" />
+					<p:commandButton value="Salvar" />
+				</h:form>
+
+			</h:form>
+
+		</p:fieldset>
+	</div>
+	<ui:insert name="footer">
+		<ui:include src="Template/footer.jsf" />
+	</ui:insert>
+</h:body>
+</html>

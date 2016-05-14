@@ -1,0 +1,68 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+	<style>
+.ui-dialog .ui-dialog-titlebar {
+	display: none !important;
+}
+</style>
+
+</h:head>
+
+<h:body style="margin:0px; border:0; background-color:#EEEEEE;">
+	<h:form id="form1">
+		<div
+			style="position: absolute; left: 50%; top: 50%; margin-left: -200px; margin-top: -284px; background-color: #dddddd; border-radius: 10px; width: 400px; height: 568px;">
+			<div
+				style="background-color: #fff; margin-left: 3px; margin-top: 3px; width: 394px; height: 120px; border-radius: 7px 7px 0px 0px;">
+				<h:graphicImage value="/imagem/logo _120.png" width="100px"
+					height="100px" style="margin-left:140px; margin-top:10px;" />
+			</div>
+			<div
+				style="background-color: #fff; margin-left: 3px; margin-top: 3px; width: 394px; height: 336px; border-radius: 0px 0px 0px 0px;">
+				<h:panelGrid columns="1" cellpadding="5"
+					style="position:center; margin-left:35px;">
+					<p
+						style="font-size: 16px; font-family: arial; color: #1e4882; font-weight: bold; margin-top: 30px;">Seja
+						bem-vindo,</p>
+					<p:inputText id="username" value="#{mbLogin.funcionario.login}"
+						placeholder="Usuário" required="true" label="username"
+						style="width:300px; margin-top:20px;border-radius: 5px;" />
+					<p:password id="password" value="#{mbLogin.funcionario.senha}"
+						placeholder="Senha" required="true" label="password"
+						style="width:300px; margin-top:20px;border-radius: 5px;" />
+
+
+					<h3>Unidade de Saúde</h3>
+					<p:selectManyCheckbox value="#{mbLogin.funcionario.unidadeSaudes}"
+						layout="grid" columns="1" required="true">
+						<f:selectItems value="#{mbLogin.unidadesDeSaude}" var="unidade"
+							itemLabel="#{unidade.fantasia}" itemValue="#{unidade}" />
+					</p:selectManyCheckbox>
+
+
+
+					<p:commandButton value="Acessar Sistema" ajax="true"
+						update=":form1" action="#{mbLogin.logar}"
+						style="margin-left:214px; margin-top:15px;" />
+				</h:panelGrid>
+				<p:growl></p:growl>
+			</div>
+			<div
+				style="background-color: #1e4882; margin-left: 3px; margin-top: 3px; width: 394px; height: 100px; border-radius: 0px 0px 7px 7px;">
+
+			</div>
+			<a
+				style="font-size: 12; font-family: arial; color: #fff; text-align: center; display: block; margin-top: -55px;"
+				href="http://www.google.com">Esqueceu sua senha?</a>
+		</div>
+		<h:outputText value="Você precisa estar logado para acessar o sistema"
+			rendered="#{param.erro}" />
+	</h:form>
+</h:body>
+</html>

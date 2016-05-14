@@ -1,0 +1,470 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+<h:body style="margin:0px; border:0; background-color:#E8E8E8;">
+
+	<ui:insert name="header">
+		<ui:include src="Template/header.jsf" />
+
+	</ui:insert>
+
+	<ui:insert name="menu">
+		<ui:include src="Template/menu.jsf" />
+	</ui:insert>
+
+	<div
+		style="position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px;">
+
+		<p:tabView id="tabView"
+			style="margin-top:10px;position:relative; width:1112px;background-color:#E8E8E8;">
+			<p:tab title="Cadastro de Pacientes" style="position:relative;">
+
+				<!--Rafael_p_Ferreira-->
+
+				<h:form id="form1">
+
+					<p:panel id="dados_pessoais" header="Dados Pessoais"
+						style="background-color:#F0F4F9; color:#000000;">
+						<h:panelGrid columns="3" cellpadding="5">
+							<p:column colspan="30">
+								<p:photoCam widgetVar="pc" listener="#{mbPaciente.oncapture}"
+									update="photo" width="180" />
+								<p:commandButton type="button" value="Fotografar"
+									onclick="PF('pc').capture()" />
+								<p:outputPanel id="photo">
+									<p:graphicImage
+										name="demo/images/photocam/#{mbPaciente.filename}.jpeg"
+										rendered="#{not empty photoCamView.filename}" size="30" />
+								</p:outputPanel>
+							</p:column>
+							<p:column>
+
+								<h:outputText value="Nome: " style="color:#000000;" />
+								<br />
+								<p:inputText value="#{mbPaciente.paciente.nome}" required="true"
+									size="60" />
+								<br />
+
+
+								<h:outputText value="Nome do pai: " style="color:#000000;" />
+								<br />
+								<p:inputText value="#{mbPaciente.paciente.nomePai}"
+									required="true" size="60" />
+								<br />
+
+								<h:outputText value="Nome da mãe: " style="color:#000000;" />
+								<br />
+								<p:inputText value="#{mbPaciente.paciente.nomeMae}"
+									required="true" size="60" />
+								<br />
+
+
+								<h:panelGrid columns="2">
+									<p:column>
+
+										<h:outputText value="Cartão SUS: " style="color:#000000;" />
+										<br />
+										<p:inputText maxlength="15" value="#{mbPaciente.paciente.cartaoSus}"
+											required="true" size="20" />
+										<br />
+
+										<h:outputText value="Naturalidade: " style="color:#000000;" />
+										<p:inputText value="#{mbPaciente.paciente.naturalidade}"
+											required="true" />
+
+									</p:column>
+									<p:column>
+
+										<h:outputText value="Profissão: " style="color:#000000;" />
+										<br />
+										<p:inputText value="#{mbPaciente.paciente.profissao}"
+											required="true" />
+										<br />
+
+										<h:outputText value="Data de Nascimento:"
+											style="color:#000000;" />
+										<p:calendar pattern="dd/MM/yyyy" mask="99/99/9999"
+											value="#{mbPaciente.paciente.dataNasc}" showOn="button"
+											size="30" />
+
+
+									</p:column>
+								</h:panelGrid>
+
+
+
+
+
+							</p:column>
+							<p:column>
+
+								<h:outputText value="CPF: "
+									style="margin-top:-20px; color:#000000;" />
+								<br />
+
+								<p:inputMask mask="999.999.999-99" value="#{mbPaciente.paciente.cpf}" required="true"
+									size="30" />
+								<br />
+
+								<h:outputText value="RG: " style="color:#000000;" />
+								<br />
+								<p:inputMask mask="99.999.999-9" value="#{mbPaciente.paciente.rg}" required="true"
+									size="30" />
+
+								<h:panelGrid columns="2">
+
+
+									<p:column>
+
+
+
+										<h:outputText value="Etnia:" style="color:#000000;" />
+										<br />
+										<p:selectOneMenu value="#{mbPaciente.paciente.etnia}"
+											required="true">
+											<f:selectItem itemValue="" itemLabel="Escolha"></f:selectItem>
+											<f:selectItem itemValue="Branco(a)" itemLabel="Branco(a)"></f:selectItem>
+											<f:selectItem itemValue="Negro(a)" itemLabel="Negro(a)"></f:selectItem>
+											<f:selectItem itemValue="Pardo(a)" itemLabel="Pardo(a)"></f:selectItem>
+											<f:selectItem itemValue="Índio(a)" itemLabel="Indio(a)"></f:selectItem>
+											<f:selectItem itemValue="Outro(a)" itemLabel="Outro(a)"></f:selectItem>
+										</p:selectOneMenu>
+										<br />
+									</p:column>
+
+									<p:column>
+										<h:outputText value="Estado Civil:" style="color:#000000;" />
+										<br />
+										<p:selectOneMenu value="#{mbPaciente.paciente.estCivil}"
+											required="true">
+											<f:selectItem itemValue="" itemLabel="Escolha"></f:selectItem>
+											<f:selectItem itemValue="Solteiro(a)" itemLabel="Solteiro(a)"></f:selectItem>
+											<f:selectItem itemValue="Casado(a)" itemLabel="Casado(a)"></f:selectItem>
+											<f:selectItem itemValue="Divorciado(a)"
+												itemLabel="Divorciado(a)"></f:selectItem>
+											<f:selectItem itemValue="Separado(a)" itemLabel="Separado(a)"></f:selectItem>
+											<f:selectItem itemValue="Viúvo(a)" itemLabel="Viúvo(a)"></f:selectItem>
+										</p:selectOneMenu>
+
+									</p:column>
+									<p:column>
+										<h:outputText value="Sexo :" style="color:#000000;" />
+										<br />
+										<p:selectOneMenu value="#{mbPaciente.paciente.sexo}"
+											required="true">
+											<f:selectItem itemValue="" itemLabel="Escolha" noSelectionOption="true"></f:selectItem>
+											<f:selectItem itemValue="Masculino" itemLabel="Masculino"></f:selectItem>
+											<f:selectItem itemValue="Feminino" itemLabel="Feminino"></f:selectItem>
+										</p:selectOneMenu>
+
+									</p:column>
+
+								</h:panelGrid>
+								<h:panelGrid columns="2"
+									style="position:relative;margin-bottom:10px" cellpadding="5">
+									<p:column>
+										<p:outputLabel for="console" value="Alergico?:"
+											style="color:#000000;" />
+										<p:selectOneRadio id="console"
+											value="#{mbPaciente.paciente.alergia}" style="color:#000000;">
+											<f:selectItem itemLabel="Sim" itemValue="true" />
+											<f:selectItem itemLabel="Não" itemValue="false" />
+										</p:selectOneRadio>
+									</p:column>
+									<p:column>
+										<h:outputText value="Tipo: " style="color:#000000;" />
+										<br />
+										<p:inputTextarea value="#{mbPaciente.paciente.tipoAlergia}"
+											required="true" rows="2" cols="20" maxlength="500"
+											autoResize="false" />
+
+									</p:column>
+								</h:panelGrid>
+							</p:column>
+						</h:panelGrid>
+					</p:panel>
+
+
+					<p:panel id="end" header="Endereço"
+						style="width:500px; margin-top:20px; background-color:#F0F4F9;color:#000000;">
+						<h:outputText value="Rua: " style="color:#000000;" />
+						<br />
+						<p:inputText value="#{mbPaciente.paciente.endereco}"
+							required="true" size="60" />
+
+
+						<h:panelGrid columns="2">
+							<p:column>
+								<h:outputText value="Número: " style="color:#000000;" />
+								<br />
+								<p:inputText value="#{mbPaciente.paciente.numero}"
+									required="true" size="15" />
+							</p:column>
+
+							<p:column>
+								<h:outputText value="Complemento: " style="color:#000000;" />
+								<br />
+								<p:inputText value="#{mbPaciente.paciente.complemento}"
+									required="true" size="30" />
+							</p:column>
+						</h:panelGrid>
+
+
+						<h:outputText value="Bairro" style="color:#000000;" />
+						<br />
+						<p:inputText value="#{mbPaciente.paciente.bairro}" required="true"
+							size="40" />
+						<br />
+
+
+						<h:panelGrid columns="2">
+
+							<p:column>
+
+								<h:outputText value="Cidade:" style="color:#000000;" />
+								<br />
+								<p:inputText value="#{mbPaciente.paciente.cidade}"
+									required="true" size="30" />
+								<br />
+
+
+								<h:outputText value="CEP: " size="30" style="color:#000000;" />
+								<br />
+
+								<p:inputText maxlength="8" value="#{mbPaciente.paciente.cep}" required="true" />
+							</p:column>
+
+
+							<p:column>
+								<p:outputLabel for="estado" value="Estado:"
+									style="color:#000000;" />
+								<br />
+								<p:selectOneMenu id="estado" value="#{mbPaciente.paciente.uf}"
+									style="width:143px">
+									<f:selectItem itemLabel="Selecione" itemValue="" />
+										<f:selectItem itemLabel="AC" itemValue="AC" />
+										<f:selectItem itemLabel="AL" itemValue="AL" />
+										<f:selectItem itemLabel="AM" itemValue="AM" />
+										<f:selectItem itemLabel="AP" itemValue="AP" />
+										<f:selectItem itemLabel="BA" itemValue="BA" />
+										<f:selectItem itemLabel="CE" itemValue="CE" />
+										<f:selectItem itemLabel="DF" itemValue="DF" />
+										<f:selectItem itemLabel="ES" itemValue="ES" />
+										<f:selectItem itemLabel="GO" itemValue="GO" />
+										<f:selectItem itemLabel="MA" itemValue="MA" />
+										<f:selectItem itemLabel="MG" itemValue="MG" />
+										<f:selectItem itemLabel="MS" itemValue="MS" />
+										<f:selectItem itemLabel="MT" itemValue="MT" />
+										<f:selectItem itemLabel="PA" itemValue="PA" />
+										<f:selectItem itemLabel="PB" itemValue="PB" />
+										<f:selectItem itemLabel="PE" itemValue="PE" />
+										<f:selectItem itemLabel="PI" itemValue="PI" />
+										<f:selectItem itemLabel="PR" itemValue="PR" />
+										<f:selectItem itemLabel="RJ" itemValue="RJ" />
+										<f:selectItem itemLabel="RN" itemValue="RN" />
+										<f:selectItem itemLabel="RO" itemValue="RO" />
+										<f:selectItem itemLabel="RR" itemValue="RR" />
+										<f:selectItem itemLabel="RS" itemValue="RS" />
+										<f:selectItem itemLabel="SC" itemValue="SC" />
+										<f:selectItem itemLabel="SE" itemValue="SE" />
+										<f:selectItem itemLabel="SP" itemValue="SP" />
+										<f:selectItem itemLabel="TO" itemValue="TO" />
+								</p:selectOneMenu>
+								<br />
+								<br />
+								<br />
+
+
+							</p:column>
+
+
+
+						</h:panelGrid>
+
+
+					</p:panel>
+
+					<p:panel id="cont" header="Contato"
+						style="postion:relative;float:right;width:500px;height:315px;margin-top:-320px;background-color:#F0F4F9;">
+						<h:panelGrid columns="2">
+							<p:column>
+								<h:outputText value="Telefone Residencial:"
+									style="color:#000000;" />
+								<br />
+								<p:inputMask mask="(99)9999-9999" value="#{mbPaciente.paciente.telRes}"
+									required="true" />
+							</p:column>
+
+							<p:column>
+								<h:outputText value="Telefone Celular:" style="color:#000000;" />
+								<br />
+								<p:inputMask mask="(99)99999-9999" value="#{mbPaciente.paciente.telCel}"
+									required="true" />
+							</p:column>
+						</h:panelGrid>
+
+						<h:outputText value="Email: " style="color:#000000;" />
+						<br />
+						<p:inputText value="#{mbPaciente.paciente.email}" required="true"
+							size="50" type="email"/>
+						<br />
+
+						<h:outputText value="Observção: " style="color:#000000;" />
+						<br />
+						<p:inputTextarea value="#{mbPaciente.paciente.obs}"
+							required="true" rows="6" cols="60" maxlength="500"
+							autoResize="false" />
+					</p:panel>
+
+
+					<p:panel id="pos_botao"
+						style=" padding-bottom:15px;background-color:#E8E8E8; height:50;position: relative; max-width: 1120px; margin-right: auto; margin-left: auto;">
+
+						<p:commandButton value="Salvar"
+							style="margin-top:-20; float:right;"
+							action="#{mbPaciente.salvar}" ajax="true"
+							update=":tabView:form1, :tabView:form2" />
+						<p:growl></p:growl>
+
+						<p:commandButton value="Limpar" style="margin-top:0;float:right"
+							type="reset" />
+
+					</p:panel>
+				</h:form>
+
+			</p:tab>
+			<p:tab title="Consulta Pacientes">
+				<h:form id="form2">
+					<p:growl id="msgs" showDetail="true" />
+					<p:dataTable id="dataTable" var="linha" editable="true"
+						reflow="true" value="#{mbPaciente.pacientes}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+						paginator="true" rows="10" style="margin-bottom:20px">
+
+						<p:ajax event="rowEdit" listener="#{mbPaciente.editarLinha}"
+							update="tabView:form2:msgs" />
+
+						<f:facet name="{Exporters}">
+							<h:commandLink>
+								<p:graphicImage name="/demo/images/excel.png" width="24" />
+								<p:dataExporter type="xls" target="tbl" fileName="cars" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage name="/demo/images/pdf.png" width="24" />
+								<p:dataExporter type="pdf" target="tbl" fileName="cars" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage name="/demo/images/csv.png" width="24" />
+								<p:dataExporter type="csv" target="tbl" fileName="cars" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage name="/demo/images/xml.png" width="24" />
+								<p:dataExporter type="xml" target="tbl" fileName="cars" />
+							</h:commandLink>
+						</f:facet>
+
+
+						<p:column width="20" headerText="SUS">
+
+							<h:outputText value="#{linha.cartaoSus}" />
+
+						</p:column>
+
+						<p:column width="20" headerText="Nome do Paciente">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{linha.nome}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{linha.nome}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column width="20" headerText="Telefones">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{linha.telCel}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{linha.telCel}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="Exclusão" width="5"
+							styleClass="text-align:center">
+							<p:commandButton action="#{mbPaciente.excluir}"
+								update=":tabView:form2,tabView:form2:dataTable" process="@this"
+								icon="ui-icon-trash" ajax="true">
+								<f:setPropertyActionListener value="#{linha}"
+									target="#{mbPaciente.paciente}"></f:setPropertyActionListener>
+								<p:confirm icon="ui-icon-alert" message="Deseja Excluir ?"
+									header="Confirma?" />
+							</p:commandButton>
+						</p:column>
+
+						<p:column width="20" headerText="Edição">
+							<p:rowEditor></p:rowEditor>
+						</p:column>
+
+					</p:dataTable>
+
+					<p:confirmDialog appendTo="@(body)" global="true">
+						<p:commandButton process="@this" value="sim"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
+						<p:commandButton process="@this" value="Nao"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
+					</p:confirmDialog>
+
+
+
+
+					<h3>Export Page Data Only</h3>
+					<h:commandLink>
+						<p:graphicImage name="/demo/images/excel.png" />
+						<p:dataExporter type="xls" target="tbl" fileName="cars"
+							pageOnly="true" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage name="/demo/images/pdf.png" />
+						<p:dataExporter type="pdf" target="tbl" fileName="cars"
+							pageOnly="true" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage name="/demo/images/csv.png" />
+						<p:dataExporter type="csv" target="tbl" fileName="cars"
+							pageOnly="true" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage name="/demo/images/xml.png" />
+						<p:dataExporter type="xml" target="tbl" fileName="cars"
+							pageOnly="true" />
+					</h:commandLink>
+				</h:form>
+
+			</p:tab>
+
+		</p:tabView>
+
+	</div>
+
+	<ui:insert name="footer">
+		<ui:include src="Template/footer.jsf" />
+	</ui:insert>
+</h:body>
+</html>

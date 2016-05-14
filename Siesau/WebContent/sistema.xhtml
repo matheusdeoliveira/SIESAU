@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+<h:body>
+
+	<h:form>  
+    <p:growl id="messages"/>
+ 
+     <p:menubar>
+        <p:submenu label="Cadastros" icon="ui-icon-document">            
+            <p:menuitem value="Unidade De Saúde " url="cadastroUnidade.jsf" />
+            <p:separator />
+            <p:menuitem value="Médicos" url="cadastroMedicos.jsf" />
+        </p:submenu>
+ 
+        <f:facet name="options">
+            <p:inputText style="margin-right:10px" placeholder="Search"/>
+            <p:commandButton type="button" value="Login" icon="ui-icon-extlink" onclick="PF('login').show();" />
+        </f:facet>
+    </p:menubar>
+</h:form>
+
+	<p:panel header="Cadastro de Funcionario">
+		<h:form id="form1">
+			<p:panelGrid columns="4">
+				<h:outputText value="Nome completo" />
+				<p:inputText value="#{mb.funcionario.nome}" required="true" />
+
+				<h:outputText value="Cargo" />
+				<p:inputText value="#{mb.funcionario.cargo}" required="true" />
+
+				<h:outputText value="Login" />
+				<p:inputText value="#{mb.funcionario.loginFuncionario}"
+					required="true" />
+
+				<h:outputText value="Senha" />
+				<p:password value="#{mb.funcionario.senhaFuncionario}"
+					required="true" />
+
+				<h:outputText value="Nome do Pai" />
+				<p:inputText value="#{mb.funcionario.nomePai}" required="true" />
+
+				<h:outputText value="Nome da Mãe" />
+				<p:inputText value="#{mb.funcionario.nomeMae}" required="true" />
+
+				<h:outputText value="Identidade" />
+				<p:inputText value="#{mb.funcionario.rg}" required="true" />
+
+				<h:outputText value="CPF" />
+				<p:inputText value="#{mb.funcionario.cpf}" required="true" />
+
+				<h:outputText value="Data de nascimento" />
+				<p:calendar value="#{mb.funcionario.dataNascimento}"
+					pattern="dd/MM/yyyy">
+				</p:calendar>
+
+				<h:outputText value="Naturalidade" />
+				<p:inputText value="#{mb.funcionario.naturalidade}" />
+
+				<h:outputText value="Sexo" />
+				<p:selectOneMenu value="#{mb.funcionario.sexo}" required="true">
+					<f:selectItem itemValue="M" itemLabel="Masculino"></f:selectItem>
+					<f:selectItem itemValue="F" itemLabel="Feminino"></f:selectItem>
+				</p:selectOneMenu>
+
+				<h:outputText value="Cor" />
+				<p:selectOneMenu value="#{mb.funcionario.cor}" required="true">
+					<f:selectItem itemValue="" itemLabel="Escolha"></f:selectItem>
+					<f:selectItem itemValue="Branco(a)" itemLabel="Branco(a)"></f:selectItem>
+					<f:selectItem itemValue="Negro(a)" itemLabel="Negro(a)"></f:selectItem>
+					<f:selectItem itemValue="Amarelo(a)" itemLabel="Amarelo(a)"></f:selectItem>
+					<f:selectItem itemValue="Índio(a)" itemLabel="Índio(a)"></f:selectItem>
+				</p:selectOneMenu>
+
+				<h:outputText value="Estado Civil" />
+				<p:selectOneMenu value="#{mb.funcionario.estadoCivil}"
+					required="true">
+					<f:selectItem itemValue="" itemLabel="Escolha"></f:selectItem>
+					<f:selectItem itemValue="Solteiro(a)" itemLabel="Solteiro(a)"></f:selectItem>
+					<f:selectItem itemValue="Casado(a)" itemLabel="Casado(a)"></f:selectItem>
+					<f:selectItem itemValue="Divorciado(a)" itemLabel="Divorciado(a)"></f:selectItem>
+					<f:selectItem itemValue="Separado(a)" itemLabel="Separado(a)"></f:selectItem>
+					<f:selectItem itemValue="Viúvo(a)" itemLabel="Viúvo(a)"></f:selectItem>
+				</p:selectOneMenu>
+
+				<h:outputText value="Unidade de Saude" />
+				<p:inputText value="#{mb.funcionario.unidadeDeSaude}"
+					required="true" />
+
+				<h:outputText value="Telefone Residencial" />
+				<p:inputText value="#{mb.funcionario.telefoneResidencial}"
+					required="true" />
+
+				<h:outputText value="Telefone Celular" />
+				<p:inputText value="#{mb.funcionario.telefoneCelular}"
+					required="true" />
+
+				<h:outputText value="Email" />
+				<p:inputText value="#{mb.funcionario.email}" required="true" />
+
+				<h:outputText value="CEP" />
+				<p:inputText value="#{mb.funcionario.cep}" required="true" />
+
+				<h:outputText value="Localidade" />
+				<p:inputText value="#{mb.funcionario.localidade}" required="true" />
+
+				<h:outputText value="Logradouro" />
+				<p:inputText value="#{mb.funcionario.logradouro}" required="true" />
+
+				<h:outputText value="Complemento" />
+				<p:inputText value="#{mb.funcionario.complemento}" required="true" />
+
+				<h:outputText value="Observações" />
+				<p:inputTextarea value="#{mb.funcionario.observacao}" />				
+			</p:panelGrid>
+			<p:commandButton value="Gravar Funcionario"
+					action="#{mb.gravarFuncionario}" ajax="true" update=":form1,:form2:tabela" ></p:commandButton>
+				<p:growl></p:growl>
+		</h:form>
+	</p:panel>
+
+	<p:panel header="Consulta de Dados">
+
+		<h:form id="form2">
+
+			<p:dataTable id="tabela" value="#{mb.funcionarios}"
+				reflow="true" var="linha" rowIndexVar="num" editable="true">
+
+				<f:facet name="header">Lista de Funcionário</f:facet>
+
+				<p:ajax event="rowEdit" listener="#{mb.editarLinha}"
+					update=":form2:msg" />
+
+				<p:column headerText="IdFunciorio">
+					<h:outputText value="#{linha.idFuncionario}" />
+				</p:column>
+
+				<p:column headerText="Nome">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{linha.nome}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{linha.nome}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="Data Nascimento">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{linha.dataNascimento}">
+								<f:convertDateTime pattern="dd/MM/yyyy "></f:convertDateTime>
+							</h:outputText>
+						</f:facet>
+						<f:facet name="input">
+							<p:calendar value="#{linha.dataNascimento}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Sexo">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{linha.sexo}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{linha.sexo}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+
+
+				<p:column headerText="Exclusão" width="30"
+					styleClass="text-align:center">
+					<p:commandButton action="#{mb.excluirFuncionario}"
+						update=":form2,:form2:tabela" process="@this" icon="ui-icon-trash"
+						ajax="true">
+						<f:setPropertyActionListener value="#{linha}"
+							target="#{mb.funcionario}"></f:setPropertyActionListener>
+						<p:confirm icon="ui-icon-alert" message="Deseja Excluir ?"
+							header="Confirma?" />
+					</p:commandButton>
+				</p:column>
+
+
+				<p:column width="50" headerText="Edição">
+					<p:rowEditor></p:rowEditor>
+				</p:column>
+
+			</p:dataTable>
+
+			<p:confirmDialog appendTo="@(body)" global="true">
+				<p:commandButton process="@this" value="sim"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
+				<p:commandButton process="@this" value="Nao"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
+			</p:confirmDialog>
+
+
+			<p:growl id="msg" />
+
+		</h:form>
+	</p:panel>
+
+</h:body>
+</html>

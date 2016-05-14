@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<link rel="stylesheet" type="text/css" href="estilo.css" />
+</h:head>
+<h:body>
+
+	<h:form>
+		<ui:composition>
+			<div
+				style="background-color: #4A708B; max-width: 1120px; height: 40px; positon: relative; margin-right: auto; margin-left: auto;">
+				<section style=""> <h:form>
+					<p:growl id="messages" />
+
+
+					<p:menubar style="background-color:#4A708B;">
+						<p:menuitem icon="ui-icon-home" url="index.jsf"
+							style="background-color:#6CA6CD;color:blue;margin-left:20px;">
+						</p:menuitem>
+
+						<p:submenu label="Cadastro" icon="ui-icon-pencil"
+							style="margin-left:20px;font-size:16px;">
+							<p:menuitem value="Paciente" url="cadastroPaciente.jsf" icon="" />
+							
+							<p:menuitem value="Funcionario" url="cadastroFuncionario.jsf"
+								icon="" />
+							<p:menuitem value="Fornecedor" url="cadastroFornecedor.jsf"
+								icon="" />
+							<p:menuitem value="Unidade de Saude" url="unidadeSaude.jsf"
+								icon="" />
+
+						</p:submenu>
+
+						<p:menuitem value="Atendimento" url="atendimento.jsf"
+							icon="ui-icon-bookmark" style="margin-left:20px; font-size:15px;" />
+						
+						
+						<p:menuitem value="Prontuario" url="prontuario.jsf" icon="ui-icon-note"
+							style="margin-left:20px;font-size:15px;">
+							
+						</p:menuitem>
+
+						<p:submenu label="Medicamentos" icon="ui-icon-document"
+							style="margin-left:20px; font-size:15px;">
+							<p:menuitem value="Requerimento" url="cadastroMedicamentos.jsf"
+								icon="" />
+							<p:menuitem value="Estoque" url="estoqueMedicamento.jsf"
+								icon="" />
+						</p:submenu>
+
+						<p:menuitem value="Importação" icon="ui-icon-arrowthickstop-1-n" url="carregarPlanilha.jsf" style="font-size:15px;" >
+							
+						</p:menuitem>
+
+						<p:menuitem value="Observatorio" icon="ui-icon-search" url="geoLocal.jsf"
+							style="margin-left:20px;font-size:15px;">
+							
+							
+						</p:menuitem>
+
+						<f:facet name="options">
+							
+							<p:commandButton type="button" value="Sair"
+								icon="ui-icon-extlink" />
+						</f:facet>
+
+					</p:menubar>
+
+
+				</h:form> </section>
+			</div>
+
+		</ui:composition>
+	</h:form>
+</h:body>
+</html>

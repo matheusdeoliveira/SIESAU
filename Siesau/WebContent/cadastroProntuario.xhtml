@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+<h:body style="margin:0px; border:0; background-color:#E8E8E8;">
+	<ui:insert name="header">
+		<ui:include src="Template/header.jsf" />
+
+	</ui:insert>
+
+	<ui:insert name="menu">
+		<ui:include src="Template/menu.jsf" />
+	</ui:insert>
+	<div
+		style="position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px;">
+		<h:form id="form">
+
+			<p:growl id="msgs" showDetail="true" />
+
+
+			<p:tabView
+				style="position:relative; width:1112px;background-color:#E8E8E8;">
+				
+				<p:tab title="Cadastro de Prontuário" style="position:relative;">			
+				<h:form id="form1">
+                    
+                    <p:panel id="prontuario" header="Informações" style="background-color:#F0F4F9; color:#000000;">
+                        <h:panelGrid columns="3" layout="grid">
+                     
+                       <p:row>
+				    <h:outputText value="Nome do Paciente:"  style="color:#000000;"/><br/>
+					<p:inputText size="60" value="#{mbMed.medico.nomeMedico}" required="true" /><tr></tr>
+					</p:row>
+                        
+				    
+					<p:row>					
+					<h:outputText value="Inicio de Tratamento:" style="color:#000000;"/><br/>
+					<p:inputText value="#{mbMed.medico.rgMedico}" required="true"  />
+					</p:row>
+					
+					<p:row>
+					<h:outputText value="Fim de Tratamento:" style="color:#000000;"/><br/>
+					<p:inputText value="#{mbMed.medico.crmMedico}" /><tr/>
+					</p:row>
+					
+				
+					</h:panelGrid>					
+					
+					<h:panelGrid>
+					
+					<p:row>
+					<h:outputText value="Resultado dos Exames:" style="color:#000000;" /><br/>
+					<p:inputTextarea value="#{mbPaciente.paciente.obs}"
+							required="true" rows="5" cols="90"/>
+					</p:row>
+										
+					<p:row>
+					<h:outputText value="Medicamentos:" style="color:#000000;" /><br/>
+					<p:inputTextarea value="#{mbPaciente.paciente.obs}"
+							required="true" rows="5" cols="90"/>
+					</p:row>
+					
+					<p:row>
+					<h:outputText value="Posologia:" style="color:#000000;" /><br/>
+					<p:inputTextarea value="#{mbPaciente.paciente.obs}"
+							required="true" rows="5" cols="90"/>
+					</p:row>
+					
+						<p:row>
+					<h:outputText value="Observações:" style="color:#000000;" /><br/>
+					<p:inputTextarea value="#{mbPaciente.paciente.obs}"
+							required="true" rows="5" cols="90"/>
+					</p:row>
+					
+					</h:panelGrid>
+                      
+                      </p:panel>
+             				
+				<br/>
+					<p:commandButton value="Salvar" style="float:right"
+					action="#" ajax="true" update=":form" />
+				
+					<p:commandButton value="Limpar" style="float:right"
+					action="#" ajax="true" update=":form" />
+				
+	 </h:form>
+
+</p:tab>
+				
+				
+
+				<p:tab title="Consulta Prontuário">
+					<h:form id="form_con">
+						<p:dataTable id="tbl" var="car" value="#{mbProntuario}"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+							paginator="true" rows="10" style="margin-bottom:20px">
+
+							<f:facet name="{Exporters}">
+								<h:commandLink>
+									<p:graphicImage name="/demo/images/excel.png" width="24" />
+									<p:dataExporter type="xls" target="tbl" fileName="cars" />
+								</h:commandLink>
+
+								<h:commandLink>
+									<p:graphicImage name="/demo/images/pdf.png" width="24" />
+									<p:dataExporter type="pdf" target="tbl" fileName="cars" />
+								</h:commandLink>
+
+								<h:commandLink>
+									<p:graphicImage name="/demo/images/csv.png" width="24" />
+									<p:dataExporter type="csv" target="tbl" fileName="cars" />
+								</h:commandLink>
+
+								<h:commandLink>
+									<p:graphicImage name="/demo/images/xml.png" width="24" />
+									<p:dataExporter type="xml" target="tbl" fileName="cars" />
+								</h:commandLink>
+							</f:facet>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Numero do Prontuário" />
+								</f:facet>
+								<h:outputText value="#{mbProntuario}" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Medicamento" />
+								</f:facet>
+								<h:outputText value="#{mbProntuario}" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Paciente" />
+								</f:facet>
+								<h:outputText value="#{mbProntuario}" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Edição" />
+								</f:facet>
+								<h:outputText value="#{mbProntuario}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Exclusão" />
+								</f:facet>
+								<h:outputText value="#{mbProntuario}" />
+							</p:column>
+						</p:dataTable>
+
+						<h3>Export Page Data Only</h3>
+						<h:commandLink>
+							<p:graphicImage name="/demo/images/excel.png" />
+							<p:dataExporter type="xls" target="tbl" fileName="cars"
+								pageOnly="true" />
+						</h:commandLink>
+
+						<h:commandLink>
+							<p:graphicImage name="/demo/images/pdf.png" />
+							<p:dataExporter type="pdf" target="tbl" fileName="cars"
+								pageOnly="true" />
+						</h:commandLink>
+
+						<h:commandLink>
+							<p:graphicImage name="/demo/images/csv.png" />
+							<p:dataExporter type="csv" target="tbl" fileName="cars"
+								pageOnly="true" />
+						</h:commandLink>
+
+						<h:commandLink>
+							<p:graphicImage name="/demo/images/xml.png" />
+							<p:dataExporter type="xml" target="tbl" fileName="cars"
+								pageOnly="true" />
+						</h:commandLink>
+					</h:form>
+				</p:tab>
+			</p:tabView>
+		</h:form>
+
+	</div>
+	<ui:insert name="footer">
+		<ui:include src="Template/footer.jsf" />
+	</ui:insert>
+</h:body>
+</html>

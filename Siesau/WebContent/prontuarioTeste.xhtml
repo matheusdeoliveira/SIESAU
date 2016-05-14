@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<h:body style="margin:0px; border:0; background-color:#E8E8E8;">
+	<ui:insert name="header">
+		<ui:include src="Template/header.jsf" />
+	</ui:insert>
+
+	<ui:insert name="menu">
+		<ui:include src="Template/menu.jsf" />
+	</ui:insert>
+
+	<p:growl id="msgs" showDetail="true" />
+
+	<div
+		style="position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px;">
+
+		<p:panel header="Prontuário"
+			style="margin-top:20px;max-width: 1120px; margin-right: auto; margin-left: auto;background-color:#F0F4F9;">
+
+			<h:form id="form_paciente">
+				<h:panelGrid style="background-color:#F0F4F9;" columns="3"
+					layout="grid">
+					<p:column>
+						<p:selectOneMenu value="#{mbProntuario.itemSelecionado}"
+							required="true" style="width:125px">
+							<f:selectItem itemValue="" itemLabel="Buscar Paciente"></f:selectItem>
+							<f:selectItem itemValue="rg" itemLabel="RG"></f:selectItem>
+							<f:selectItem itemValue="cpf" itemLabel="CPF"></f:selectItem>
+							<f:selectItem itemValue="sus" itemLabel="Cartão SUS"></f:selectItem>
+							<f:selectItem itemValue="cdAtend"
+								itemLabel="Codigo de Atendimento"></f:selectItem>
+						</p:selectOneMenu>
+					</p:column>
+
+					<p:column>
+						<p:inputText value="#{mbProntuario.campoBusca}" required="true"
+							size="20" />
+					</p:column>
+					<p:column>
+						<p:commandButton value="Buscar"
+							action="#{mbProntuario.buscaPaciente}" ajax="true"
+							update="form_paciente" />
+					</p:column>
+
+				</h:panelGrid>
+				<p />
+
+				<h:outputText id="nome" value="Nome:"
+					style=" padding:10px;color:#000000;" />
+				<p:inputText value="#{mbProntuario.paciente.nome}" required="true"
+					size="70" disabled="true" />
+				<p />
+
+				<h:panelGrid style="background-color:#F0F4F9;" columns="3"
+					layout="grid">
+
+					<p:column>
+						<h:outputText id="sexo" value="Sexo:"
+							style=" padding:10px;color:#000000;" />
+						<p:inputText value="#{mbProntuario.paciente.sexo}" required="true"
+							size="15" disabled="true" />
+					</p:column>
+
+					<p:column>
+						<h:outputText id="idade" value="Idade:"
+							style=" padding:10px;color:#000000;" />
+						<p:inputText value="#{mbProntuario.paciente.dataNasc}"
+							required="true" size="10" disabled="true" />
+					</p:column>
+
+					<p:column>
+
+						<h:outputLabel id="labelAlergico" for="alergico" value="Alérgico?"
+							style=" color:#000000;" />
+						<p:selectOneMenu id="alergico"
+							value="#{mbAtendimento.atendimento.paciente.alergia}"
+							required="true" disabled="true">
+							<f:selectItem itemLabel="Sim" itemValue="Sim"></f:selectItem>
+							<f:selectItem itemLabel="Não" itemValue="Não"></f:selectItem>
+
+						</p:selectOneMenu>
+					</p:column>
+				</h:panelGrid>
+			</h:form>
+		</p:panel>
+		<h:form id="form2">
+
+			<p:growl id="growl" sticky="true" showDetail="true" />
+
+			<p:wizard nextLabel="Avançar" backLabel="Voltar">
+				<p:tab id="personal" title="Receita">
+					<p:panel header="Receita">
+						<p:messages />
+						<h:panelGrid style="background-color:#F0F4F9;" columns="3"
+							layout="grid">
+
+							<p:row>
+								<p:outputPanel style="float:left;margin-top: 4px">
+									<h:outputText value="Medicamento:"
+										style=" padding:10px;color:#000000;" />
+									<p:inputText value="#{mbProntuario.medicamento.cdMedicam}"
+										required="true" size="63" />
+									<br />
+								</p:outputPanel>
+								<p />
+								<p:outputPanel style="float:left;margin-top: 15px">
+									<h:outputText value="Posologia:"
+										style=" color:#000000; padding:23px; float:left;margin-top: 10px" />
+									<p:inputTextarea value="#{mbProntuario.receita.posologiaRecei}"
+										required="true" rows="6" cols="60" maxlength="500"
+										autoResize="false" />
+								</p:outputPanel>
+								<p:outputPanel style="float:left;margin-top: 15px">
+									<h:outputText value="Observação:"
+										style=" color:#000000; padding:16px; float:left;margin-top: 10px " />
+									<p:column>
+										<p:inputTextarea value="#{mbProntuario.receita.obs}"
+											required="true" rows="6" cols="60" maxlength="500"
+											autoResize="false" />
+									</p:column>
+								</p:outputPanel>
+							</p:row>
+						</h:panelGrid>
+					</p:panel>
+				</p:tab>
+				<p:tab title="Exames">
+					<p:panel header="Exames">
+						<p:messages />
+						<h:panelGrid columns="3" layout="grid">
+							<p:row>
+								<h:outputText value="Nome do Exame:"
+									style=" padding:10px;color:#000000;" />
+								<p:inputText value="#{mbProntuario.exame.nome}" required="true"
+									size="61" />
+								<br />
+								<p />
+								<p:outputPanel style="float:left;margin-top: 15px">
+									<h:outputText value="Observação:"
+										style=" color:#000000; padding:26px; float:left;margin-top: 10px " />
+									<p:column>
+										<p:inputTextarea value="#{mbProntuario.exame.obs}"
+											required="true" rows="6" cols="60" maxlength="500"
+											autoResize="false" />
+									</p:column>
+								</p:outputPanel>
+							</p:row>
+						</h:panelGrid>
+					</p:panel>
+				</p:tab>
+				<p:tab title="Laudo">
+					<p:messages />
+					<h:panelGrid columns="3" layout="grid">
+
+						<p:row>
+							<h:outputText value="CRM:" style=" padding:10px;color:#000000;" />
+							<p:inputText value="#{mbProntuario.funcionario.registro}"
+								required="true" size="8" />
+							<h:outputText value="Médico:"
+								style=" padding:10px;color:#000000;" />
+							<p:inputText value="#{mbProntuario.funcionario.nome}"
+								required="true" size="51" />
+							<p />
+							<h:outputText value="Nome do Paciente:"
+								style=" padding:13px;color:#000000; " />
+							<p:inputText value="#{mbProntuario.paciente.nome}"
+								required="true" rows="2" cols="60" size="61" />
+							<p />
+							<p:outputPanel style="float:left;margin-top: 15px">
+								<h:outputText value="Observação:"
+									style=" color:#000000; padding:35px; float:left;margin-top: 10px " />
+								<p:column>
+									<p:inputTextarea value="#{mbProntuario.laudo.resultado}"
+										required="true" rows="6" cols="60" maxlength="500"
+										autoResize="false" />
+								</p:column>
+							</p:outputPanel>
+						</p:row>
+					</h:panelGrid>
+				</p:tab>
+				<p:tab title="Doença">
+					<h:panelGrid columns="3" layout="grid">
+						<p:messages />
+						<p:row>
+							<h:outputText value="CID:" style=" padding:10px; color:#000000;" />
+							<p:inputText value="#{mbProntuario.doenca.cid}" required="true"
+								size="5" />
+							<h:outputText value="Nome da Doença:"
+								style=" padding:8px;color:#000000;" />
+							<p:inputText value="#{mbProntuario.doenca.nome}" required="true"
+								rows="5" cols="100" size="44" />
+							<p />
+							<p:outputPanel style="float:left;margin-top: 15px">
+								<h:outputText value="Descrição:"
+									style=" color:#000000; padding:35px; float:left;margin-top: 10px " />
+								<p:column>
+									<p:inputTextarea value="#{mbProntuario.doenca.nome}"
+										required="true" rows="6" cols="60" maxlength="500"
+										autoResize="false" />
+								</p:column>
+							</p:outputPanel>
+						</p:row>
+						<p:commandButton value="Finalizar Atendimento"
+							style="margin-top:-60;margin-left:400px;"
+							action="#{mbProntuario.salvar}" ajax="false"
+							process="@this, form_pront"></p:commandButton>
+					</h:panelGrid>
+				</p:tab>
+
+			</p:wizard>
+		</h:form>
+
+	</div>
+	<ui:insert name="footer">
+		<ui:include src="Template/footer.jsf" />
+	</ui:insert>
+</h:body>
+</html>

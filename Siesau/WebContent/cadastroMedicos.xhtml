@@ -1,0 +1,316 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+<h:body style="margin:0px; border:0; background-color:#E8E8E8;">
+	<ui:insert name="header">
+		<ui:include src="Template/header.jsf" />
+
+	</ui:insert>
+	<!--Rafael_p_Ferreira-->
+	<ui:insert name="menu">
+		<ui:include src="Template/menu.jsf" />
+	</ui:insert>
+	<div
+		style="position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px;">
+			<p:tabView id="tabView"
+			style="position:relative; width:1112px;background-color:#E8E8E8;">
+			<p:tab title="Cadastro" style="position:relative;">
+
+				<p:fieldset legend="Cadastro de Medicos"
+					style="position:relative;background-color:#E8E8E8;color:black;width:1080px;">
+					<h:form id="form1">
+						<p:panel style="width:200px;float:right;posion:absolute;">
+							<p:photoCam widgetVar="pc" listener="#{photoCamView.oncapture}"
+								update="photo" />
+							<p:commandButton type="button" value="Capture"
+								onclick="PF('pc').capture()" />
+							<p:outputPanel id="photo">
+								<p:graphicImage
+									name="demo/images/photocam/#{photoCamView.filename}.jpeg"
+									rendered="#{not empty photoCamView.filename}" />
+							</p:outputPanel>
+						</p:panel>
+						<h:panelGrid columns="3" layout="grid">
+							<p:row>
+								<h:outputText value="Nome:" style="padding:20px;" />
+								<br />
+								<p:column>
+									<p:inputText value="#{mbMedico.medico.nome}" required="true" />
+								</p:column>
+							</p:row>
+
+
+							<p:row>
+								<h:outputText value="Usuário:" style=" padding:20px;" />
+								<br />
+								<p:column>
+									<p:inputText value="#{mbMedico.medico.login}" required="true" />
+								</p:column>
+							</p:row>
+
+
+							<p:row>
+								<h:outputText value="Senha:" style=" padding:20px; " />
+								<br />
+								<p:column>
+									<p:password value="#{mbMedico.medico.senha}" required="true" />
+								</p:column>
+							</p:row>
+
+							<p:row>
+								<p:outputLabel for="estado_civil" value="Estado Civil: " />
+								<p:selectOneMenu id="estado_civil"
+									value="#{mbMedico.medico.estadoCivil}" required="true">
+									<f:selectItem itemLabel="Casado" itemValue="CASADO"></f:selectItem>
+									<f:selectItem itemLabel="Solteiro" itemValue="SOLTEIRO"></f:selectItem>
+									<f:selectItem itemLabel="Viuvo" itemValue="VIUVO"></f:selectItem>
+									<f:selectItem itemLabel="Divorciado" itemValue="DIVORCIADO"></f:selectItem>
+								</p:selectOneMenu>
+							</p:row>
+
+
+							<p:row>
+								<h:outputText value="CPF:" style=" padding:20px;" />
+								<br />
+								<p:column>
+									<p:inputText value="#{mbMedico.medico.cpf}" required="true" />
+								</p:column>
+							</p:row>
+
+
+							<p:row>
+								<h:outputText value="RG:" style=" padding:20px;" />
+								<br />
+								<p:column>
+									<p:inputText value="#{mbMedico.medico.rg}" />
+								</p:column>
+							</p:row>
+
+							<p:row>
+								<p:outputLabel for="sexo" value="Sexo: " />
+								<p:selectOneMenu id="sexo" value="#{mbMedico.medico.sexo}"
+									required="true">
+									<f:selectItem itemLabel="Masculino" itemValue="M"></f:selectItem>
+									<f:selectItem itemLabel="Feminino" itemValue="F"></f:selectItem>
+									<f:selectItem itemLabel="Outros" itemValue="O"></f:selectItem>
+								</p:selectOneMenu>
+							</p:row>
+
+							<p:row>
+								<h:outputText value="Telefone:" style=" padding:20px;" />
+								<br />
+								<p:column>
+									<p:inputText value="#{mbMedico.medico.telRes}" />
+								</p:column>
+							</p:row>
+
+							<p:row>
+								<h:outputText value="CEP: " />
+								<br />
+								<p:inputText value="#{mbMedico.medico.cep}" required="true">
+									<p:ajax event="keyup" update="cidade, endereco, bairro, uf"
+										listener="#{mbMedico.buscaCep}" />
+								</p:inputText>
+							</p:row>
+
+							<p:row>
+								<h:outputText value="Cidade:" />
+								<br />
+								<p:inputText disabled="true" value="#{mbMedico.medico.cidade}"
+									required="true" id="cidade" />
+							</p:row>
+
+							<p:row>
+								<h:outputText value="Endereço:" />
+								<br />
+								<p:inputText disabled="true" value="#{mbMedico.medico.endereco}"
+									required="true" id="endereco" />
+							</p:row>
+
+							<p:row>
+								<h:outputText value="Bairro:" />
+								<br />
+								<p:inputText disabled="true" value="#{mbMedico.medico.bairro}"
+									required="true" id="bairro" />
+							</p:row>
+
+							<p:row>
+								<h:outputText value="Complemento:" />
+								<br />
+								<p:inputText value="#{mbMedico.medico.complemento}"
+									required="true" id="complemento" />
+							</p:row>
+
+							<p:row>
+								<h:outputText value="Número" />
+								<br />
+								<p:inputText value="#{mbMedico.medico.numero}" required="true"
+									id="numero" />
+							</p:row>
+
+							<p:row>
+								<h:outputText value="UF:" />
+								<br />
+								<p:inputText id="uf" disabled="true"
+									value="#{mbMedico.medico.uf}" required="true" />
+							</p:row>
+
+							<p:row>
+								<h:outputText value="CRM:" style=" " />
+								<br />
+								<p:column>
+									<p:inputText value="#{mbMedico.medico.registro}" />
+								</p:column>
+							</p:row>
+
+						</h:panelGrid>
+						<br />
+
+						<p:commandButton value="Salvar" style="float:right"
+							action="#{mbMedico.salvar}" ajax="true"
+							update=":tabView:form1, :tabView:form2" />
+						<p:growl></p:growl>
+
+						<p:commandButton value="Limpar" style="float:right" type="reset" />
+					</h:form>
+				</p:fieldset>
+
+			</p:tab>
+
+			<p:tab title="Consulta">
+				<h:form id="form2">
+					<p:growl id="msgs" showDetail="true" />
+					<p:dataTable id="dataTable" var="linha" editable="true"
+						reflow="true" value="#{mbMedico.medicos}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+						paginator="true" rows="10" style="margin-bottom:20px">
+
+						<p:ajax event="rowEdit" listener="#{mbMedico.editarLinha}"
+							update="tabView:form2:msgs" />
+
+
+						<f:facet name="{Exporters}">
+							<!--Rafael_p_Ferreira-->
+							<h:commandLink>
+								<p:graphicImage name="/demo/images/excel.png" width="24" />
+								<p:dataExporter type="xls" target="tbl" fileName="cars" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage name="/demo/images/pdf.png" width="24" />
+								<p:dataExporter type="pdf" target="tbl" fileName="cars" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage name="/demo/images/csv.png" width="24" />
+								<p:dataExporter type="csv" target="tbl" fileName="cars" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage name="/demo/images/xml.png" width="24" />
+								<p:dataExporter type="xml" target="tbl" fileName="cars" />
+							</h:commandLink>
+
+						</f:facet>
+
+						<p:column width="20">
+							<f:facet name="header">
+								<h:outputText value="ID" />
+							</f:facet>
+							<h:outputText value="#{linha.cdFunc}" />
+						</p:column>
+
+						<p:column width="20" headerText="Nome">
+							<p:cellEditor>
+
+								<f:facet name="output">
+									<h:outputText value="#{linha.nome}" />
+								</f:facet>
+
+								<f:facet name="input">
+									<p:inputText value="#{linha.nome}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column width="20" headerText="CRM">
+							<p:cellEditor>
+
+								<f:facet name="output">
+									<h:outputText value="#{linha.registro}" />
+								</f:facet>
+
+								<f:facet name="input">
+									<p:inputText value="#{linha.registro}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+
+						<p:column headerText="Exclusão" width="5"
+							styleClass="text-align:center">
+							<p:commandButton action="#{mbMedico.excluir}"
+								update=":tabView:form2,tabView:form2:dataTable" process="@this"
+								icon="ui-icon-trash" ajax="true">
+								<f:setPropertyActionListener value="#{linha}"
+									target="#{mbMedico.medico}"></f:setPropertyActionListener>
+								<p:confirm icon="ui-icon-alert" message="Deseja Excluir ?"
+									header="Confirma?" />
+							</p:commandButton>
+						</p:column>
+
+						<p:column width="20" headerText="Edição">
+							<p:rowEditor />
+						</p:column>
+
+					</p:dataTable>
+
+					<p:confirmDialog appendTo="@(body)" global="true">
+						<p:commandButton process="@this" value="Sim"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
+						<p:commandButton process="@this" value="Não"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
+					</p:confirmDialog>
+
+					<h3>Export Page Data Only</h3>
+					<h:commandLink>
+						<p:graphicImage name="/demo/images/excel.png" />
+						<p:dataExporter type="xls" target="tbl" fileName="cars"
+							pageOnly="true" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage name="/demo/images/pdf.png" />
+						<p:dataExporter type="pdf" target="tbl" fileName="cars"
+							pageOnly="true" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage name="/demo/images/csv.png" />
+						<p:dataExporter type="csv" target="tbl" fileName="cars"
+							pageOnly="true" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage name="/demo/images/xml.png" />
+						<p:dataExporter type="xml" target="tbl" fileName="cars"
+							pageOnly="true" />
+					</h:commandLink>
+					<!--Rafael_p_Ferreira-->
+				</h:form>
+			</p:tab>
+		</p:tabView>
+	</div>
+	<ui:insert name="footer">
+		<ui:include src="Template/footer.jsf" />
+	</ui:insert>
+</h:body>
+</html>
