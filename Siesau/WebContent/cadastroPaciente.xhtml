@@ -34,16 +34,23 @@
 					<p:panel id="dados_pessoais" header="Dados Pessoais"
 						style="background-color:#F0F4F9; color:#000000;">
 						<h:panelGrid columns="3" cellpadding="5">
-							<p:column colspan="30">
+							<p:column  colspan="30" width="180"  >
+								<p:outputPanel id="photo">
+									<p:graphicImage height="150px"
+										value="#{pageContext.servletContext.contextPath}/resources/fotos/#{mbPaciente.foto}"
+										rendered="#{not empty mbPaciente.foto}" />										
+								</p:outputPanel>
+								<p:commandButton value="Capturar Foto" type="button"
+									onclick="PF('webcan').show();" />
+
+								<p:dialog header="Fotagrafia" widgetVar="webcan" minHeight="40">
+																	
 								<p:photoCam widgetVar="pc" listener="#{mbPaciente.oncapture}"
-									update="photo" width="180" />
+									update=":tabView:form1:photo" />
 								<p:commandButton type="button" value="Fotografar"
 									onclick="PF('pc').capture()" />
-								<p:outputPanel id="photo">
-									<p:graphicImage
-										name="demo/images/photocam/#{mbPaciente.filename}.jpeg"
-										rendered="#{not empty photoCamView.filename}" size="30" />
-								</p:outputPanel>
+								<p:growl></p:growl>
+								</p:dialog>
 							</p:column>
 							<p:column>
 
@@ -183,7 +190,7 @@
 										<h:outputText value="Tipo: " style="color:#000000;" />
 										<br />
 										<p:inputTextarea value="#{mbPaciente.paciente.tipoAlergia}"
-											required="true" rows="2" cols="20" maxlength="500"
+											 rows="2" cols="20" maxlength="500"
 											autoResize="false" />
 
 									</p:column>
@@ -398,7 +405,7 @@
 									<h:outputText value="#{linha.telCel}" />
 								</f:facet>
 								<f:facet name="input">
-									<h:inputText value="#{linha.telCel}" />
+									<p:inputMask mask="(99)99999-9999" value="#{linha.telCel}" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>

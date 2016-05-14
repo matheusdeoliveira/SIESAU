@@ -29,7 +29,7 @@
 						<h:panelGrid columns="3" layout="grid">
 						<p:column>
 							<p:outputPanel id="photo">
-									<p:graphicImage 
+									<p:graphicImage height="150px" 
 										value="#{pageContext.servletContext.contextPath}/resources/fotos/#{mbFuncionario.foto}"
 										rendered="#{not empty mbFuncionario.foto}" />										
 								</p:outputPanel>
@@ -184,7 +184,7 @@
 									value="#{mbFuncionario.funcionario.bairro}" required="true"
 									id="bairro" size="30" />
 							</p:column>
-
+<!-- Adicionar aqui o campo de complemento -->
 							<p:column>
 								<h:outputText value="Cidade:" style="color:#000000;" />
 								<br />

@@ -48,6 +48,7 @@ Temporary Items
 .apdisk
 
 .metadata/
+.recommenders/
 RemoteSystemsTempFiles/
 Servers/
 

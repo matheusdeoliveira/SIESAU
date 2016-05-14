@@ -86,6 +86,7 @@ public class ManagerBeanFuncionario implements Serializable {
 			funcionario.setDataAdmis(new Date());
 			funcionario.setAtivo(true);
 
+
 			// new UnidFuncDao(new UnidFunc()).salva(unidFunc);
 			new FuncionarioDao(new Funcionario()).salva(funcionario);
 			fc.addMessage("form1", new FacesMessage("Funcionario " + funcionario.getNome() + " salvo com sucesso."));

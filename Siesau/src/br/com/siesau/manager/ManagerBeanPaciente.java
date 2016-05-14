@@ -3,6 +3,8 @@ package br.com.siesau.manager;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +32,7 @@ public class ManagerBeanPaciente implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Paciente paciente;
 	private List<Paciente> pacientes;
+	private String foto;
 
 	@PostConstruct
 	private void inti() {
@@ -43,10 +46,9 @@ public class ManagerBeanPaciente implements Serializable {
 			List<String> coordenadas = GoogleMap
 					.buscaCoordenadas(paciente.getEndereco() + " " + paciente.getBairro() + " " + paciente.getCidade());
 
+			paciente.setFoto(getFoto());
 			paciente.setLatitude(coordenadas.get(0));
 			paciente.setLongitude(coordenadas.get(1));
-
-			System.out.println("Coordenadas " + coordenadas);
 
 			paciente.setDataCad(new Date());
 			new PacienteDao(new Paciente()).salva(paciente);
@@ -87,7 +89,43 @@ public class ManagerBeanPaciente implements Serializable {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public void oncapture(CaptureEvent captureEvent) {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		
+		this.foto = getNumeroRandomico() + ".jpeg";
+		byte[] data = captureEvent.getData();
+		
+		ExternalContext externalContext = fc.getExternalContext();
+		String diretorio = externalContext.getRealPath("")+ "resources" + File.separator + "fotos" ;
+		
+		String dir = diretorio.replace("\\", "\\\\");		
+		verificaDiretorio(dir);
+		
+		String caminhoFoto = diretorio + File.separator	+ foto;
+		
+		FileImageOutputStream imageOutput;
+		
+		try {
+			imageOutput = new FileImageOutputStream(new File(caminhoFoto));
+			imageOutput.write(data, 0, data.length);
+			imageOutput.close();
+			
+			fc.addMessage("form1",
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Foto CAPTURADA com sucesso!", "Informação"));
+			System.out.println("Tenta nesse diretório aqui " + caminhoFoto);
+		} catch (IOException e) {
+			throw new FacesException("Error in writing captured image.", e);
+		}
+	}
+	
+	private void verificaDiretorio(String param){
+		Path dir = Paths.get(param);
+		if(!dir.toFile().exists()){
+			System.out.println("Criação do diretório: " + param);
+			new File(param).mkdirs();
+		}					
+	}
 	public Paciente getPaciente() {
 		return paciente;
 	}
@@ -106,7 +144,7 @@ public class ManagerBeanPaciente implements Serializable {
 
 	private String filename;
 
-	private String getRandomImageName() {
+	private String getNumeroRandomico() {
 		int i = (int) (Math.random() * 10000000);
 
 		return String.valueOf(i);
@@ -121,22 +159,18 @@ public class ManagerBeanPaciente implements Serializable {
 		return serialVersionUID;
 	}
 
-	public void oncapture(CaptureEvent captureEvent) {
-		filename = getRandomImageName();
-		byte[] data = captureEvent.getData();
-
-		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		String newFileName = externalContext.getRealPath("") + File.separator + "resources" + File.separator + "demo"
-				+ File.separator + "images" + File.separator + "photocam" + File.separator + filename + ".jpeg";
-
-		FileImageOutputStream imageOutput;
-		try {
-			imageOutput = new FileImageOutputStream(new File(newFileName));
-			imageOutput.write(data, 0, data.length);
-			imageOutput.close();
-		} catch (IOException e) {
-			throw new FacesException("Error in writing captured image.", e);
-		}
+	public String getFoto() {
+		return foto;
 	}
 
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	
+	
 }
