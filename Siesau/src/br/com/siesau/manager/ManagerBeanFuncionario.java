@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -23,15 +24,18 @@ import javax.faces.context.FacesContext;
 import javax.imageio.stream.FileImageOutputStream;
 
 import org.primefaces.event.CaptureEvent;
-import org.primefaces.event.RowEditEvent;
 
 import br.com.siesau.control.viaCEP.ViaCEP;
 import br.com.siesau.control.viaCEP.ViaCEPException;
 import br.com.siesau.entity.Cargo;
+import br.com.siesau.entity.Especialidade;
+import br.com.siesau.entity.FuncEspec;
 import br.com.siesau.entity.Funcionario;
 import br.com.siesau.entity.UnidFunc;
 import br.com.siesau.entity.UnidadeSaude;
 import br.com.siesau.persistence.CargoDao;
+import br.com.siesau.persistence.EspecialidadeDao;
+import br.com.siesau.persistence.FuncEspecDao;
 import br.com.siesau.persistence.FuncionarioDao;
 
 /**
@@ -45,7 +49,11 @@ public class ManagerBeanFuncionario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Funcionario funcionario;
+	private Funcionario selecionado;
+	private FuncEspec funcEspec;
 	private List<Funcionario> funcionarios;
+	private List<Especialidade> especialidades;
+	private List<Especialidade> especialidadesSelecionadas;
 	private ViaCEP viaCep;
 	private List<Cargo> cargos;
 	private Map<String, String> mostraCargos = new HashMap<String, String>();
@@ -56,9 +64,12 @@ public class ManagerBeanFuncionario implements Serializable {
 	@PostConstruct
 	public void init() {
 		funcionario = new Funcionario();
+		selecionado = new Funcionario();
+		funcEspec = new FuncEspec();
 		funcionario.setCargo(new Cargo());
 		funcionarios = new FuncionarioDao(new Funcionario()).lista();
-
+		especialidades = new EspecialidadeDao(new Especialidade()).lista();
+		especialidadesSelecionadas = new ArrayList<>();
 		unidadeSaude = new UnidadeSaude();
 		unidFunc = new UnidFunc();
 
@@ -78,10 +89,13 @@ public class ManagerBeanFuncionario implements Serializable {
 
 		try {
 			buscaCep();
+			
+		
 			unidFunc.setFuncionario1(funcionario);
 			unidFunc.setUnidadeSaude1(unidadeSaude);
 			unidFunc.setFuncionario2(funcionario);
 			unidFunc.setUnidadeSaude2(unidadeSaude);
+			funcionario.setEspecialidades(especialidadesSelecionadas);
 			funcionario.setFoto(getFoto());
 			funcionario.setDataAdmis(new Date());
 			funcionario.setAtivo(true);
@@ -115,14 +129,15 @@ public class ManagerBeanFuncionario implements Serializable {
 		}
 	}
 
-	public void editarLinha(RowEditEvent row) {
+	public void editar() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		try {
-
-			Funcionario selecionado = (Funcionario) row.getObject();
-
+			Funcionario temp = selecionado;
+		
 			new FuncionarioDao(new Funcionario()).atualiza(selecionado);
-			fc.addMessage("form2", new FacesMessage("Funcionario " + selecionado.getNome() + " editado"));
+			fc.addMessage("form2", new FacesMessage("Funcionario "+ temp.getNome() + " editado"));
+			selecionado = new Funcionario();
+			temp = new Funcionario();
 			funcionarios = new FuncionarioDao(new Funcionario()).lista();
 
 		} catch (Exception e) {
@@ -252,6 +267,44 @@ public class ManagerBeanFuncionario implements Serializable {
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
-	
+
+	public Funcionario getSelecionado() {
+		return selecionado;
+	}
+
+	public void setSelecionado(Funcionario selecionado) {
+		this.selecionado = selecionado;
+	}
+
+	public List<Especialidade> getEspecialidades() {
+		if(especialidades == null){
+			especialidades = new EspecialidadeDao(new Especialidade()).lista();
+		}
+		return especialidades;
+	}
+
+	public void setEspecialidades(List<Especialidade> especialidades) {
+		this.especialidades = especialidades;
+	}
+
+	public List<Especialidade> getEspecialidadesSelecionadas() {
+		return especialidadesSelecionadas;
+	}
+
+	public void setEspecialidadesSelecionadas(List<Especialidade> especialidadesSelecionadas) {
+		this.especialidadesSelecionadas = especialidadesSelecionadas;
+	}
+//	
+//	public static void main(String[] args) {
+//		try {
+//			Funcionario f = new FuncionarioDao(new Funcionario()).findByCode(552);
+//			System.out.println(f.getEspecialidades());
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
+//		
+//		
+//	}
+//	
 	
 }
