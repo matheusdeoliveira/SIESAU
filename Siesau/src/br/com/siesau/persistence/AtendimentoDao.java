@@ -29,14 +29,15 @@ public class AtendimentoDao extends GenericDao<Atendimento> {
 
 		for (int i = 0; i <= func.getEspecialidades().size(); i++) {
 			atend.addAll(manager.createQuery(("FROM " + classe.getClass().getName()) + " WHERE cd_espec = "
-					+ func.getEspecialidades().get(i).getCdEspec()).getResultList());
+					+ func.getEspecialidades().get(i).getCdEspec() + "AND cd_sitatend = 1").getResultList());
 		}
 		return atend;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Atendimento> listaNaoFinalizados(){			
-		return manager.createQuery(("FROM " + Atendimento.class.getName() + " WHERE cd_sitatend = 1 OR cd_sitatend = 2"))
-				.getResultList();	
+	public List<Atendimento> listaNaoFinalizados() {
+		return manager
+				.createQuery(("FROM " + Atendimento.class.getName() + " WHERE cd_sitatend = 1 OR cd_sitatend = 2"))
+				.getResultList();
 	}
 }
