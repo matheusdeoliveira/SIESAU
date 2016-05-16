@@ -155,8 +155,6 @@ public class ManagerBeanFuncionario implements Serializable {
 			funcionario.setBairro(viaCep.getBairro());
 			funcionario.setUf(viaCep.getUf());
 
-			System.out.println(funcionario.getBairro());
-
 		} catch (ViaCEPException e) {
 			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
 			e.printStackTrace();

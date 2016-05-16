@@ -205,7 +205,7 @@
 						style="width:500px; margin-top:20px; background-color:#F0F4F9;color:#000000;">
 						<h:outputText value="Rua: " style="color:#000000;" />
 						<br />
-						<p:inputText value="#{mbPaciente.paciente.endereco}"
+						<p:inputText id="endereco" value="#{mbPaciente.paciente.endereco}"
 							required="true" size="60" />
 
 
@@ -228,8 +228,8 @@
 
 						<h:outputText value="Bairro" style="color:#000000;" />
 						<br />
-						<p:inputText value="#{mbPaciente.paciente.bairro}" required="true"
-							size="40" />
+						<p:inputText id="bairro" value="#{mbPaciente.paciente.bairro}"
+							required="true" size="40" />
 						<br />
 
 
@@ -239,16 +239,18 @@
 
 								<h:outputText value="Cidade:" style="color:#000000;" />
 								<br />
-								<p:inputText value="#{mbPaciente.paciente.cidade}"
+								<p:inputText id="cidade" value="#{mbPaciente.paciente.cidade}"
 									required="true" size="30" />
 								<br />
 
-
-								<h:outputText value="CEP: " size="30" style="color:#000000;" />
+								<h:outputText value="CEP: " style="color:#000000;" />
 								<br />
-
-								<p:inputText maxlength="8" value="#{mbPaciente.paciente.cep}"
-									required="true" />
+								<p:inputText maxlength="8"
+									requiredMessage="Favor preencha o CEP"
+									value="#{mbPaciente.paciente.cep}" required="true">
+									<p:ajax event="keyup" update="cidade, endereco, bairro"
+										listener="#{mbPaciente.buscaCep}" />
+								</p:inputText>
 							</p:column>
 
 
@@ -357,8 +359,8 @@
 						reflow="true" value="#{mbPaciente.pacientes}"
 						widgetVar="tabelaPacientes"
 						filteredValue="#{mbPaciente.pacientesFiltrados}"
-						emptyMessage="Não há pacientes."
-						paginator="true" rows="10" style="margin-bottom:20px">
+						emptyMessage="Não há pacientes." paginator="true" rows="10"
+						style="margin-bottom:20px">
 
 						<p:ajax event="rowEdit" listener="#{mbPaciente.editarLinha}"
 							update="tabView:form2:msgs" />
@@ -372,13 +374,15 @@
 							</p:outputPanel>
 						</f:facet>
 
-						<p:column width="20" headerText="SUS" filterBy="#{linha.cartaoSus}" filterMatchMode="contains">
+						<p:column width="20" headerText="SUS"
+							filterBy="#{linha.cartaoSus}" filterMatchMode="contains">
 
 							<h:outputText value="#{linha.cartaoSus}" />
 
 						</p:column>
 
-						<p:column width="20" headerText="Nome do Paciente" filterBy="#{linha.nome}" filterMatchMode="contains">
+						<p:column width="20" headerText="Nome do Paciente"
+							filterBy="#{linha.nome}" filterMatchMode="contains">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{linha.nome}" />
@@ -389,7 +393,8 @@
 							</p:cellEditor>
 						</p:column>
 
-						<p:column width="20" headerText="Telefones" filterBy="#{linha.telCel}" filterMatchMode="contains">
+						<p:column width="20" headerText="Telefones"
+							filterBy="#{linha.telCel}" filterMatchMode="contains">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{linha.telCel}" />

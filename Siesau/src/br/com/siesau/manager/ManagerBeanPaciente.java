@@ -21,6 +21,8 @@ import org.primefaces.event.CaptureEvent;
 import org.primefaces.event.RowEditEvent;
 
 import br.com.siesau.control.GoogleMap;
+import br.com.siesau.control.viaCEP.ViaCEP;
+import br.com.siesau.control.viaCEP.ViaCEPException;
 import br.com.siesau.entity.Paciente;
 import br.com.siesau.persistence.PacienteDao;
 
@@ -34,6 +36,7 @@ public class ManagerBeanPaciente implements Serializable {
 	private List<Paciente> pacientes;
 	private List<Paciente> pacientesFiltrados;
 	private String foto;
+	private ViaCEP viaCep;
 
 	@PostConstruct
 	private void inti() {
@@ -44,6 +47,8 @@ public class ManagerBeanPaciente implements Serializable {
 	public void salvar() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		try {
+			buscaCep();
+			
 			List<String> coordenadas = GoogleMap
 					.buscaCoordenadas(paciente.getEndereco() + " " + paciente.getBairro() + " " + paciente.getCidade());
 
@@ -86,6 +91,24 @@ public class ManagerBeanPaciente implements Serializable {
 			pacientes = new PacienteDao(new Paciente()).lista();
 
 		} catch (Exception e) {
+			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
+			e.printStackTrace();
+		}
+	}
+	
+	public void buscaCep() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+
+		try {
+			viaCep = new ViaCEP();
+			viaCep.buscar(paciente.getCep().toString());
+
+			paciente.setCidade(viaCep.getLocalidade());
+			paciente.setEndereco(viaCep.getLogradouro());
+			paciente.setBairro(viaCep.getBairro());
+			paciente.setUf(viaCep.getUf());
+
+		} catch (ViaCEPException e) {
 			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
 			e.printStackTrace();
 		}
