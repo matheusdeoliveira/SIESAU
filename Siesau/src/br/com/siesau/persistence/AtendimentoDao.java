@@ -34,4 +34,9 @@ public class AtendimentoDao extends GenericDao<Atendimento> {
 		return atend;
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Atendimento> listaNaoFinalizados(){			
+		return manager.createQuery(("FROM " + Atendimento.class.getName() + " WHERE cd_sitatend = 1 OR cd_sitatend = 2"))
+				.getResultList();	
+	}
 }
