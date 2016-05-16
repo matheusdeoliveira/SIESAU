@@ -56,13 +56,14 @@ public class ManagerBeanFuncionario implements Serializable {
 	private List<Especialidade> especialidadesSelecionadas;
 	private ViaCEP viaCep;
 	private List<Cargo> cargos;
-	private Map<String, String> mostraCargos = new HashMap<String, String>();
+	private Map<String, String> mostraCargos;
 	private UnidadeSaude unidadeSaude;
 	private UnidFunc unidFunc;
 	private String foto;
 
 	@PostConstruct
 	public void init() {
+		mostraCargos = new HashMap<String, String>();
 		funcionario = new Funcionario();
 		selecionado = new Funcionario();
 		funcEspec = new FuncEspec();
