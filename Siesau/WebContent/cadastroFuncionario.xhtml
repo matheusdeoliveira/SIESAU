@@ -554,7 +554,7 @@
 						header="Confirma?" />
 				</p:commandButton>
 				<p:confirmDialog appendTo="@(body)" global="true">
-					<p:commandButton process="@this" value="Sim"
+					<p:commandButton process="@this" value="Sim" type="button" onclick="PF('funExDialog').hide()"
 						styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
 					<p:commandButton process="@this" value="Não"
 						styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
