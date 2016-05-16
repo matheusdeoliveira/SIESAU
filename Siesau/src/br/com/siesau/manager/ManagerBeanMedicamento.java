@@ -25,6 +25,7 @@ public class ManagerBeanMedicamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Medicamento medicamento;
 	private List<Medicamento> medicamentos;
+	private List<Medicamento> medicamentosFiltrados;
 
 	@PostConstruct
 	public void init() {
@@ -95,6 +96,14 @@ public class ManagerBeanMedicamento implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public List<Medicamento> getMedicamentosFiltrados() {
+		return medicamentosFiltrados;
+	}
+
+	public void setMedicamentosFiltrados(List<Medicamento> medicamentosFiltrados) {
+		this.medicamentosFiltrados = medicamentosFiltrados;
 	}
 
 }

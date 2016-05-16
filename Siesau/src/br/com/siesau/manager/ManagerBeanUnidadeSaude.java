@@ -23,6 +23,7 @@ public class ManagerBeanUnidadeSaude {
 	private static final long serialVersionUID = 1L;
 	private UnidadeSaude unidadeSaude;
 	private List<UnidadeSaude> unidadeSaudes;
+	private List<UnidadeSaude> unidadeSaudesFiltradas;
 	private ViaCEP viaCep;
 	
 	@PostConstruct
@@ -121,6 +122,16 @@ public class ManagerBeanUnidadeSaude {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+
+	public List<UnidadeSaude> getUnidadeSaudesFiltradas() {
+		return unidadeSaudesFiltradas;
+	}
+
+
+	public void setUnidadeSaudesFiltradas(List<UnidadeSaude> unidadeSaudesFiltradas) {
+		this.unidadeSaudesFiltradas = unidadeSaudesFiltradas;
 	}
 
 	

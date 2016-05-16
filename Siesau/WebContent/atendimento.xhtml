@@ -97,32 +97,53 @@
 			<p:growl />
 
 			<p:dataTable id="atendimento" var="linha"
-				value="#{mbAtendimento.atendimentos}" editable="true">
+				widgetVar="tabelaAtendimento"
+				filteredValue="#{mbAtendimento.atendimentosFiltrados}"
+				emptyMessage="Não há atendimentos."
+				value="#{mbAtendimento.atendimentos}" editable="true"
+				paginator="true" rows="10" style="padding-bottom:15px;">
+
 				<f:facet name="header">Lista de Atendimentos</f:facet>
+
+				<f:facet name="header">
+					<p:outputPanel>
+						<h:outputText value="Pesquisa em todos os campos:" />
+						<p:inputText id="globalFilter"
+							onkeyup="PF('tabelaAtendimento').filter()" style="width:150px"
+							placeholder="Digite a busca" />
+					</p:outputPanel>
+				</f:facet>
 
 				<p:ajax event="rowEdit" listener="#{mbAtendimento.editarLinha}"
 					update="form_lista:atendimento" />
 
 				<p:column headerText="Codigo do Atendimento"
+					filterBy="#{linha.cdAtend}" filterMatchMode="contains"
 					sortBy="#{linha.cdAtend}">
 					<h:outputText value="#{linha.cdAtend}" />
 				</p:column>
 
-				<p:column headerText="Nome Paciente" sortBy="#{linha.paciente.nome}">
+				<p:column headerText="Nome Paciente"
+					filterBy="#{linha.paciente.nome}" filterMatchMode="contains"
+					sortBy="#{linha.paciente.nome}">
 					<h:outputText value="#{linha.paciente.nome}" />
 				</p:column>
 
 				<p:column headerText="Especialidade"
+					filterBy="#{linha.especialidade.especialidade}"
+					filterMatchMode="contains"
 					sortBy="#{linha.especialidade.especialidade}">
 					<h:outputText value="#{linha.especialidade.especialidade}" />
 				</p:column>
 
 				<p:column headerText="Situação"
 					sortBy="#{linha.situacaoAtend.situacao}">
+
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{linha.situacaoAtend.situacao}" />
 						</f:facet>
+
 						<f:facet name="input">
 							<h:selectOneMenu value="#{linha.situacaoAtend}">
 								<f:selectItems value="#{mbAtendimento.situacaoAtends}"

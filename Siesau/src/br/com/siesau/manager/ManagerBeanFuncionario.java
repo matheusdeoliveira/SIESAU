@@ -52,6 +52,7 @@ public class ManagerBeanFuncionario implements Serializable {
 	private UnidadeSaude unidadeSaude;
 	private UnidFunc unidFunc;
 	private String foto;
+	private List<Funcionario> funcionariosFiltrados;
 
 	@PostConstruct
 	public void init() {
@@ -251,6 +252,14 @@ public class ManagerBeanFuncionario implements Serializable {
 
 	public void setFoto(String foto) {
 		this.foto = foto;
+	}
+
+	public List<Funcionario> getFuncionariosFiltrados() {
+		return funcionariosFiltrados;
+	}
+
+	public void setFuncionariosFiltrados(List<Funcionario> funcionariosFiltrados) {
+		this.funcionariosFiltrados = funcionariosFiltrados;
 	}
 	
 	

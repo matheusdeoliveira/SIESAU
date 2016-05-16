@@ -27,22 +27,23 @@
 				<h:form id="form1">
 					<p:panel header="Dados Pessoais" style="background-color:#F0F4F9;">
 						<h:panelGrid columns="3" layout="grid">
-						<p:column>
-							<p:outputPanel id="photo">
-									<p:graphicImage height="150px" 
+							<p:column>
+								<p:outputPanel id="photo">
+									<p:graphicImage height="150px"
 										value="#{pageContext.servletContext.contextPath}/resources/fotos/#{mbFuncionario.foto}"
-										rendered="#{not empty mbFuncionario.foto}" />										
+										rendered="#{not empty mbFuncionario.foto}" />
 								</p:outputPanel>
 								<p:commandButton value="Capturar Foto" type="button"
 									onclick="PF('webcan').show();" />
 
 								<p:dialog header="Fotagrafia" widgetVar="webcan" minHeight="40">
-																	
-								<p:photoCam widgetVar="pc" listener="#{mbFuncionario.oncapture}"
-									update=":tabView:form1:photo" />
-								<p:commandButton type="button" value="Fotografar"
-									onclick="PF('pc').capture()" />
-								<p:growl></p:growl>
+
+									<p:photoCam widgetVar="pc"
+										listener="#{mbFuncionario.oncapture}"
+										update=":tabView:form1:photo" />
+									<p:commandButton type="button" value="Fotografar"
+										onclick="PF('pc').capture()" />
+									<p:growl></p:growl>
 								</p:dialog>
 
 							</p:column>
@@ -83,7 +84,8 @@
 
 										<h:outputText value="Telefone:" style="color:#000000;" />
 										<br />
-										<p:inputMask mask="(99)9999-9999" value="#{mbFuncionario.funcionario.telRes}" />
+										<p:inputMask mask="(99)9999-9999"
+											value="#{mbFuncionario.funcionario.telRes}" />
 									</p:column>
 
 								</h:panelGrid>
@@ -93,13 +95,14 @@
 							<p:column>
 								<h:outputText value="CPF:" style="color:#000000;" />
 								<br />
-								<p:inputMask mask="999.999.99-99" value="#{mbFuncionario.funcionario.cpf}"
-									required="true" />
+								<p:inputMask mask="999.999.99-99"
+									value="#{mbFuncionario.funcionario.cpf}" required="true" />
 								<br />
 
 								<h:outputText value="RG:" style="color:#000000;" />
 								<br />
-								<p:inputMask mask="99.999.999-99"  value="#{mbFuncionario.funcionario.rg}" />
+								<p:inputMask mask="99.999.999-99"
+									value="#{mbFuncionario.funcionario.rg}" />
 								<br />
 
 								<h:panelGrid columns="2">
@@ -134,7 +137,8 @@
 								<h:selectOneMenu id="console"
 									value="#{mbFuncionario.funcionario.unidadeSaudes}">
 									<f:selectItems value="#{mbUnidadeSaude.unidadeSaudes}"
-										var="unidade" itemLabel="#{unidade.fantasia}" itemValue="#{unidade}" />
+										var="unidade" itemLabel="#{unidade.fantasia}"
+										itemValue="#{unidade}" />
 								</h:selectOneMenu>
 							</p:column>
 
@@ -149,8 +153,9 @@
 							<p:column>
 								<h:outputText value="CEP: " style="color:#000000;" />
 								<br />
-								<p:inputText maxlength="8" requiredMessage="Favor preencha o CEP" value="#{mbFuncionario.funcionario.cep}"
-									required="true">
+								<p:inputText maxlength="8"
+									requiredMessage="Favor preencha o CEP"
+									value="#{mbFuncionario.funcionario.cep}" required="true">
 									<p:ajax event="keyup" update="cidade, endereco, bairro, uf"
 										listener="#{mbFuncionario.buscaCep}" />
 								</p:inputText>
@@ -184,7 +189,7 @@
 									value="#{mbFuncionario.funcionario.bairro}" required="true"
 									id="bairro" size="30" />
 							</p:column>
-<!-- Adicionar aqui o campo de complemento -->
+							<!-- Adicionar aqui o campo de complemento -->
 							<p:column>
 								<h:outputText value="Cidade:" style="color:#000000;" />
 								<br />
@@ -229,42 +234,31 @@
 					<p:growl id="msgs" showDetail="true" />
 					<p:dataTable id="dataTable" var="linha" editable="true"
 						reflow="true" value="#{mbFuncionario.funcionarios}"
-						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+						widgetVar="tabelaFuncionario"
+						filteredValue="#{mbFuncionario.funcionariosFiltrados}"
+						emptyMessage="Não há funcionarios."
 						paginator="true" rows="10" style="margin-bottom:20px">
 
 						<p:ajax event="rowEdit" listener="#{mbFuncionario.editarLinha}"
 							update="tabView:form2:msgs" />
 
-						<f:facet name="{Exporters}">
-							<h:commandLink>
-								<p:graphicImage name="/demo/images/excel.png" width="24" />
-								<p:dataExporter type="xls" target="tbl" fileName="cars" />
-							</h:commandLink>
-
-							<h:commandLink>
-								<p:graphicImage name="/demo/images/pdf.png" width="24" />
-								<p:dataExporter type="pdf" target="tbl" fileName="cars" />
-							</h:commandLink>
-
-							<h:commandLink>
-								<p:graphicImage name="/demo/images/csv.png" width="24" />
-								<p:dataExporter type="csv" target="tbl" fileName="cars" />
-							</h:commandLink>
-
-							<h:commandLink>
-								<p:graphicImage name="/demo/images/xml.png" width="24" />
-								<p:dataExporter type="xml" target="tbl" fileName="cars" />
-							</h:commandLink>
+						<f:facet name="header">
+							<p:outputPanel>
+								<h:outputText value="Pesquisa em todos os campos:" />
+								<p:inputText id="globalFilter"
+									onkeyup="PF('tabelaFuncionario').filter()" style="width:150px"
+									placeholder="Digite a busca" />
+							</p:outputPanel>
 						</f:facet>
 
-						<p:column width="20">
+						<p:column width="20" filterBy="#{linha.cdFunc}" filterMatchMode="contains">
 							<f:facet name="header">
 								<h:outputText value="ID" />
 							</f:facet>
 							<h:outputText value="#{linha.cdFunc}" />
 						</p:column>
 
-						<p:column width="20" headerText="Usuario">
+						<p:column width="20" headerText="Usuario" filterBy="#{linha.login}" filterMatchMode="contains">
 							<p:cellEditor>
 
 								<f:facet name="output">
@@ -277,7 +271,7 @@
 							</p:cellEditor>
 						</p:column>
 
-						<p:column width="20" headerText="Nome">
+						<p:column width="20" headerText="Nome" filterBy="#{linha.nome}" filterMatchMode="contains">
 							<p:cellEditor>
 
 								<f:facet name="output">
@@ -316,30 +310,6 @@
 							styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
 					</p:confirmDialog>
 
-					<h3>Export Page Data Only</h3>
-					<h:commandLink>
-						<p:graphicImage name="/demo/images/excel.png" />
-						<p:dataExporter type="xls" target="tbl" fileName="cars"
-							pageOnly="true" />
-					</h:commandLink>
-
-					<h:commandLink>
-						<p:graphicImage name="/demo/images/pdf.png" />
-						<p:dataExporter type="pdf" target="tbl" fileName="cars"
-							pageOnly="true" />
-					</h:commandLink>
-
-					<h:commandLink>
-						<p:graphicImage name="/demo/images/csv.png" />
-						<p:dataExporter type="csv" target="tbl" fileName="cars"
-							pageOnly="true" />
-					</h:commandLink>
-
-					<h:commandLink>
-						<p:graphicImage name="/demo/images/xml.png" />
-						<p:dataExporter type="xml" target="tbl" fileName="cars"
-							pageOnly="true" />
-					</h:commandLink>
 				</h:form>
 			</p:tab>
 		</p:tabView>

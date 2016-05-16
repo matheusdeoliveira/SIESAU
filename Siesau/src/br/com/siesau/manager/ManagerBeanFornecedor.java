@@ -21,6 +21,7 @@ public class ManagerBeanFornecedor implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Fornecedor fornecedor;
 	private List<Fornecedor> fornecedores;
+	private List<Fornecedor> fornecedoresFiltrados;
 	private String[] uf = { "", "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RS", "SC", "SE", "SP", "TO" };
 	
 	
@@ -107,6 +108,14 @@ public class ManagerBeanFornecedor implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public List<Fornecedor> getFornecedoresFiltrados() {
+		return fornecedoresFiltrados;
+	}
+
+	public void setFornecedoresFiltrados(List<Fornecedor> fornecedoresFiltrados) {
+		this.fornecedoresFiltrados = fornecedoresFiltrados;
 	}
 
 }

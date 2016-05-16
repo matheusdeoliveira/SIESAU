@@ -32,6 +32,7 @@ public class ManagerBeanPaciente implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Paciente paciente;
 	private List<Paciente> pacientes;
+	private List<Paciente> pacientesFiltrados;
 	private String foto;
 
 	@PostConstruct
@@ -169,6 +170,14 @@ public class ManagerBeanPaciente implements Serializable {
 
 	public void setFilename(String filename) {
 		this.filename = filename;
+	}
+
+	public List<Paciente> getPacientesFiltrados() {
+		return pacientesFiltrados;
+	}
+
+	public void setPacientesFiltrados(List<Paciente> pacientesFiltrados) {
+		this.pacientesFiltrados = pacientesFiltrados;
 	}
 
 	

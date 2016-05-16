@@ -34,22 +34,22 @@
 					<p:panel id="dados_pessoais" header="Dados Pessoais"
 						style="background-color:#F0F4F9; color:#000000;">
 						<h:panelGrid columns="3" cellpadding="5">
-							<p:column  colspan="30" width="180"  >
+							<p:column colspan="30" width="180">
 								<p:outputPanel id="photo">
 									<p:graphicImage height="150px"
 										value="#{pageContext.servletContext.contextPath}/resources/fotos/#{mbPaciente.foto}"
-										rendered="#{not empty mbPaciente.foto}" />										
+										rendered="#{not empty mbPaciente.foto}" />
 								</p:outputPanel>
 								<p:commandButton value="Capturar Foto" type="button"
 									onclick="PF('webcan').show();" />
 
 								<p:dialog header="Fotagrafia" widgetVar="webcan" minHeight="40">
-																	
-								<p:photoCam widgetVar="pc" listener="#{mbPaciente.oncapture}"
-									update=":tabView:form1:photo" />
-								<p:commandButton type="button" value="Fotografar"
-									onclick="PF('pc').capture()" />
-								<p:growl></p:growl>
+
+									<p:photoCam widgetVar="pc" listener="#{mbPaciente.oncapture}"
+										update=":tabView:form1:photo" />
+									<p:commandButton type="button" value="Fotografar"
+										onclick="PF('pc').capture()" />
+									<p:growl></p:growl>
 								</p:dialog>
 							</p:column>
 							<p:column>
@@ -79,8 +79,9 @@
 
 										<h:outputText value="Cartão SUS: " style="color:#000000;" />
 										<br />
-										<p:inputText maxlength="15" value="#{mbPaciente.paciente.cartaoSus}"
-											required="true" size="20" />
+										<p:inputText maxlength="15"
+											value="#{mbPaciente.paciente.cartaoSus}" required="true"
+											size="20" />
 										<br />
 
 										<h:outputText value="Naturalidade: " style="color:#000000;" />
@@ -117,14 +118,14 @@
 									style="margin-top:-20px; color:#000000;" />
 								<br />
 
-								<p:inputMask mask="999.999.999-99" value="#{mbPaciente.paciente.cpf}" required="true"
-									size="30" />
+								<p:inputMask mask="999.999.999-99"
+									value="#{mbPaciente.paciente.cpf}" required="true" size="30" />
 								<br />
 
 								<h:outputText value="RG: " style="color:#000000;" />
 								<br />
-								<p:inputMask mask="99.999.999-9" value="#{mbPaciente.paciente.rg}" required="true"
-									size="30" />
+								<p:inputMask mask="99.999.999-9"
+									value="#{mbPaciente.paciente.rg}" required="true" size="30" />
 
 								<h:panelGrid columns="2">
 
@@ -167,7 +168,8 @@
 										<br />
 										<p:selectOneMenu value="#{mbPaciente.paciente.sexo}"
 											required="true">
-											<f:selectItem itemValue="" itemLabel="Escolha" noSelectionOption="true"></f:selectItem>
+											<f:selectItem itemValue="" itemLabel="Escolha"
+												noSelectionOption="true"></f:selectItem>
 											<f:selectItem itemValue="Masculino" itemLabel="Masculino"></f:selectItem>
 											<f:selectItem itemValue="Feminino" itemLabel="Feminino"></f:selectItem>
 										</p:selectOneMenu>
@@ -190,8 +192,7 @@
 										<h:outputText value="Tipo: " style="color:#000000;" />
 										<br />
 										<p:inputTextarea value="#{mbPaciente.paciente.tipoAlergia}"
-											 rows="2" cols="20" maxlength="500"
-											autoResize="false" />
+											rows="2" cols="20" maxlength="500" autoResize="false" />
 
 									</p:column>
 								</h:panelGrid>
@@ -246,7 +247,8 @@
 								<h:outputText value="CEP: " size="30" style="color:#000000;" />
 								<br />
 
-								<p:inputText maxlength="8" value="#{mbPaciente.paciente.cep}" required="true" />
+								<p:inputText maxlength="8" value="#{mbPaciente.paciente.cep}"
+									required="true" />
 							</p:column>
 
 
@@ -257,33 +259,33 @@
 								<p:selectOneMenu id="estado" value="#{mbPaciente.paciente.uf}"
 									style="width:143px">
 									<f:selectItem itemLabel="Selecione" itemValue="" />
-										<f:selectItem itemLabel="AC" itemValue="AC" />
-										<f:selectItem itemLabel="AL" itemValue="AL" />
-										<f:selectItem itemLabel="AM" itemValue="AM" />
-										<f:selectItem itemLabel="AP" itemValue="AP" />
-										<f:selectItem itemLabel="BA" itemValue="BA" />
-										<f:selectItem itemLabel="CE" itemValue="CE" />
-										<f:selectItem itemLabel="DF" itemValue="DF" />
-										<f:selectItem itemLabel="ES" itemValue="ES" />
-										<f:selectItem itemLabel="GO" itemValue="GO" />
-										<f:selectItem itemLabel="MA" itemValue="MA" />
-										<f:selectItem itemLabel="MG" itemValue="MG" />
-										<f:selectItem itemLabel="MS" itemValue="MS" />
-										<f:selectItem itemLabel="MT" itemValue="MT" />
-										<f:selectItem itemLabel="PA" itemValue="PA" />
-										<f:selectItem itemLabel="PB" itemValue="PB" />
-										<f:selectItem itemLabel="PE" itemValue="PE" />
-										<f:selectItem itemLabel="PI" itemValue="PI" />
-										<f:selectItem itemLabel="PR" itemValue="PR" />
-										<f:selectItem itemLabel="RJ" itemValue="RJ" />
-										<f:selectItem itemLabel="RN" itemValue="RN" />
-										<f:selectItem itemLabel="RO" itemValue="RO" />
-										<f:selectItem itemLabel="RR" itemValue="RR" />
-										<f:selectItem itemLabel="RS" itemValue="RS" />
-										<f:selectItem itemLabel="SC" itemValue="SC" />
-										<f:selectItem itemLabel="SE" itemValue="SE" />
-										<f:selectItem itemLabel="SP" itemValue="SP" />
-										<f:selectItem itemLabel="TO" itemValue="TO" />
+									<f:selectItem itemLabel="AC" itemValue="AC" />
+									<f:selectItem itemLabel="AL" itemValue="AL" />
+									<f:selectItem itemLabel="AM" itemValue="AM" />
+									<f:selectItem itemLabel="AP" itemValue="AP" />
+									<f:selectItem itemLabel="BA" itemValue="BA" />
+									<f:selectItem itemLabel="CE" itemValue="CE" />
+									<f:selectItem itemLabel="DF" itemValue="DF" />
+									<f:selectItem itemLabel="ES" itemValue="ES" />
+									<f:selectItem itemLabel="GO" itemValue="GO" />
+									<f:selectItem itemLabel="MA" itemValue="MA" />
+									<f:selectItem itemLabel="MG" itemValue="MG" />
+									<f:selectItem itemLabel="MS" itemValue="MS" />
+									<f:selectItem itemLabel="MT" itemValue="MT" />
+									<f:selectItem itemLabel="PA" itemValue="PA" />
+									<f:selectItem itemLabel="PB" itemValue="PB" />
+									<f:selectItem itemLabel="PE" itemValue="PE" />
+									<f:selectItem itemLabel="PI" itemValue="PI" />
+									<f:selectItem itemLabel="PR" itemValue="PR" />
+									<f:selectItem itemLabel="RJ" itemValue="RJ" />
+									<f:selectItem itemLabel="RN" itemValue="RN" />
+									<f:selectItem itemLabel="RO" itemValue="RO" />
+									<f:selectItem itemLabel="RR" itemValue="RR" />
+									<f:selectItem itemLabel="RS" itemValue="RS" />
+									<f:selectItem itemLabel="SC" itemValue="SC" />
+									<f:selectItem itemLabel="SE" itemValue="SE" />
+									<f:selectItem itemLabel="SP" itemValue="SP" />
+									<f:selectItem itemLabel="TO" itemValue="TO" />
 								</p:selectOneMenu>
 								<br />
 								<br />
@@ -306,22 +308,22 @@
 								<h:outputText value="Telefone Residencial:"
 									style="color:#000000;" />
 								<br />
-								<p:inputMask mask="(99)9999-9999" value="#{mbPaciente.paciente.telRes}"
-									required="true" />
+								<p:inputMask mask="(99)9999-9999"
+									value="#{mbPaciente.paciente.telRes}" required="true" />
 							</p:column>
 
 							<p:column>
 								<h:outputText value="Telefone Celular:" style="color:#000000;" />
 								<br />
-								<p:inputMask mask="(99)99999-9999" value="#{mbPaciente.paciente.telCel}"
-									required="true" />
+								<p:inputMask mask="(99)99999-9999"
+									value="#{mbPaciente.paciente.telCel}" required="true" />
 							</p:column>
 						</h:panelGrid>
 
 						<h:outputText value="Email: " style="color:#000000;" />
 						<br />
 						<p:inputText value="#{mbPaciente.paciente.email}" required="true"
-							size="50" type="email"/>
+							size="50" type="email" />
 						<br />
 
 						<h:outputText value="Observção: " style="color:#000000;" />
@@ -353,42 +355,30 @@
 					<p:growl id="msgs" showDetail="true" />
 					<p:dataTable id="dataTable" var="linha" editable="true"
 						reflow="true" value="#{mbPaciente.pacientes}"
-						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+						widgetVar="tabelaPacientes"
+						filteredValue="#{mbPaciente.pacientesFiltrados}"
+						emptyMessage="Não há pacientes."
 						paginator="true" rows="10" style="margin-bottom:20px">
 
 						<p:ajax event="rowEdit" listener="#{mbPaciente.editarLinha}"
 							update="tabView:form2:msgs" />
 
-						<f:facet name="{Exporters}">
-							<h:commandLink>
-								<p:graphicImage name="/demo/images/excel.png" width="24" />
-								<p:dataExporter type="xls" target="tbl" fileName="cars" />
-							</h:commandLink>
-
-							<h:commandLink>
-								<p:graphicImage name="/demo/images/pdf.png" width="24" />
-								<p:dataExporter type="pdf" target="tbl" fileName="cars" />
-							</h:commandLink>
-
-							<h:commandLink>
-								<p:graphicImage name="/demo/images/csv.png" width="24" />
-								<p:dataExporter type="csv" target="tbl" fileName="cars" />
-							</h:commandLink>
-
-							<h:commandLink>
-								<p:graphicImage name="/demo/images/xml.png" width="24" />
-								<p:dataExporter type="xml" target="tbl" fileName="cars" />
-							</h:commandLink>
+						<f:facet name="header">
+							<p:outputPanel>
+								<h:outputText value="Pesquisa em todos os campos:" />
+								<p:inputText id="globalFilter"
+									onkeyup="PF('tabelaPacientes').filter()" style="width:150px"
+									placeholder="Digite a busca" />
+							</p:outputPanel>
 						</f:facet>
 
-
-						<p:column width="20" headerText="SUS">
+						<p:column width="20" headerText="SUS" filterBy="#{linha.cartaoSus}" filterMatchMode="contains">
 
 							<h:outputText value="#{linha.cartaoSus}" />
 
 						</p:column>
 
-						<p:column width="20" headerText="Nome do Paciente">
+						<p:column width="20" headerText="Nome do Paciente" filterBy="#{linha.nome}" filterMatchMode="contains">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{linha.nome}" />
@@ -399,7 +389,7 @@
 							</p:cellEditor>
 						</p:column>
 
-						<p:column width="20" headerText="Telefones">
+						<p:column width="20" headerText="Telefones" filterBy="#{linha.telCel}" filterMatchMode="contains">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{linha.telCel}" />
@@ -435,33 +425,6 @@
 							styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
 					</p:confirmDialog>
 
-
-
-
-					<h3>Export Page Data Only</h3>
-					<h:commandLink>
-						<p:graphicImage name="/demo/images/excel.png" />
-						<p:dataExporter type="xls" target="tbl" fileName="cars"
-							pageOnly="true" />
-					</h:commandLink>
-
-					<h:commandLink>
-						<p:graphicImage name="/demo/images/pdf.png" />
-						<p:dataExporter type="pdf" target="tbl" fileName="cars"
-							pageOnly="true" />
-					</h:commandLink>
-
-					<h:commandLink>
-						<p:graphicImage name="/demo/images/csv.png" />
-						<p:dataExporter type="csv" target="tbl" fileName="cars"
-							pageOnly="true" />
-					</h:commandLink>
-
-					<h:commandLink>
-						<p:graphicImage name="/demo/images/xml.png" />
-						<p:dataExporter type="xml" target="tbl" fileName="cars"
-							pageOnly="true" />
-					</h:commandLink>
 				</h:form>
 
 			</p:tab>

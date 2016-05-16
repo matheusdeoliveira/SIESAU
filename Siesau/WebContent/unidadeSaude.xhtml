@@ -22,106 +22,118 @@
 	<div
 		style="position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px;">
 
-<h:form id="form">
+		<p:growl id="msgs" showDetail="true" />
 
- <p:growl id="msgs" showDetail="true" />
+		<p:tabView id="tabView"
+			style="margin-top:10px;position:relative; width:1112px;background-color:#E8E8E8;">
 
-  <p:tabView style="margin-top:10px;position:relative; width:1112px;background-color:#E8E8E8;">
+			<p:tab title="Unidade de Saúde" style="position:relative;">
 
-   <p:tab title="Unidade de Saúde" style="position:relative;">			
+				<h:form id="form1">
 
-	<h:form id="form1">
+					<p:panel id="dados_gerais" header="Dados Gerais"
+						style="background-color:#F0F4F9; color:#000000;">
+						<h:panelGrid STYLE="background-color:#F0F4F9;" columns="3"
+							layout="grid">
+							<p:row>
+								<h:outputText value="Nome Unidade de Saúde:"
+									style="color:#000000;" />
+								<br />
 
-           <p:panel id="dados_gerais" header="Dados Gerais" style="background-color:#F0F4F9; color:#000000;">
-                        <h:panelGrid STYLE="background-color:#F0F4F9;" columns="3" layout="grid">
-                            <p:row>
-                                <h:outputText value="Nome Unidade de Saúde:" style="color:#000000;"/>
-                                <br />
-                               
-                                    <p:inputText value="#{mbUnidadeSaude.unidadeSaude.fantasia}"
-                                        required="true" size="60"/>
-                                
-                            </p:row>
+								<p:inputText value="#{mbUnidadeSaude.unidadeSaude.fantasia}"
+									required="true" size="60" />
 
-                            <p:row>
-                                <h:outputText value="CNPJ:" style="color:#000000;"/>
-                                <br />
-                                <p:inputText value="#{mbUnidadeSaude.unidadeSaude.cnpj}"
-                                    required="true" size="50"/>
-                            </p:row>
-                           
-                            <p:row>
-                                <h:outputText value="Situação:" style="color:#000000;"/>
+							</p:row>
+
+							<p:row>
+								<h:outputText value="CNPJ:" style="color:#000000;" />
+								<br />
+								<p:inputText value="#{mbUnidadeSaude.unidadeSaude.cnpj}"
+									required="true" size="50" />
+							</p:row>
+
+							<p:row>
+								<h:outputText value="Situação:" style="color:#000000;" />
 								<br />
 								<p:selectOneMenu value="#{mbUnidadeSaude.unidadeSaude.ativo}"
 									required="true" style="width:125px">
 									<f:selectItem itemValue="selecione" itemLabel="Selecione"></f:selectItem>
 									<f:selectItem itemValue="true" itemLabel="Ativa"></f:selectItem>
 									<f:selectItem itemValue="false" itemLabel="Inativa"></f:selectItem>
-									
-									
+
+
 								</p:selectOneMenu>
-                            </p:row>
+							</p:row>
 
-                            
 
-                        </h:panelGrid>
-                      
-                      </p:panel>
-                      				
-				
-		<p:panel id="end" header="Endereço"
+
+						</h:panelGrid>
+
+					</p:panel>
+
+
+					<p:panel id="end" header="Endereço"
 						style="width:500px; margin-top:20px; background-color:#F0F4F9;color:#000000;">
 						<h:outputText value="Rua: " style="color:#000000;" />
 						<br />
-						<p:inputText id="endereco" value="#{mbUnidadeSaude.unidadeSaude.endereco}"
-							required="true" size="60" />
-				
+						<p:inputText id="endereco"
+							value="#{mbUnidadeSaude.unidadeSaude.endereco}" required="true"
+							size="60" />
+
 
 						<h:panelGrid columns="2">
-						<p:column><h:outputText value="Número: " style="color:#000000;"/>
-						<br />
-						<p:inputText value="#{mbUnidadeSaude.unidadeSaude.numero}" required="true"
-							size="15" />
-						</p:column>
-						
-						<p:column>
-						<h:outputText value="Complemento: " style="color:#000000;" />
-						<br />
-						<p:inputText value="#{mbUnidadeSaude.unidadeSaude.complemento}"
-							required="true" size="30" />
-						</p:column>
+							<p:column>
+								<h:outputText value="Número: " style="color:#000000;" />
+								<br />
+								<p:inputText value="#{mbUnidadeSaude.unidadeSaude.numero}"
+									required="true" size="15" />
+							</p:column>
+
+							<p:column>
+								<h:outputText value="Complemento: " style="color:#000000;" />
+								<br />
+								<p:inputText value="#{mbUnidadeSaude.unidadeSaude.complemento}"
+									required="true" size="30" />
+							</p:column>
 						</h:panelGrid>
-						
+
 
 						<h:outputText value="Bairro" style="color:#000000;" />
 						<br />
-						<p:inputText id="bairro" value="#{mbUnidadeSaude.unidadeSaude.bairro}" required="true"
-							size="40" /><br/>
-
-						 <h:panelGrid columns="2">
-                     
-                     <p:column> 	
-                    
-                     <h:outputText value="Cidade:"  style="color:#000000;"/>
+						<p:inputText id="bairro"
+							value="#{mbUnidadeSaude.unidadeSaude.bairro}" required="true"
+							size="40" />
 						<br />
-						<p:inputText id="cidade" value="#{mbUnidadeSaude.unidadeSaude.cidade}" required="true"
-							size="30" /><br />
-								                    
-                     	
-						<h:outputText value="CEP: " size="30" style="color:#000000;" /><br/>
-						
-						<p:inputText value="#{mbUnidadeSaude.unidadeSaude.cep}" required="true" >
-						<p:ajax event="keyup" update="cidade, endereco, bairro"
+
+						<h:panelGrid columns="2">
+
+							<p:column>
+
+								<h:outputText value="Cidade:" style="color:#000000;" />
+								<br />
+								<p:inputText id="cidade"
+									value="#{mbUnidadeSaude.unidadeSaude.cidade}" required="true"
+									size="30" />
+								<br />
+
+
+								<h:outputText value="CEP: " size="30" style="color:#000000;" />
+								<br />
+
+								<p:inputText value="#{mbUnidadeSaude.unidadeSaude.cep}"
+									required="true">
+									<p:ajax event="keyup" update="cidade, endereco, bairro"
 										listener="#{mbUnidadeSaude.buscaCep}" />
-						</p:inputText>
-                    </p:column>
-								
-                       
-								<p:column>
-									<p:outputLabel for="estado" value="Estado:" style="color:#000000;"/><br/>
-								<p:selectOneMenu id="estado" value="#{mbUnidadeSaude.unidadeSaude.uf}"
-									style="width:143px">
+								</p:inputText>
+							</p:column>
+
+
+							<p:column>
+								<p:outputLabel for="estado" value="Estado:"
+									style="color:#000000;" />
+								<br />
+								<p:selectOneMenu id="estado"
+									value="#{mbUnidadeSaude.unidadeSaude.uf}" style="width:143px">
 									<f:selectItem itemLabel="Selecione" itemValue="" />
 									<f:selectItem itemValue="AC" itemLabel="Acre" />
 									<f:selectItem itemValue="AL" itemLabel="Alagoas" />
@@ -151,50 +163,142 @@
 									<f:selectItem itemValue="SP" itemLabel="Sao Paulo" />
 									<f:selectItem itemValue="TO" itemLabel="Tocantins" />
 								</p:selectOneMenu>
-									<br />
-									<br />
-									<br />
-									
-								 </p:column>
-					
-						
-					              
-								</h:panelGrid>
-						
-						
+								<br />
+								<br />
+								<br />
+
+							</p:column>
+
+
+
+						</h:panelGrid>
+
+
 					</p:panel>
-					
-					<p:panel id="cont" header="Contato"  
+
+					<p:panel id="cont" header="Contato"
 						style="postion:relative;float:right;width:500px;height:315px;margin-top:-320px;background-color:#F0F4F9;">
 						<h:panelGrid columns="2">
-						<p:column>
-						<h:outputText value="Telefone:" style="color:#000000;" /><br/>
-						<p:inputText value="#{mbUnidadeSaude.unidadeSaude.tel}" required="true" />
-						</p:column>
-						
+							<p:column>
+								<h:outputText value="Telefone:" style="color:#000000;" />
+								<br />
+								<p:inputText value="#{mbUnidadeSaude.unidadeSaude.tel}"
+									required="true" />
+							</p:column>
+
 						</h:panelGrid>
-						
-						<h:outputText value="Email: " style="color:#000000;" /><br/>
-						<p:inputText value="#{mbUnidadeSaude.unidadeSaude.email}" required="true" size="50" /><br/>
+
+						<h:outputText value="Email: " style="color:#000000;" />
+						<br />
+						<p:inputText value="#{mbUnidadeSaude.unidadeSaude.email}"
+							required="true" size="50" />
+						<br />
 					</p:panel>
-             				
-				<br/>
-				  
-				  <p:panel id="pos_botao" style="padding-bottom:15px;background-color:#E8E8E8; height:20;position: relative; max-width: 1120px; margin-right: auto; margin-left: auto;">
-					
-					<p:commandButton value="Limpar" style="margin-top:-20;float:right" type="reset" />	
-					
-					<p:commandButton value="Salvar" style="margin-top:0;float:right"
-					action="#{mbUnidadeSaude.salvar}" ajax="true" update=":form" />
-				</p:panel>
+
+					<br />
+
+					<p:panel id="pos_botao"
+						style="padding-bottom:15px;background-color:#E8E8E8; height:20;position: relative; max-width: 1120px; margin-right: auto; margin-left: auto;">
+
+						<p:commandButton value="Limpar" style="margin-top:-20;float:right"
+							type="reset" />
+
+						<p:commandButton value="Salvar" style="margin-top:0;float:right"
+							action="#{mbUnidadeSaude.salvar}" ajax="true" update="form1" />
+					</p:panel>
+
+				</h:form>
+			</p:tab>
+
+			<p:tab title="Consulta">
+				<h:form id="form2">
+					<p:growl id="msgs" showDetail="true" />
+					<p:dataTable id="dataTable" var="linha" editable="true"
+						reflow="true" value="#{mbUnidadeSaude.unidadeSaudes}"
+						widgetVar="tabelaUnidadeSaude"
+						filteredValue="#{mbUnidadeSaude.unidadeSaudesFiltradas}"
+						emptyMessage="Não há Unidades de Saúde."
 						
-	         </h:form>
-	     </p:tab>
-		
+						paginator="true" rows="10" style="margin-bottom:20px">
+
+						<p:ajax event="rowEdit" listener="#{mbUnidadeSaude.editarLinha}"
+							update="tabView:form2:msgs" />
+
+						<f:facet name="header">
+							<p:outputPanel>
+								<h:outputText value="Pesquisa em todos os campos:" />
+								<p:inputText id="globalFilter"
+									onkeyup="PF('tabelaUnidadeSaude').filter()" style="width:150px"
+									placeholder="Digite a busca" />
+							</p:outputPanel>
+						</f:facet>
+
+						<p:column width="20" filterBy="#{linha.cdUnidsaude}"
+							filterMatchMode="contains">
+							<f:facet name="header">
+								<h:outputText value="ID" />
+							</f:facet>
+							<h:outputText value="#{linha.cdUnidsaude}" />
+						</p:column>
+
+						<p:column width="20" headerText="Usuario"
+							filterBy="#{linha.fantasia}" filterMatchMode="contains">
+							<p:cellEditor>
+
+								<f:facet name="output">
+									<h:outputText value="#{linha.fantasia}" />
+								</f:facet>
+
+								<f:facet name="input">
+									<p:inputText value="#{linha.fantasia}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column width="20" headerText="Nome Fantasia"
+							filterBy="#{linha.fantasia}" filterMatchMode="contains">
+							<p:cellEditor>
+
+								<f:facet name="output">
+									<h:outputText value="#{linha.fantasia}" />
+								</f:facet>
+
+								<f:facet name="input">
+									<p:inputText value="#{linha.fantasia}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+
+						<p:column headerText="Exclusão" width="5"
+							styleClass="text-align:center">
+							<p:commandButton action="#{mbUnidadeSaude.excluir}"
+								update=":tabView:form2" process="@this"
+								icon="ui-icon-trash" ajax="true">
+								<f:setPropertyActionListener value="#{linha}"
+									target="#{mbUnidadeSaude.unidadeSaude}"></f:setPropertyActionListener>
+								<p:confirm icon="ui-icon-alert" message="Deseja Excluir ?"
+									header="Confirma?" />
+							</p:commandButton>
+						</p:column>
+
+						<p:column width="20" headerText="Edição">
+							<p:rowEditor />
+						</p:column>
+					</p:dataTable>
+
+
+					<p:confirmDialog appendTo="@(body)" global="true">
+						<p:commandButton process="@this" value="Sim"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
+						<p:commandButton process="@this" value="Não"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
+					</p:confirmDialog>
+
+				</h:form>
+			</p:tab>
 		</p:tabView>
-	</h:form>
-		
-</div>
+	</div>
 
 	<ui:insert name="footer">
 		<ui:include src="Template/footer.jsf" />

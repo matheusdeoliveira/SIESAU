@@ -35,6 +35,7 @@ public class ManagerBeanAtendimento implements Serializable {
 
 	private Atendimento atendimento;
 	private List<Atendimento> atendimentos;
+	private List<Atendimento> atendimentosFiltrados;
 
 	private Paciente paciente;
 
@@ -250,4 +251,13 @@ public class ManagerBeanAtendimento implements Serializable {
 	public void setIdade(int idade) {
 		this.idade = idade;
 	}
+
+	public List<Atendimento> getAtendimentosFiltrados() {
+		return atendimentosFiltrados;
+	}
+
+	public void setAtendimentosFiltrados(List<Atendimento> atendimentosFiltrados) {
+		this.atendimentosFiltrados = atendimentosFiltrados;
+	}
+	
 }

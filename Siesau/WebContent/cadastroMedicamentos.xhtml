@@ -109,48 +109,36 @@
 
 			<p:tab title="Consulta de medicamentos">
 				<h:form id="form_con">
-					<p:dataTable id="tbl" var="linha"
+					<p:dataTable id="tbl" var="linha" widgetVar="tabelaMedicamentos"
 						value="#{mbMedicamento.medicamentos}"
-						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+						filteredValue="#{mbMedicamento.medicamentosFiltrados}"
+						emptyMessage="Não há medicamentos."
 						paginator="true" rows="10" style="margin-bottom:20px">
 
-						<f:facet name="{Exporters}">
-							<h:commandLink>
-								<p:graphicImage name="/demo/images/excel.png" width="24" />
-								<p:dataExporter type="xls" target="tbl" fileName="cars" />
-							</h:commandLink>
-
-							<h:commandLink>
-								<p:graphicImage name="/demo/images/pdf.png" width="24" />
-								<p:dataExporter type="pdf" target="tbl" fileName="cars" />
-							</h:commandLink>
-
-							<h:commandLink>
-								<p:graphicImage name="/demo/images/csv.png" width="24" />
-								<p:dataExporter type="csv" target="tbl" fileName="cars" />
-							</h:commandLink>
-
-							<h:commandLink>
-								<p:graphicImage name="/demo/images/xml.png" width="24" />
-								<p:dataExporter type="xml" target="tbl" fileName="cars" />
-							</h:commandLink>
+						<f:facet name="header">
+							<p:outputPanel>
+								<h:outputText value="Pesquisa em todos os campos:" />
+								<p:inputText id="globalFilter"
+									onkeyup="PF('tabelaMedicamentos').filter()" style="width:150px"
+									placeholder="Digite a busca" />
+							</p:outputPanel>
 						</f:facet>
 
-						<p:column>
+						<p:column filterBy="#{linha.nomeRef}" filterMatchMode="contains">
 							<f:facet name="header">
 								<h:outputText value="Nome do Medicamento" />
 							</f:facet>
 							<h:outputText value="#{linha.nomeRef}" />
 						</p:column>
 
-						<p:column>
+						<p:column filterBy="#{linha.forma}" filterMatchMode="contains">
 							<f:facet name="header">
 								<h:outputText value="Medicamento" />
 							</f:facet>
 							<h:outputText value="#{linha.forma}" />
 						</p:column>
 
-						<p:column>
+						<p:column filterBy="#{linha.fabricante.fantasia}" filterMatchMode="contains">
 							<f:facet name="header">
 								<h:outputText value="Nome do Laboratório" />
 							</f:facet>
@@ -172,42 +160,8 @@
 							</p:commandButton>
 						</p:column>
 
-
-
 					</p:dataTable>
 
-					<p:confirmDialog appendTo="@(body)" global="true">
-						<p:commandButton process="@this" value="Sim"
-							styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
-						<p:commandButton process="@this" value="Não"
-							styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
-					</p:confirmDialog>
-
-
-					<h3>Export Page Data Only</h3>
-					<h:commandLink>
-						<p:graphicImage name="/demo/images/excel.png" />
-						<p:dataExporter type="xls" target="tbl" fileName="cars"
-							pageOnly="true" />
-					</h:commandLink>
-
-					<h:commandLink>
-						<p:graphicImage name="/demo/images/pdf.png" />
-						<p:dataExporter type="pdf" target="tbl" fileName="cars"
-							pageOnly="true" />
-					</h:commandLink>
-
-					<h:commandLink>
-						<p:graphicImage name="/demo/images/csv.png" />
-						<p:dataExporter type="csv" target="tbl" fileName="cars"
-							pageOnly="true" />
-					</h:commandLink>
-
-					<h:commandLink>
-						<p:graphicImage name="/demo/images/xml.png" />
-						<p:dataExporter type="xml" target="tbl" fileName="cars"
-							pageOnly="true" />
-					</h:commandLink>
 				</h:form>
 			</p:tab>
 		</p:tabView>

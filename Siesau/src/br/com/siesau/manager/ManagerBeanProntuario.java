@@ -9,8 +9,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.event.FlowEvent;
-
 import br.com.siesau.entity.Atendimento;
 import br.com.siesau.entity.Doenca;
 import br.com.siesau.entity.Exame;
@@ -19,6 +17,7 @@ import br.com.siesau.entity.Laudo;
 import br.com.siesau.entity.Medicamento;
 import br.com.siesau.entity.Paciente;
 import br.com.siesau.entity.Receita;
+import br.com.siesau.entity.SituacaoAtend;
 import br.com.siesau.persistence.AtendimentoDao;
 import br.com.siesau.persistence.DoencaDao;
 import br.com.siesau.persistence.ExameDao;
@@ -42,10 +41,11 @@ public class ManagerBeanProntuario implements Serializable {
 	private Laudo laudo;
 	private Doenca doenca;
 	private Atendimento atendimento;
-	private Boolean skip;
+	private SituacaoAtend situacao;
 
 	@PostConstruct
 	public void init() {
+		situacao = new SituacaoAtend();
 		paciente = new Paciente();
 		receita = new Receita();
 		medicamento = new Medicamento();
@@ -54,7 +54,6 @@ public class ManagerBeanProntuario implements Serializable {
 		laudo = new Laudo();
 		doenca = new Doenca();
 		atendimento = new Atendimento();
-		skip = false;
 	}
 
 	public void buscaPaciente() {
@@ -84,59 +83,76 @@ public class ManagerBeanProntuario implements Serializable {
 		}
 	}
 
-	
+	public void salvarReceita() {
+		FacesContext fc = FacesContext.getCurrentInstance();
 
-	public void salvar(){
-		FacesContext fc= FacesContext.getCurrentInstance();
-		
 		try {
-			
-			
-			atendimento = new AtendimentoDao(new Atendimento()).pesquisaCodigoAtendimento(campoBusca);
-			atendimento.getSituacaoAtend().setCdSitatend(3);		
-			
 			receita.setAtendimento(atendimento);
 			receita.setData(new Date());
-			exame.setData(new Date());
 			
 			new ReceitaDao(new Receita()).salva(receita);
-			new ExameDao(new Exame()).salva(exame);
-			new LaudoDao(new Laudo()).salva(laudo);
-			new DoencaDao(new Doenca()).salva(doenca);
-			
-			fc.addMessage("form1", new FacesMessage("Atendimento " + atendimento.getCdAtend() + " finalizado."));
-			
-
-			atendimento = new Atendimento();
-			doenca = new Doenca();
-			funcionario = new Funcionario();
-			laudo = new Laudo();
-			receita = new Receita();
-			exame = new Exame();
+			fc.addMessage("form1", new FacesMessage("Receita " + receita.getCdReceita() + " salva."));
 		} catch (Exception e) {
+			fc.addMessage("form1", new FacesMessage("Erro: " + e.getMessage() + "."));
+			e.printStackTrace();
+		}
+		receita = new Receita();
+	}
+
+	public void salvarExame() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+
+		try {
+			exame.setData(new Date());
+			new ExameDao(new Exame()).salva(exame);
+			fc.addMessage("form_exames", new FacesMessage("Exame " + exame.getCdExame() + " salvo."));
+		} catch (Exception e) {
+			fc.addMessage("form_exames", new FacesMessage("Erro: " + e.getMessage() + "."));
 			e.printStackTrace();
 		}
 	}
-	
-		public String onFlowProcess(FlowEvent event) {
-        if(skip) {
-            skip = false;   
-            return "confirm";
-        }
-        else {
-            return event.getNewStep();
-        }
-    }
-		
-		
-	
-	public Boolean getSkip() {
-			return skip;
-		}
 
-		public void setSkip(Boolean skip) {
-			this.skip = skip;
+	public void salvarLaudo() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+
+		try {
+			new LaudoDao(new Laudo()).salva(laudo);
+			fc.addMessage("form_laudo", new FacesMessage("Laudo " + laudo.getCdLaudo() + " salvo."));
+
+		} catch (Exception e) {
+			fc.addMessage("form_laudo", new FacesMessage("Erro: " + e.getMessage() + "."));
+			e.printStackTrace();
 		}
+	}
+
+	public void salvarDoenca() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+
+		try {
+			new DoencaDao(new Doenca()).salva(doenca);
+			fc.addMessage("form_laudo", new FacesMessage("Doenca " + doenca.getNome() + " salva."));
+		} catch (Exception e) {
+			fc.addMessage("form_doenca", new FacesMessage("Erro: " + e.getMessage() + "."));
+			e.printStackTrace();
+		}
+	}
+
+	public void finalizaAtendimento(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+
+		try{
+			atendimento = new AtendimentoDao(new Atendimento()).pesquisaCodigoAtendimento(campoBusca);
+			situacao.setCdSitatend(3);
+			atendimento.setSituacaoAtend(situacao);;		
+			
+			new AtendimentoDao(new Atendimento()).atualiza(atendimento);
+			fc.addMessage("form1", new FacesMessage("Atendimento " + atendimento.getCdAtend() + " finalizado."));
+		}catch(Exception e){
+			fc.addMessage("form1", new FacesMessage("Erro : " + e.getMessage()));
+		}
+		init();
+		campoBusca = 0;
+	}
 
 	public Paciente getPaciente() {
 		return paciente;
