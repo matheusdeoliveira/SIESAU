@@ -2,6 +2,7 @@ package br.com.siesau.manager;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -42,6 +43,7 @@ public class ManagerBeanProntuario implements Serializable {
 	private Doenca doenca;
 	private Atendimento atendimento;
 	private SituacaoAtend situacao;
+	private List<Atendimento> atendimentosPorEspecialidade;
 
 	@PostConstruct
 	public void init() {
@@ -54,6 +56,8 @@ public class ManagerBeanProntuario implements Serializable {
 		laudo = new Laudo();
 		doenca = new Doenca();
 		atendimento = new Atendimento();
+		
+		atendimentosPorEspecialidade = new AtendimentoDao(new Atendimento()).listaPorEspecialidade(funcionario);
 	}
 
 	public void buscaPaciente() {
@@ -254,5 +258,23 @@ public class ManagerBeanProntuario implements Serializable {
 	public void setIdade(int idade) {
 		this.idade = idade;
 	}
+
+	public SituacaoAtend getSituacao() {
+		return situacao;
+	}
+
+	public void setSituacao(SituacaoAtend situacao) {
+		this.situacao = situacao;
+	}
+
+	public List<Atendimento> getAtendimentosPorEspecialidade() {
+		return atendimentosPorEspecialidade;
+	}
+
+	public void setAtendimentosPorEspecialidade(List<Atendimento> atendimentosPorEspecialidade) {
+		this.atendimentosPorEspecialidade = atendimentosPorEspecialidade;
+	}
+	
+	
 
 }
