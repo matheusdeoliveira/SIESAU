@@ -20,6 +20,7 @@ public class ManagerBeanFornecedor implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Fornecedor fornecedor;
+	private Fornecedor selecionado;
 	private List<Fornecedor> fornecedores;
 	private String[] uf = { "", "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RS", "SC", "SE", "SP", "TO" };
 	
@@ -35,6 +36,7 @@ public class ManagerBeanFornecedor implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
 
 		try {
+			fornecedor.setAtivo(true);
 			new FornecedoreDao(new Fornecedor()).salva(fornecedor);
 			fc.addMessage("form1", new FacesMessage("Fornecedor " + fornecedor.getRazSocial() + " salvo com sucesso"));
 			fornecedor = new Fornecedor();
@@ -62,12 +64,10 @@ public class ManagerBeanFornecedor implements Serializable {
 		}
 	}
 
-	public void editarLinha(RowEditEvent row) {
+	public void editar() {
 			FacesContext fc = FacesContext.getCurrentInstance();
 		try {
 			
-			Fornecedor selecionado = (Fornecedor) row.getObject();
-
 			new FornecedoreDao(new Fornecedor()).atualiza(selecionado);
 			fc.addMessage("form2", new FacesMessage("Fornecedor " + selecionado.getRazSocial() + " editado"));
 			fornecedores = new FornecedoreDao(new Fornecedor()).lista();
@@ -108,5 +108,15 @@ public class ManagerBeanFornecedor implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	public Fornecedor getSelecionado() {
+		return selecionado;
+	}
+
+	public void setSelecionado(Fornecedor selecionado) {
+		this.selecionado = selecionado;
+	}
+	
+	
 
 }

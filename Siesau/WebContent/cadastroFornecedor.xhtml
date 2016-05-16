@@ -2,338 +2,491 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:p="http://primefaces.org/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 </h:head>
 
-<h:body style=" height: 100%; margin:0px; border:0; background-color:#E8E8E8;">
-    <ui:insert name="header">
-        <ui:include src="Template/header.jsf" />
-    </ui:insert>
+<h:body
+	style=" height: 100%; margin:0px; border:0; background-color:#E8E8E8;">
+	<ui:insert name="header">
+		<ui:include src="Template/header.jsf" />
+	</ui:insert>
 
-    <ui:insert name="menu">
-        <ui:include src="Template/menu.jsf" />
-    </ui:insert>
-    <div
-        style="min-height: 100%;position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px;">
+	<ui:insert name="menu">
+		<ui:include src="Template/menu.jsf" />
+	</ui:insert>
+	<div
+		style="min-height: 100%; position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px;">
 
-        <p:tabView id="tabView"
-            style="margin-top:10px;position:relative; width:1112px;background-color:#E8E8E8;">
-            <p:tab title="Cadastro de Fornecedor" style="position:relative;">
-                
-                    <h:form id="form1">
-                    
-                    <p:panel id="dados_gerais" header="Dados Gerais" style="background-color:#F0F4F9; color:#000000;">
-                        <h:panelGrid columns="3" layout="grid">
-                            <p:row>
-                                <h:outputText value="Razão social:" style="color:#000000;"/>
-                                <br />
-                                <p:column>
-                                    <p:inputText value="#{mbFornecedor.fornecedor.razSocial}"
-                                        required="true"  size="60" />
-                                </p:column>
-                            </p:row>
+		<p:tabView id="tabView"
+			style="margin-top:10px;position:relative; width:1112px;background-color:#E8E8E8;">
+			<p:tab title="Cadastro de Fornecedor" style="position:relative;">
 
-                            <p:row>
-                                <h:outputText value="Nome fantasia:" style="color:#000000;"/>
-                                <br />
-                                <p:inputText value="#{mbFornecedor.fornecedor.fantasia}"
-                                    required="true" size="60"/>
-                            </p:row>
-                         </h:panelGrid>
-                            <h:panelGrid columns="3">
-                           
-                            <p:column>
-                            <p:row>
-                                <h:outputText value="CNPJ:" style="color:#000000;"/>
-                                <br />
-                                <p:inputText value="#{mbFornecedor.fornecedor.cnpj}"
-                                    required="true" size="50"/>
-                            </p:row>
-                            </p:column>
-                          
-                           
-                           <p:column>
-                            <p:row>
-                                <h:outputText value="Situação:" style="color:#000000;"/>
+				<h:form id="form1">
+
+					<p:panel id="dados_gerais" header="Dados Gerais"
+						style="background-color:#F0F4F9; color:#000000;">
+						<h:panelGrid columns="3" layout="grid">
+							<p:row>
+								<h:outputText value="Razão social:" style="color:#000000;" />
 								<br />
-								<p:selectOneMenu value="#{mbFornecedor.fornecedor.ativo}"
-									required="true" >
-									<f:selectItem itemValue="selecione" itemLabel="Selecione" noSelectionOption="true"></f:selectItem>
-									<f:selectItem itemValue="true" itemLabel="Ativo"></f:selectItem>
-									<f:selectItem itemValue="false" itemLabel="Inativo"></f:selectItem>
-									
-									
-								</p:selectOneMenu>
-                            </p:row>
-                            </p:column>
-                        </h:panelGrid>
-                            
+								<p:column>
+									<p:inputText value="#{mbFornecedor.fornecedor.razSocial}"
+										required="true" size="60" />
+								</p:column>
+							</p:row>
 
-                            
-                      </p:panel>
-               
-                
-                
-			<p:panel id="end" header="Endereço"
+							<p:row>
+								<h:outputText value="Nome fantasia:" style="color:#000000;" />
+								<br />
+								<p:inputText value="#{mbFornecedor.fornecedor.fantasia}"
+									required="true" size="60" />
+							</p:row>
+						</h:panelGrid>
+						<h:panelGrid columns="3">
+
+							<p:column>
+								<p:row>
+									<h:outputText value="CNPJ:" style="color:#000000;" />
+									<br />
+									<p:inputMask mask="99.999.999/9999-99"
+										value="#{mbFornecedor.fornecedor.cnpj}" required="true"
+										size="50" />
+								</p:row>
+							</p:column>
+
+
+							<p:column>
+								<p:row>
+									<h:outputText value="Situação:" style="color:#000000;" />
+									<br />
+									<p:selectOneMenu value="#{mbFornecedor.fornecedor.ativo}"
+										required="true">
+										<f:selectItem itemValue="selecione" itemLabel="Selecione"
+											noSelectionOption="true"></f:selectItem>
+										<f:selectItem itemValue="true" itemLabel="Ativo"></f:selectItem>
+										<f:selectItem itemValue="false" itemLabel="Inativo"></f:selectItem>
+
+
+									</p:selectOneMenu>
+								</p:row>
+							</p:column>
+						</h:panelGrid>
+
+
+
+					</p:panel>
+
+
+
+					<p:panel id="end" header="Endereço"
 						style="width:500px; margin-top:20px; background-color:#F0F4F9;color:#000000;">
 						<h:outputText value="Rua: " style="color:#000000;" />
 						<br />
 						<p:inputText value="#{mbFornecedor.fornecedor.endereco}"
 							required="true" size="60" />
-				
+
 
 						<h:panelGrid columns="2">
-						<p:column><h:outputText value="Número: " style="color:#000000;"/>
-						<br />
-						<p:inputText value="#{mbFornecedor.fornecedor.numero}" required="true"
-							size="15" />
-						</p:column>
-						
-						<p:column>
-						<h:outputText value="Complemento: " style="color:#000000;" />
-						<br />
-						<p:inputText value="#{mbFornecedor.fornecedor.complemento}"
-							required="true" size="30" />
-						</p:column>
+							<p:column>
+								<h:outputText value="Número: " style="color:#000000;" />
+								<br />
+								<p:inputText value="#{mbFornecedor.fornecedor.numero}"
+									required="true" size="15" />
+							</p:column>
+
+							<p:column>
+								<h:outputText value="Complemento: " style="color:#000000;" />
+								<br />
+								<p:inputText value="#{mbFornecedor.fornecedor.complemento}"
+									required="true" size="30" />
+							</p:column>
 						</h:panelGrid>
-						
+
 
 						<h:outputText value="Bairro" style="color:#000000;" />
 						<br />
-						<p:inputText value="#{mbFornecedor.fornecedor.bairro}" required="true"
-							size="40" /><br/>
-
-						 <h:panelGrid columns="2">
-                     
-                     <p:column> 	
-                    
-                     <h:outputText value="Cidade:"  style="color:#000000;"/>
+						<p:inputText value="#{mbFornecedor.fornecedor.bairro}"
+							required="true" size="40" />
 						<br />
-						<p:inputText value="#{mbFornecedor.fornecedor.cidade}" required="true"
-							size="30" /><br />
-								                    
-                     	
-						<h:outputText value="CEP:" size="30" style="color:#000000;" /><br/>
-						
-						<p:inputText value="#{mbFornecedor.fornecedor.cep}" required="true" />
-                    </p:column>
-								
-                       
-								<p:column>
-									<p:outputLabel for="estado" value="Estado:" style="color:#000000;"/><br/>
-									<p:selectOneMenu id="estado" value="#{mbFornecedor.fornecedor.uf}" style="width:143px">
-										<f:selectItem itemLabel="Selecione" itemValue="opcao" noSelectionOption="true" />
-										<f:selectItem itemLabel="AC" itemValue="AC" />
-										<f:selectItem itemLabel="AL" itemValue="AL" />
-										<f:selectItem itemLabel="AM" itemValue="AM" />
-										<f:selectItem itemLabel="AP" itemValue="AP" />
-										<f:selectItem itemLabel="BA" itemValue="BA" />
-										<f:selectItem itemLabel="CE" itemValue="CE" />
-										<f:selectItem itemLabel="DF" itemValue="DF" />
-										<f:selectItem itemLabel="ES" itemValue="ES" />
-										<f:selectItem itemLabel="GO" itemValue="GO" />
-										<f:selectItem itemLabel="MA" itemValue="MA" />
-										<f:selectItem itemLabel="MG" itemValue="MG" />
-										<f:selectItem itemLabel="MS" itemValue="MS" />
-										<f:selectItem itemLabel="MT" itemValue="MT" />
-										<f:selectItem itemLabel="PA" itemValue="PA" />
-										<f:selectItem itemLabel="PB" itemValue="PB" />
-										<f:selectItem itemLabel="PE" itemValue="PE" />
-										<f:selectItem itemLabel="PI" itemValue="PI" />
-										<f:selectItem itemLabel="PR" itemValue="PR" />
-										<f:selectItem itemLabel="RJ" itemValue="RJ" />
-										<f:selectItem itemLabel="RN" itemValue="RN" />
-										<f:selectItem itemLabel="RO" itemValue="RO" />
-										<f:selectItem itemLabel="RR" itemValue="RR" />
-										<f:selectItem itemLabel="RS" itemValue="RS" />
-										<f:selectItem itemLabel="SC" itemValue="SC" />
-										<f:selectItem itemLabel="SE" itemValue="SE" />
-										<f:selectItem itemLabel="SP" itemValue="SP" />
-										<f:selectItem itemLabel="TO" itemValue="TO" />
-									</p:selectOneMenu>
-									<br />
-									<br />
-									<br />
-									
-								 </p:column>
-					
-						
-					              
-								</h:panelGrid>
-						
-						
+
+						<h:panelGrid columns="2">
+
+							<p:column>
+
+								<h:outputText value="Cidade:" style="color:#000000;" />
+								<br />
+								<p:inputText value="#{mbFornecedor.fornecedor.cidade}"
+									required="true" size="30" />
+								<br />
+
+
+								<h:outputText value="CEP:" size="30" style="color:#000000;" />
+								<br />
+
+								<p:inputText maxlength="8"
+									value="#{mbFornecedor.fornecedor.cep}" required="true" />
+							</p:column>
+
+
+							<p:column>
+								<p:outputLabel for="estado" value="Estado:"
+									style="color:#000000;" />
+								<br />
+								<p:selectOneMenu id="estado"
+									value="#{mbFornecedor.fornecedor.uf}" style="width:143px">
+									<f:selectItem itemLabel="Selecione" itemValue="opcao"
+										noSelectionOption="true" />
+									<f:selectItem itemLabel="AC" itemValue="AC" />
+									<f:selectItem itemLabel="AL" itemValue="AL" />
+									<f:selectItem itemLabel="AM" itemValue="AM" />
+									<f:selectItem itemLabel="AP" itemValue="AP" />
+									<f:selectItem itemLabel="BA" itemValue="BA" />
+									<f:selectItem itemLabel="CE" itemValue="CE" />
+									<f:selectItem itemLabel="DF" itemValue="DF" />
+									<f:selectItem itemLabel="ES" itemValue="ES" />
+									<f:selectItem itemLabel="GO" itemValue="GO" />
+									<f:selectItem itemLabel="MA" itemValue="MA" />
+									<f:selectItem itemLabel="MG" itemValue="MG" />
+									<f:selectItem itemLabel="MS" itemValue="MS" />
+									<f:selectItem itemLabel="MT" itemValue="MT" />
+									<f:selectItem itemLabel="PA" itemValue="PA" />
+									<f:selectItem itemLabel="PB" itemValue="PB" />
+									<f:selectItem itemLabel="PE" itemValue="PE" />
+									<f:selectItem itemLabel="PI" itemValue="PI" />
+									<f:selectItem itemLabel="PR" itemValue="PR" />
+									<f:selectItem itemLabel="RJ" itemValue="RJ" />
+									<f:selectItem itemLabel="RN" itemValue="RN" />
+									<f:selectItem itemLabel="RO" itemValue="RO" />
+									<f:selectItem itemLabel="RR" itemValue="RR" />
+									<f:selectItem itemLabel="RS" itemValue="RS" />
+									<f:selectItem itemLabel="SC" itemValue="SC" />
+									<f:selectItem itemLabel="SE" itemValue="SE" />
+									<f:selectItem itemLabel="SP" itemValue="SP" />
+									<f:selectItem itemLabel="TO" itemValue="TO" />
+								</p:selectOneMenu>
+								<br />
+								<br />
+								<br />
+
+							</p:column>
+
+
+
+						</h:panelGrid>
+
+
 					</p:panel>
- 
- 					<p:panel id="cont" header="Contato"  
+
+					<p:panel id="cont" header="Contato"
 						style="postion:relative;float:right;width:500px;height:307px;margin-top:-314px;background-color:#F0F4F9;">
 						<h:panelGrid columns="2">
-						<p:column>
-						<h:outputText value="Telefone Comercial:" style="color:#000000;" /><br/>
-						<p:inputText value="#{mbFornecedor.fornecedor.tel}" required="true" />
-						</p:column>
-												
+							<p:column>
+								<h:outputText value="Telefone Comercial:" style="color:#000000;" />
+								<br />
+								<p:inputMask mask="(99)9999-9999"
+									value="#{mbFornecedor.fornecedor.tel}" required="true" />
+							</p:column>
+
 						</h:panelGrid>
-						
-						<h:outputText value="Email: " style="color:#000000;" /><br/>
-						<p:inputText value="#{mbFornecedor.fornecedor.email}" required="true" size="50" /><br/>
+
+						<h:outputText value="Email: " style="color:#000000;" />
+						<br />
+						<p:inputText value="#{mbFornecedor.fornecedor.email}"
+							required="true" size="50" />
+						<br />
 
 					</p:panel>
- 
- 						<p:panel id="pos_botao" style="padding-bottom:15px; background-color:#E8E8E8; height:50;position: relative; max-width: 1120px; margin-right: auto; margin-left: auto;">
-				
-				        <p:commandButton value="Salvar" style="margin-top:-20; float:right;"
-                            action="#{mbFornecedor.salvar}" ajax="true"
-                            update=":tabView:form1, :tabView:form2" />
-                        <p:growl></p:growl>
-                        
-                        <p:commandButton value="Limpar" style="margin-top:0;float:right"
-                            type="reset" />
-                        <p:growl></p:growl>                   
-                  				
-				</p:panel>
- 						
-            </h:form>
-            </p:tab>
-            <p:tab title="Consulta Fornecedor" >
-                <h:form id="form2">
-                    <p:growl id="msgs" showDetail="true" />
-                    <p:dataTable id="dataTable" var="linha" editable="true" reflow="true"
-                        value="#{mbFornecedor.fornecedores}"
-                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                        paginator="true" rows="10" style="padding-bottom:15px;">
 
-                        <p:ajax event="rowEdit" listener="#{mbFornecedor.editarLinha}"
-                            update="tabView:form2:msgs" />
+					<p:panel id="pos_botao"
+						style="padding-bottom:15px; background-color:#E8E8E8; height:50;position: relative; max-width: 1120px; margin-right: auto; margin-left: auto;">
 
-                        <f:facet name="{Exporters}">
-                            <h:commandLink>
-                                <p:graphicImage name="/demo/images/excel.png" width="24" />
-                                <p:dataExporter type="xls" target="tbl" fileName="cars" />
-                            </h:commandLink>
+						<p:commandButton value="Salvar"
+							style="margin-top:-20; float:right;"
+							action="#{mbFornecedor.salvar}" ajax="true"
+							update=":tabView:form1, :tabView:form2" />
+						<p:growl></p:growl>
 
-                            <h:commandLink>
-                                <p:graphicImage name="/demo/images/pdf.png" width="24" />
-                                <p:dataExporter type="pdf" target="tbl" fileName="cars" />
-                            </h:commandLink>
+						<p:commandButton value="Limpar" style="margin-top:0;float:right"
+							type="reset" />
+						<p:growl></p:growl>
 
-                            <h:commandLink>
-                                <p:graphicImage name="/demo/images/csv.png" width="24" />
-                                <p:dataExporter type="csv" target="tbl" fileName="cars" />
-                            </h:commandLink>
+					</p:panel>
 
-                            <h:commandLink>
-                                <p:graphicImage name="/demo/images/xml.png" width="24" />
-                                <p:dataExporter type="xml" target="tbl" fileName="cars" />
-                            </h:commandLink>
-                        </f:facet>
+				</h:form>
+			</p:tab>
+			<p:tab title="Consulta Fornecedor">
+				<h:form id="form2">
+					<p:growl id="msgs" showDetail="true" />
+					<p:dataTable id="dataTable" var="linha" editable="true"
+						reflow="true" value="#{mbFornecedor.fornecedores}"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+						paginator="true" rows="10" style="padding-bottom:15px;">
 
-                        <p:column width="20" headerText="CNPJ">
-                            <h:outputText value="#{linha.cnpj}" />
-                        </p:column>
+						<p:column width="20" headerText="CNPJ">
+							<h:outputText value="#{linha.cnpj}" />
+						</p:column>
 
-                        <p:column width="20" headerText="Nome do fornecedor">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText value="#{linha.razSocial}" />
-                            </f:facet>
-                            <f:facet name="input">
-                                <h:inputText value="#{linha.razSocial}" />
-                            </f:facet>                            
-                        </p:cellEditor>
-                        </p:column>
+						<p:column width="20" headerText="Nome do fornecedor">
+							<h:outputText value="#{linha.razSocial}" />
+						</p:column>
 
 
-                        <p:column width="20" headerText="Telefone do fornecedor">
-                            <p:cellEditor>
-                            
-                            <f:facet name="output">
-                                <h:outputText value="#{linha.tel}" />
-                            </f:facet>
-                            
-                            <f:facet name="input">
-                                <h:inputText value="#{linha.tel}" />
-                            </f:facet>
-                            </p:cellEditor>
-                        </p:column>
+						<p:column width="20" headerText="Telefone do fornecedor">
+							<h:outputText value="#{linha.tel}" />
+						</p:column>
 
-                        <p:column width="20" headerText="Cidade">
-                            <p:cellEditor>
-
-                                <f:facet name="output">
-                                    <h:outputText value="#{linha.cidade}" />
-                                </f:facet>
-
-                                <f:facet name="input">
-                                    <p:inputText value="#{linha.cidade}" />
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
+						<p:column width="20" headerText="Cidade">
+							<h:outputText value="#{linha.cidade}" />
+						</p:column>
 
 
-                        <p:column headerText="Exclusão" width="5"
-                            styleClass="text-align:center">
-                            <p:commandButton action="#{mbFornecedor.excluir}"
-                                update=":tabView:form2,tabView:form2:dataTable" process="@this"
-                                icon="ui-icon-trash" ajax="true">
-                                <f:setPropertyActionListener value="#{linha}"
-                                    target="#{mbFornecedor.fornecedor}"></f:setPropertyActionListener>
-                                <p:confirm icon="ui-icon-alert" message="Deseja Excluir ?"
-                                    header="Confirma?" />
-                            </p:commandButton>
-                        </p:column>
+						<p:column headerText="Exclusão" width="5">
 
-                        <p:column width="20" headerText="Edição">
-                            <p:rowEditor></p:rowEditor>
-                        </p:column>
+							<p:commandButton styleClass="text-align:center"
+								style="margin-top:-20; float:right;" update=":forExDetail"
+								oncomplete="PF('forExDialog').show()" icon="ui-icon-trash">
+								<f:setPropertyActionListener value="#{linha}"
+									target="#{mbFornecedor.selecionado}" />
+							</p:commandButton>
+						</p:column>
 
-                    </p:dataTable>
+						<p:column style="width:32px;text-align: center"
+							headerText="Edição">
+							<p:commandButton update="forEdDetail"
+								oncomplete="PF('forEdDialog').show()" icon="ui-icon-search">
+								<f:setPropertyActionListener value="#{linha}"
+									target="#{mbFornecedor.selecionado}" />
+							</p:commandButton>
 
-                    <p:confirmDialog appendTo="@(body)" global="true">
-                        <p:commandButton process="@this" value="sim"
-                            styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
-                        <p:commandButton process="@this" value="Nao"
-                            styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
-                    </p:confirmDialog>
+						</p:column>
 
-                    <h3>Export Page Data Only</h3>
-                    <h:commandLink>
-                        <p:graphicImage name="/demo/images/excel.png" />
-                        <p:dataExporter type="xls" target="tbl" fileName="cars"
-                            pageOnly="true" />
-                    </h:commandLink>
+					</p:dataTable>
+				</h:form>
+			</p:tab>
 
-                    <h:commandLink>
-                        <p:graphicImage name="/demo/images/pdf.png" />
-                        <p:dataExporter type="pdf" target="tbl" fileName="cars"
-                            pageOnly="true" />
-                    </h:commandLink>
+		</p:tabView>
 
-                    <h:commandLink>
-                        <p:graphicImage name="/demo/images/csv.png" />
-                        <p:dataExporter type="csv" target="tbl" fileName="cars"
-                            pageOnly="true" />
-                    </h:commandLink>
+	</div>
 
-                    <h:commandLink>
-                        <p:graphicImage name="/demo/images/xml.png" />
-                        <p:dataExporter type="xml" target="tbl" fileName="cars"
-                            pageOnly="true" />
-                    </h:commandLink>
-                </h:form>
-                
-               
-            </p:tab>
+	<p:dialog header="Fornecedor" widgetVar="forEdDialog" modal="true"
+		minHeight="600" minWidth="600">
+		<p:outputPanel id="forEdDetail" style="text-align:center;">
+			<h:form id="form_forEdModal">
 
-        </p:tabView>
+				<p:panelGrid columns="1"
+					rendered="#{not empty mbFornecedor.selecionado}"
+					columnClasses="label,value">
+					<p:tabView>
+						<p:tab title="Dados pessoais">
+							<p:panelGrid columns="2">
+								<h:outputLabel value="Razão Social" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbFornecedor.selecionado.razSocial}" />
+								</p:panelGrid>
 
-    </div>
-    <ui:insert  name="footer">
-        <ui:include src="Template/footer.jsf" />
-    </ui:insert>
+								<h:outputLabel value="Nome" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbFornecedor.selecionado.fantasia}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="CNPJ" />
+								<p:panelGrid columns="1">
+									<p:inputMask mask="99.999.999/9999-99"
+										value="#{mbFornecedor.selecionado.cnpj}" required="true" />
+								</p:panelGrid>
+									
+
+								<h:outputLabel value="Telefone" />
+								<p:panelGrid columns="1">
+									<p:inputMask mask="(99)9999-9999"
+										value="#{mbFornecedor.selecionado.tel}" required="true" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Email" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbFornecedor.selecionado.email}"
+										required="true" />
+								</p:panelGrid>
+
+
+							</p:panelGrid>
+						</p:tab>
+						<p:tab title="Endereço">
+							<h:panelGrid columns="2">
+
+								<h:outputLabel value="CEP" />
+								<p:panelGrid columns="1">
+									<p:inputText maxlength="8"
+										requiredMessage="Favor preencha o CEP"
+										value="#{mbFornecedor.selecionado.cep}" required="true">
+									</p:inputText>
+								</p:panelGrid>
+
+								<h:outputLabel value="Rua:" />
+								<p:panelGrid columns="1">
+									<p:inputText disabled="true"
+										value="#{mbFornecedor.selecionado.endereco}" required="true"
+										id="endereco" size="60" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Número:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbFornecedor.selecionado.numero}"
+										required="true" id="numero" size="10" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Bairro:" />
+								<p:panelGrid columns="1">
+									<p:inputText disabled="true"
+										value="#{mbFornecedor.selecionado.bairro}" required="true"
+										id="bairro" size="30" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Cidade:" />
+								<p:panelGrid columns="1">
+									<p:inputText disabled="true"
+										value="#{mbFornecedor.selecionado.cidade}" required="true"
+										id="cidade" size="30" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="UF:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<p:inputText id="uf" disabled="true"
+										value="#{mbFornecedor.selecionado.uf}" required="true"
+										size="10" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Complemento:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbFornecedor.selecionado.complemento}"
+										required="true" id="complemnto" size="30" />
+								</p:panelGrid>
+
+
+							</h:panelGrid>
+
+
+						</p:tab>
+					</p:tabView>
+				</p:panelGrid>
+
+				<p:commandButton value="Alterar"
+					style="margin-top:-20; float:right;"
+					action="#{mbFornecedor.editar}" ajax="true" update=":tabView:form2"></p:commandButton>
+			</h:form>
+		</p:outputPanel>
+	</p:dialog>
+	<p:dialog header="Funcionário" widgetVar="forExDialog" modal="true">
+		<p:outputPanel id="forExDetail" style="text-align:center;">
+			<h:form id="form_forExModal">
+				<p:panelGrid columns="1"
+					rendered="#{not empty mbFuncionario.selecionado}"
+					columnClasses="label,value">
+					
+					<p:tabView>
+						<p:tab title="Dados pessoais">
+							<p:panelGrid columns="2">
+								<h:outputLabel value="Razão Social" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.razSocial}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Nome" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.fantasia}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="CNPJ" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.cnpj}"/>
+								</p:panelGrid>
+
+								<h:outputLabel value="Telefone" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.tel}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Email" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.email}"/>
+								</p:panelGrid>
+
+
+
+							</p:panelGrid>
+						</p:tab>
+						<p:tab title="Endereço">
+							<h:panelGrid columns="2">
+								<h:outputLabel value="CEP" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.cep}" />								
+								</p:panelGrid>
+
+								<h:outputLabel value="Rua:" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.endereco}" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Número:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.numero}"/>
+								</p:panelGrid>
+
+								<h:outputLabel value="Bairro:" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.bairro}" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Cidade:" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.cidade}" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="UF:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.uf}"  />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Complemento:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.complemento}" />
+								</p:panelGrid>
+
+							</h:panelGrid>
+						</p:tab>
+					</p:tabView>
+				</p:panelGrid>
+				<p:commandButton value="Excluir"
+					style="margin-top:-20; float:right;"
+					action="#{mbFuncionario.excluir}" ajax="true"
+					update=":tabView:form2">
+					<p:confirm icon="ui-icon-alert" message="Deseja Excluir ?"
+						header="Confirma?" />
+				</p:commandButton>
+				<p:confirmDialog appendTo="@(body)" global="true">
+					<p:commandButton process="@this" value="Sim"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
+					<p:commandButton process="@this" value="Não"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
+				</p:confirmDialog>
+			</h:form>
+		</p:outputPanel>
+	</p:dialog>
+	<ui:insert name="footer">
+		<ui:include src="Template/footer.jsf" />
+	</ui:insert>
 </h:body>
 </html>

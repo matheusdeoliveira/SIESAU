@@ -35,8 +35,8 @@ import br.com.siesau.entity.UnidFunc;
 import br.com.siesau.entity.UnidadeSaude;
 import br.com.siesau.persistence.CargoDao;
 import br.com.siesau.persistence.EspecialidadeDao;
-import br.com.siesau.persistence.FuncEspecDao;
 import br.com.siesau.persistence.FuncionarioDao;
+import br.com.siesau.persistence.UnidFuncDao;
 
 /**
  * @author Diogo Freitas
@@ -101,7 +101,7 @@ public class ManagerBeanFuncionario implements Serializable {
 			funcionario.setAtivo(true);
 
 
-			// new UnidFuncDao(new UnidFunc()).salva(unidFunc);
+		//	new UnidFuncDao(new UnidFunc()).salva(unidFunc);
 			new FuncionarioDao(new Funcionario()).salva(funcionario);
 			fc.addMessage("form1", new FacesMessage("Funcionario " + funcionario.getNome() + " salvo com sucesso."));
 			unidFunc = new UnidFunc();
@@ -119,9 +119,8 @@ public class ManagerBeanFuncionario implements Serializable {
 
 		try {
 
-			new FuncionarioDao(new Funcionario()).deleta(funcionario);
-
-			fc.addMessage("form2", new FacesMessage("Fornecedor " + funcionario.getNome() + " excluído"));
+			fc.addMessage("form2", new FacesMessage("Funcionário " + selecionado.getNome() + " excluído"));
+			new FuncionarioDao(new Funcionario()).deleta(selecionado);
 			funcionarios = new FuncionarioDao(new Funcionario()).lista();
 		} catch (Exception e) {
 			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
@@ -135,7 +134,7 @@ public class ManagerBeanFuncionario implements Serializable {
 			Funcionario temp = selecionado;
 		
 			new FuncionarioDao(new Funcionario()).atualiza(selecionado);
-			fc.addMessage("form2", new FacesMessage("Funcionario "+ temp.getNome() + " editado"));
+			fc.addMessage("form2", new FacesMessage("Funcionário "+ temp.getNome() + " editado"));
 			selecionado = new Funcionario();
 			temp = new Funcionario();
 			funcionarios = new FuncionarioDao(new Funcionario()).lista();
@@ -159,6 +158,26 @@ public class ManagerBeanFuncionario implements Serializable {
 			funcionario.setUf(viaCep.getUf());
 
 			System.out.println(funcionario.getBairro());
+
+		} catch (ViaCEPException e) {
+			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
+			e.printStackTrace();
+		}
+	}
+	
+	public void buscaCepSelecionado() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+
+		try {
+			viaCep = new ViaCEP();
+			viaCep.buscar(selecionado.getCep().toString());
+
+			selecionado.setCidade(viaCep.getLocalidade());
+			selecionado.setEndereco(viaCep.getLogradouro());
+			selecionado.setBairro(viaCep.getBairro());
+			selecionado.setUf(viaCep.getUf());
+
+			System.out.println(selecionado.getBairro());
 
 		} catch (ViaCEPException e) {
 			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
@@ -225,6 +244,9 @@ public class ManagerBeanFuncionario implements Serializable {
 	}
 
 	public List<Cargo> getCargos() {
+		if(cargos == null){
+			cargos = new CargoDao(new Cargo()).lista();
+		}
 		return cargos;
 	}
 
@@ -233,6 +255,11 @@ public class ManagerBeanFuncionario implements Serializable {
 	}
 
 	public Map<String, String> getMostraCargos() {
+		if(mostraCargos == null){
+			for (int i = 0; i < cargos.size(); i++) {
+				mostraCargos.put(cargos.get(i).getCargo().toString().toUpperCase(), cargos.get(i).getCdCargo().toString());
+			}
+		}
 		return mostraCargos;
 	}
 
@@ -294,6 +321,16 @@ public class ManagerBeanFuncionario implements Serializable {
 	public void setEspecialidadesSelecionadas(List<Especialidade> especialidadesSelecionadas) {
 		this.especialidadesSelecionadas = especialidadesSelecionadas;
 	}
+
+	public FuncEspec getFuncEspec() {
+		return funcEspec;
+	}
+
+	public void setFuncEspec(FuncEspec funcEspec) {
+		this.funcEspec = funcEspec;
+	}
+	
+	
 //	
 //	public static void main(String[] args) {
 //		try {
