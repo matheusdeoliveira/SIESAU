@@ -52,7 +52,7 @@ public class ManagerBeanAtendimento implements Serializable {
 		atendimento = new Atendimento();
 		atendimento.setPaciente(new Paciente());
 		atendimento.setSituacaoAtend(new SituacaoAtend());
-		atendimentos = new AtendimentoDao(new Atendimento()).lista();
+		atendimentos = new AtendimentoDao(new Atendimento()).listaNaoFinalizados();
 
 		paciente = new Paciente();
 
@@ -112,7 +112,7 @@ public class ManagerBeanAtendimento implements Serializable {
 			fc.addMessage("form_paciente",
 					new FacesMessage("Atendimento nº " + atendimento.getCdAtend() + " agendado."));
 			atendimento = new Atendimento();
-			atendimentos = new AtendimentoDao(new Atendimento()).lista();
+			atendimentos = new AtendimentoDao(new Atendimento()).listaNaoFinalizados();
 
 		} catch (Exception e) {
 			fc.addMessage("form_paciente", new FacesMessage("Error: " + e.getMessage()));
@@ -128,7 +128,7 @@ public class ManagerBeanAtendimento implements Serializable {
 			new AtendimentoDao(new Atendimento()).deleta(atendimento);
 			fc.addMessage("form_paciente",
 					new FacesMessage("Atendimento nº " + atendimento.getCdAtend() + " removido."));
-			atendimentos = new AtendimentoDao(new Atendimento()).lista();
+			atendimentos = new AtendimentoDao(new Atendimento()).listaNaoFinalizados();
 		} catch (Exception e) {
 			fc.addMessage("form_paciente", new FacesMessage("Error: " + e.getMessage()));
 			e.printStackTrace();
@@ -144,7 +144,7 @@ public class ManagerBeanAtendimento implements Serializable {
 
 			new AtendimentoDao(new Atendimento()).atualiza(selecionado);
 			fc.addMessage("form_paciente", new FacesMessage("Atendimento nº " + selecionado.getCdAtend() + " editado"));
-			atendimentos = new AtendimentoDao(new Atendimento()).lista();
+			atendimentos = new AtendimentoDao(new Atendimento()).listaNaoFinalizados();
 
 		} catch (Exception e) {
 			fc.addMessage("form_paciente", new FacesMessage("Error: " + e.getMessage()));
@@ -244,7 +244,7 @@ public class ManagerBeanAtendimento implements Serializable {
 		this.sitAtend = sitAtend;
 	}
 
-	public int getIdade() {	
+	public int getIdade() {
 		return idade;
 	}
 
@@ -259,5 +259,5 @@ public class ManagerBeanAtendimento implements Serializable {
 	public void setAtendimentosFiltrados(List<Atendimento> atendimentosFiltrados) {
 		this.atendimentosFiltrados = atendimentosFiltrados;
 	}
-	
+
 }
