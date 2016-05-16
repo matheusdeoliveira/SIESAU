@@ -68,11 +68,20 @@
 										<p:outputLabel for="cargo" value="Cargo:"
 											style="color:#000000;" />
 										<br />
-										<p:selectOneMenu id="cargo"
+										<p:selectOneMenu id="cargo" required="true"
 											value="#{mbFuncionario.funcionario.cargo.cdCargo}" style="">
 											<f:selectItems value="#{mbFuncionario.mostraCargos}" />
 										</p:selectOneMenu>
-
+										<br />
+										<!-- Em produção 
+										<p:selectCheckboxMenu label="Especialidades"
+											value="#{mbFuncionario.especialidadesSelecionadas}"
+											filter="true" filterMatchMode="startsWith"
+											panelStyle="width:400px">
+											<f:selectItems value="#{mbFuncionario.especialidades}"
+												var="esp" itemValue="#{esp}" itemLabel="#{esp.especialidade}" />
+										</p:selectCheckboxMenu>
+										-->
 									</p:column>
 
 									<p:column>
@@ -82,10 +91,16 @@
 											required="true" size="20" />
 										<br />
 
-										<h:outputText value="Telefone:" style="color:#000000;" />
+										<h:outputText value="Telefone Fixo:" style="color:#000000;" />
 										<br />
 										<p:inputMask mask="(99)9999-9999"
 											value="#{mbFuncionario.funcionario.telRes}" />
+
+										<br />
+										<h:outputText value="Telefone Celular" style="color:#000000;" />
+										<br />
+										<p:inputMask mask="(99)99999-9999"
+											value="#{mbFuncionario.funcionario.telCel}" />
 									</p:column>
 
 								</h:panelGrid>
@@ -95,7 +110,7 @@
 							<p:column>
 								<h:outputText value="CPF:" style="color:#000000;" />
 								<br />
-								<p:inputMask mask="999.999.99-99"
+								<p:inputMask mask="999.999.999-99"
 									value="#{mbFuncionario.funcionario.cpf}" required="true" />
 								<br />
 
@@ -189,7 +204,7 @@
 									value="#{mbFuncionario.funcionario.bairro}" required="true"
 									id="bairro" size="30" />
 							</p:column>
-							<!-- Adicionar aqui o campo de complemento -->
+
 							<p:column>
 								<h:outputText value="Cidade:" style="color:#000000;" />
 								<br />
@@ -204,6 +219,13 @@
 								<p:inputText id="uf" disabled="true"
 									value="#{mbFuncionario.funcionario.uf}" required="true"
 									size="10" />
+							</p:column>
+
+							<p:column>
+								<h:outputText value="Complemento:" style="color:#000000;" />
+								<br />
+								<p:inputText value="#{mbFuncionario.funcionario.complemento}"
+									required="true" id="complemnto" size="30" />
 							</p:column>
 
 						</h:panelGrid>
@@ -235,12 +257,9 @@
 					<p:dataTable id="dataTable" var="linha" editable="true"
 						reflow="true" value="#{mbFuncionario.funcionarios}"
 						widgetVar="tabelaFuncionario"
-						filteredValue="#{mbFuncionario.funcionariosFiltrados}"
-						emptyMessage="Não há funcionarios."
-						paginator="true" rows="10" style="margin-bottom:20px">
-
-						<p:ajax event="rowEdit" listener="#{mbFuncionario.editarLinha}"
-							update="tabView:form2:msgs" />
+						filteredValue="#{mbAtendimento.atendimentosFiltrados}"
+						emptyMessage="Não há atendimentos." paginator="true" rows="10"
+						style="margin-bottom:20px">
 
 						<f:facet name="header">
 							<p:outputPanel>
@@ -251,69 +270,298 @@
 							</p:outputPanel>
 						</f:facet>
 
-						<p:column width="20" filterBy="#{linha.cdFunc}" filterMatchMode="contains">
-							<f:facet name="header">
-								<h:outputText value="ID" />
-							</f:facet>
-							<h:outputText value="#{linha.cdFunc}" />
+						<p:column filterBy="#{linha.cpf}" filterMatchMode="contains"
+							sortBy="#{linha.cpf}" width="20" headerText="CPF">
+							<h:outputText value="#{linha.cpf}" />
 						</p:column>
 
-						<p:column width="20" headerText="Usuario" filterBy="#{linha.login}" filterMatchMode="contains">
-							<p:cellEditor>
-
-								<f:facet name="output">
-									<h:outputText value="#{linha.login}" />
-								</f:facet>
-
-								<f:facet name="input">
-									<p:inputText value="#{linha.login}" />
-								</f:facet>
-							</p:cellEditor>
+						<p:column filterBy="#{linha.nome}" filterMatchMode="contains"
+							sortBy="#{linha.nome}" width="20" headerText="Nome">
+							<h:outputText value="#{linha.nome}" />
 						</p:column>
 
-						<p:column width="20" headerText="Nome" filterBy="#{linha.nome}" filterMatchMode="contains">
-							<p:cellEditor>
-
-								<f:facet name="output">
-									<h:outputText value="#{linha.nome}" />
-								</f:facet>
-
-								<f:facet name="input">
-									<p:inputText value="#{linha.nome}" />
-								</f:facet>
-							</p:cellEditor>
+						<p:column filterBy="#{linha.login}" filterMatchMode="contains"
+							sortBy="#{linha.login}" width="20" headerText="Usuario">
+							<h:outputText value="#{linha.login}" />
 						</p:column>
 
 
 						<p:column headerText="Exclusão" width="5"
 							styleClass="text-align:center">
-							<p:commandButton action="#{mbFuncionario.excluir}"
-								update=":tabView:form2,tabView:form2:dataTable" process="@this"
-								icon="ui-icon-trash" ajax="true">
+							<p:commandButton update="funExDetail"
+								oncomplete="PF('funExDialog').show()" icon="ui-icon-trash">
 								<f:setPropertyActionListener value="#{linha}"
-									target="#{mbFuncionario.funcionario}"></f:setPropertyActionListener>
-								<p:confirm icon="ui-icon-alert" message="Deseja Excluir ?"
-									header="Confirma?" />
+									target="#{mbFuncionario.selecionado}"></f:setPropertyActionListener>
 							</p:commandButton>
 						</p:column>
 
-						<p:column width="20" headerText="Edição">
-							<p:rowEditor />
+						<p:column style="width:32px;text-align: center"
+							headerText="Edição">
+							<p:commandButton update="funEdDetail"
+								oncomplete="PF('funEdDialog').show()" icon="ui-icon-search">
+								<f:setPropertyActionListener value="#{linha}"
+									target="#{mbFuncionario.selecionado}" />
+							</p:commandButton>
+
 						</p:column>
 					</p:dataTable>
-
-
-					<p:confirmDialog appendTo="@(body)" global="true">
-						<p:commandButton process="@this" value="Sim"
-							styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
-						<p:commandButton process="@this" value="Não"
-							styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
-					</p:confirmDialog>
-
 				</h:form>
 			</p:tab>
 		</p:tabView>
+
+
 	</div>
+
+	<p:dialog header="Funcionário" widgetVar="funEdDialog" modal="true"
+		minHeight="600" minWidth="600">
+		<p:outputPanel id="funEdDetail" style="text-align:center;">
+			<h:form id="form_funEdModal">
+
+				<p:panelGrid columns="1"
+					rendered="#{not empty mbFuncionario.selecionado}"
+					columnClasses="label,value">
+					<f:facet name="header">
+						<p:graphicImage height="150"
+							value="#{pageContext.servletContext.contextPath}/resources/fotos/#{mbFuncionario.selecionado.foto}" />
+					</f:facet>
+					<p:tabView>
+						<p:tab title="Dados pessoais">
+							<p:panelGrid columns="2">
+								<h:outputLabel value="Nome" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbFuncionario.selecionado.nome}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="CPF" />
+								<p:panelGrid columns="1">
+									<p:inputMask mask="999.999.999-99"
+										value="#{mbFuncionario.selecionado.cpf}" required="true" />
+								</p:panelGrid>
+
+								<h:outputLabel value="RG" />
+								<p:panelGrid columns="1">
+									<p:inputMask mask="99.999.999-9"
+										value="#{mbFuncionario.selecionado.rg}" required="true" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Estado Civil" />
+								<p:panelGrid columns="2">
+									<h:outputText value="#{mbFuncionario.selecionado.estadoCivil}" />
+									<p:selectOneMenu id="estado_civil"
+										value="#{mbFuncionario.selecionado.estadoCivil}"
+										required="true">
+										<f:selectItem itemLabel="Selecione" itemValue="" />
+										<f:selectItem itemLabel="Casado" itemValue="CASADO"></f:selectItem>
+										<f:selectItem itemLabel="Solteiro" itemValue="SOLTEIRO"></f:selectItem>
+										<f:selectItem itemLabel="Viuvo" itemValue="VIUVO"></f:selectItem>
+										<f:selectItem itemLabel="Divorciado" itemValue="DIVORCIADO"></f:selectItem>
+									</p:selectOneMenu>
+								</p:panelGrid>
+
+								<h:outputText value="Telefones" />
+								<p:panelGrid columns="2">
+									<p:inputMask mask="(99)99999-9999"
+										value="#{mbFuncionario.selecionado.telCel}"
+										placeholder="Digite o telefone Celular" />
+									<p:inputMask mask="(99)9999-9999"
+										value="#{mbFuncionario.selecionado.telRes}"
+										placeholder="Digite o telefone Residencial" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Cargo" />
+								<p:panelGrid columns="3">
+									<h:outputText value="#{mbFuncionario.selecionado.cargo.cargo}" />
+									<h:outputLabel value="Selecione o novo Cargo" />
+									<p:selectOneMenu id="cargo" label="Selecione o novo Cargo"
+										value="#{mbFuncionario.selecionado.cargo.cdCargo}">
+										<f:selectItems value="#{mbFuncionario.mostraCargos}" />
+									</p:selectOneMenu>
+								</p:panelGrid>
+								<h:outputLabel value="Especialidades" />
+								<p:panelGrid columns="2">
+								</p:panelGrid>
+							</p:panelGrid>
+						</p:tab>
+						<p:tab title="Endereço">
+							<h:panelGrid columns="2">
+
+								<h:outputLabel value="CEP" />
+								<p:panelGrid columns="1">
+									<p:inputText maxlength="8"
+										requiredMessage="Favor preencha o CEP"
+										value="#{mbFuncionario.selecionado.cep}" required="true">
+										<p:ajax event="keyup" update="cidade, endereco, bairro, uf"
+											listener="#{mbFuncionario.buscaCepSelecionado}" />
+									</p:inputText>
+								</p:panelGrid>
+
+								<h:outputLabel value="Rua:" />
+								<p:panelGrid columns="1">
+									<p:inputText disabled="true"
+										value="#{mbFuncionario.selecionado.endereco}" required="true"
+										id="endereco" size="60" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Número:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbFuncionario.selecionado.numero}"
+										required="true" id="numero" size="10" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Bairro:" />
+								<p:panelGrid columns="1">
+									<p:inputText disabled="true"
+										value="#{mbFuncionario.selecionado.bairro}" required="true"
+										id="bairro" size="30" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Cidade:" />
+								<p:panelGrid columns="1">
+									<p:inputText disabled="true"
+										value="#{mbFuncionario.selecionado.cidade}" required="true"
+										id="cidade" size="30" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="UF:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<p:inputText id="uf" disabled="true"
+										value="#{mbFuncionario.selecionado.uf}" required="true"
+										size="10" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Complemento:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbFuncionario.selecionado.complemento}"
+										required="true" id="complemnto" size="30" />
+								</p:panelGrid>
+
+
+							</h:panelGrid>
+
+
+						</p:tab>
+					</p:tabView>
+				</p:panelGrid>
+
+				<p:commandButton value="Alterar"
+					style="margin-top:-20; float:right;"
+					action="#{mbFuncionario.editar}" ajax="true"
+					update=":tabView:form2"></p:commandButton>
+			</h:form>
+		</p:outputPanel>
+	</p:dialog>
+	<p:dialog header="Funcionário" widgetVar="funExDialog" modal="true">
+		<p:outputPanel id="funExDetail" style="text-align:center;">
+			<h:form id="form_funExModal">
+				<p:panelGrid columns="1"
+					rendered="#{not empty mbFuncionario.selecionado}"
+					columnClasses="label,value">
+					<f:facet name="header">
+						<p:graphicImage height="150"
+							value="#{pageContext.servletContext.contextPath}/resources/fotos/#{mbFuncionario.selecionado.foto}" />
+					</f:facet>
+					<p:tabView>
+						<p:tab title="Dados pessoais">
+							<p:panelGrid columns="2">
+								<h:outputLabel value="Nome" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFuncionario.selecionado.nome}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="CPF" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFuncionario.selecionado.cpf}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="RG" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFuncionario.selecionado.rg}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Estado Civil" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFuncionario.selecionado.estadoCivil}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Telefones" />
+								<p:panelGrid columns="2">
+									<h:outputText value="#{mbFuncionario.selecionado.telCel}"
+										rendered="{not null #{mbFuncionario.selecionado.telCel}}" />
+									<h:outputText value="#{mbFuncionario.selecionado.telRes}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Cargo" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFuncionario.selecionado.cargo.cargo}" />
+								</p:panelGrid>
+
+							</p:panelGrid>
+						</p:tab>
+						<p:tab title="Endereço">
+							<h:panelGrid columns="2">
+
+								<h:outputLabel value="CEP" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFuncionario.selecionado.cep}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Rua:" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFuncionario.selecionado.endereco}" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Número:" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFuncionario.selecionado.numero}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Bairro:" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFuncionario.selecionado.bairro}" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Cidade:" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFuncionario.selecionado.cidade}" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="UF:" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFuncionario.selecionado.uf}" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Complemento:" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFuncionario.selecionado.complemento}" />
+								</p:panelGrid>
+							</h:panelGrid>
+						</p:tab>
+					</p:tabView>
+				</p:panelGrid>
+				<p:commandButton value="Excluir"
+					style="margin-top:-20; float:right;"
+					action="#{mbFuncionario.excluir}" ajax="true"
+					update=":tabView:form2">
+					<p:confirm icon="ui-icon-alert" message="Deseja Excluir ?"
+						header="Confirma?" />
+				</p:commandButton>
+				<p:confirmDialog appendTo="@(body)" global="true">
+					<p:commandButton process="@this" value="Sim"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
+					<p:commandButton process="@this" value="Não"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
+				</p:confirmDialog>
+			</h:form>
+		</p:outputPanel>
+	</p:dialog>
 	<ui:insert name="footer">
 		<ui:include src="Template/footer.jsf" />
 	</ui:insert>

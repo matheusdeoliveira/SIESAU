@@ -53,8 +53,9 @@
 								<p:row>
 									<h:outputText value="CNPJ:" style="color:#000000;" />
 									<br />
-									<p:inputText value="#{mbFornecedor.fornecedor.cnpj}"
-										required="true" size="50" />
+									<p:inputMask mask="99.999.999/9999-99"
+										value="#{mbFornecedor.fornecedor.cnpj}" required="true"
+										size="50" />
 								</p:row>
 							</p:column>
 
@@ -127,8 +128,8 @@
 								<h:outputText value="CEP:" size="30" style="color:#000000;" />
 								<br />
 
-								<p:inputText value="#{mbFornecedor.fornecedor.cep}"
-									required="true" />
+								<p:inputText maxlength="8"
+									value="#{mbFornecedor.fornecedor.cep}" required="true" />
 							</p:column>
 
 
@@ -187,8 +188,8 @@
 							<p:column>
 								<h:outputText value="Telefone Comercial:" style="color:#000000;" />
 								<br />
-								<p:inputText value="#{mbFornecedor.fornecedor.tel}"
-									required="true" />
+								<p:inputMask mask="(99)9999-9999"
+									value="#{mbFornecedor.fornecedor.tel}" required="true" />
 							</p:column>
 
 						</h:panelGrid>
@@ -222,14 +223,11 @@
 				<h:form id="form2">
 					<p:growl id="msgs" showDetail="true" />
 					<p:dataTable id="dataTable" var="linha" editable="true"
-						reflow="true" value="#{mbFornecedor.fornecedores}"
 						widgetVar="tabelaFornecedor"
 						filteredValue="#{mbFornecedor.fornecedoresFiltrados}"
-						emptyMessage="Não há fornecedores."
+						emptyMessage="Não há fornecedores." reflow="true"
+						value="#{mbFornecedor.fornecedores}"
 						paginator="true" rows="10" style="padding-bottom:15px;">
-
-						<p:ajax event="rowEdit" listener="#{mbFornecedor.editarLinha}"
-							update="tabView:form2:msgs" />
 
 						<f:facet name="header">
 							<p:outputPanel>
@@ -240,82 +238,270 @@
 							</p:outputPanel>
 						</f:facet>
 
-
-						<p:column filterBy="#{linha.cnpj}" filterMatchMode="contains" width="20" headerText="CNPJ">
+						<p:column filterBy="#{linha.cnpj}" filterMatchMode="contains"
+							sortBy="#{linha.cnpj}" width="20" headerText="CNPJ">
 							<h:outputText value="#{linha.cnpj}" />
 						</p:column>
 
-						<p:column filterBy="#{linha.razSocial}" filterMatchMode="contains" width="20" headerText="Nome do fornecedor">
-							<p:cellEditor>
-								<f:facet name="output">
-									<h:outputText value="#{linha.razSocial}" />
-								</f:facet>
-								<f:facet name="input">
-									<h:inputText value="#{linha.razSocial}" />
-								</f:facet>
-							</p:cellEditor>
+						<p:column filterBy="#{linha.razSocial}" filterMatchMode="contains"
+							sortBy="#{linha.razSocial}" width="20"
+							headerText="Nome do fornecedor">
+							<h:outputText value="#{linha.razSocial}" />
 						</p:column>
 
 
-						<p:column filterBy="#{linha.tel}" filterMatchMode="contains" width="20" headerText="Telefone do fornecedor">
-							<p:cellEditor>
-
-								<f:facet name="output">
-									<h:outputText value="#{linha.tel}" />
-								</f:facet>
-
-								<f:facet name="input">
-									<h:inputText value="#{linha.tel}" />
-								</f:facet>
-							</p:cellEditor>
+						<p:column filterBy="#{linha.tel}" filterMatchMode="contains"
+							sortBy="#{linha.tel}" width="20"
+							headerText="Telefone do fornecedor">
+							<h:outputText value="#{linha.tel}" />
 						</p:column>
 
-						<p:column filterBy="#{linha.cidade}" filterMatchMode="contains" width="20" headerText="Cidade">
-							<p:cellEditor>
-
-								<f:facet name="output">
-									<h:outputText value="#{linha.cidade}" />
-								</f:facet>
-
-								<f:facet name="input">
-									<p:inputText value="#{linha.cidade}" />
-								</f:facet>
-							</p:cellEditor>
+						<p:column filterBy="#{linha.cidade}" filterMatchMode="contains"
+							sortBy="#{linha.cidade}" width="20" headerText="Cidade">
+							<h:outputText value="#{linha.cidade}" />
 						</p:column>
 
 
-						<p:column headerText="Exclusão" width="5"
-							styleClass="text-align:center">
-							<p:commandButton action="#{mbFornecedor.excluir}"
-								update=":tabView:form2,tabView:form2:dataTable" process="@this"
-								icon="ui-icon-trash" ajax="true">
+						<p:column headerText="Exclusão" width="5">
+
+							<p:commandButton styleClass="text-align:center"
+								style="margin-top:-20; float:right;" update=":forExDetail"
+								oncomplete="PF('forExDialog').show()" icon="ui-icon-trash">
 								<f:setPropertyActionListener value="#{linha}"
-									target="#{mbFornecedor.fornecedor}"></f:setPropertyActionListener>
-								<p:confirm icon="ui-icon-alert" message="Deseja Excluir ?"
-									header="Confirma?" />
+									target="#{mbFornecedor.selecionado}" />
 							</p:commandButton>
 						</p:column>
 
-						<p:column width="20" headerText="Edição">
-							<p:rowEditor></p:rowEditor>
+						<p:column style="width:32px;text-align: center"
+							headerText="Edição">
+							<p:commandButton update="forEdDetail"
+								oncomplete="PF('forEdDialog').show()" icon="ui-icon-search">
+								<f:setPropertyActionListener value="#{linha}"
+									target="#{mbFornecedor.selecionado}" />
+							</p:commandButton>
+
 						</p:column>
 
 					</p:dataTable>
-
-					<p:confirmDialog appendTo="@(body)" global="true">
-						<p:commandButton process="@this" value="sim"
-							styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
-						<p:commandButton process="@this" value="Nao"
-							styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
-					</p:confirmDialog>
-
 				</h:form>
-
 			</p:tab>
 
 		</p:tabView>
 
 	</div>
+
+	<p:dialog header="Fornecedor" widgetVar="forEdDialog" modal="true"
+		minHeight="600" minWidth="600">
+		<p:outputPanel id="forEdDetail" style="text-align:center;">
+			<h:form id="form_forEdModal">
+
+				<p:panelGrid columns="1"
+					rendered="#{not empty mbFornecedor.selecionado}"
+					columnClasses="label,value">
+					<p:tabView>
+						<p:tab title="Dados pessoais">
+							<p:panelGrid columns="2">
+								<h:outputLabel value="Razão Social" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbFornecedor.selecionado.razSocial}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Nome" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbFornecedor.selecionado.fantasia}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="CNPJ" />
+								<p:panelGrid columns="1">
+									<p:inputMask mask="99.999.999/9999-99"
+										value="#{mbFornecedor.selecionado.cnpj}" required="true" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Telefone" />
+								<p:panelGrid columns="1">
+									<p:inputMask mask="(99)9999-9999"
+										value="#{mbFornecedor.selecionado.tel}" required="true" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Email" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbFornecedor.selecionado.email}"
+										required="true" />
+								</p:panelGrid>
+
+
+							</p:panelGrid>
+						</p:tab>
+						<p:tab title="Endereço">
+							<h:panelGrid columns="2">
+
+								<h:outputLabel value="CEP" />
+								<p:panelGrid columns="1">
+									<p:inputText maxlength="8"
+										requiredMessage="Favor preencha o CEP"
+										value="#{mbFornecedor.selecionado.cep}" required="true">
+									</p:inputText>
+								</p:panelGrid>
+
+								<h:outputLabel value="Rua:" />
+								<p:panelGrid columns="1">
+									<p:inputText disabled="true"
+										value="#{mbFornecedor.selecionado.endereco}" required="true"
+										id="endereco" size="60" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Número:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbFornecedor.selecionado.numero}"
+										required="true" id="numero" size="10" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Bairro:" />
+								<p:panelGrid columns="1">
+									<p:inputText disabled="true"
+										value="#{mbFornecedor.selecionado.bairro}" required="true"
+										id="bairro" size="30" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Cidade:" />
+								<p:panelGrid columns="1">
+									<p:inputText disabled="true"
+										value="#{mbFornecedor.selecionado.cidade}" required="true"
+										id="cidade" size="30" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="UF:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<p:inputText id="uf" disabled="true"
+										value="#{mbFornecedor.selecionado.uf}" required="true"
+										size="10" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Complemento:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbFornecedor.selecionado.complemento}"
+										required="true" id="complemnto" size="30" />
+								</p:panelGrid>
+
+
+							</h:panelGrid>
+
+
+						</p:tab>
+					</p:tabView>
+				</p:panelGrid>
+
+				<p:commandButton value="Alterar"
+					style="margin-top:-20; float:right;"
+					action="#{mbFornecedor.editar}" ajax="true" update=":tabView:form2"></p:commandButton>
+			</h:form>
+		</p:outputPanel>
+	</p:dialog>
+	<p:dialog header="Funcionário" widgetVar="forExDialog" modal="true">
+		<p:outputPanel id="forExDetail" style="text-align:center;">
+			<h:form id="form_forExModal">
+				<p:panelGrid columns="1"
+					rendered="#{not empty mbFuncionario.selecionado}"
+					columnClasses="label,value">
+
+					<p:tabView>
+						<p:tab title="Dados pessoais">
+							<p:panelGrid columns="2">
+								<h:outputLabel value="Razão Social" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.razSocial}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Nome" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.fantasia}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="CNPJ" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.cnpj}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Telefone" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.tel}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Email" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.email}" />
+								</p:panelGrid>
+
+
+
+							</p:panelGrid>
+						</p:tab>
+						<p:tab title="Endereço">
+							<h:panelGrid columns="2">
+								<h:outputLabel value="CEP" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.cep}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Rua:" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.endereco}" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Número:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.numero}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Bairro:" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.bairro}" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Cidade:" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.cidade}" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="UF:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.uf}" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Complemento:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFornecedor.selecionado.complemento}" />
+								</p:panelGrid>
+
+							</h:panelGrid>
+						</p:tab>
+					</p:tabView>
+				</p:panelGrid>
+				<p:commandButton value="Excluir"
+					style="margin-top:-20; float:right;"
+					action="#{mbFuncionario.excluir}" ajax="true"
+					update=":tabView:form2">
+					<p:confirm icon="ui-icon-alert" message="Deseja Excluir ?"
+						header="Confirma?" />
+				</p:commandButton>
+				<p:confirmDialog appendTo="@(body)" global="true">
+					<p:commandButton process="@this" value="Sim"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
+					<p:commandButton process="@this" value="Não"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
+				</p:confirmDialog>
+			</h:form>
+		</p:outputPanel>
+	</p:dialog>
 	<ui:insert name="footer">
 		<ui:include src="Template/footer.jsf" />
 	</ui:insert>

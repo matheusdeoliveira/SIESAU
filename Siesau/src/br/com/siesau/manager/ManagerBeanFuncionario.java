@@ -1,6 +1,3 @@
-/**
- * 
- */
 package br.com.siesau.manager;
 
 import java.io.File;
@@ -8,6 +5,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -23,15 +21,17 @@ import javax.faces.context.FacesContext;
 import javax.imageio.stream.FileImageOutputStream;
 
 import org.primefaces.event.CaptureEvent;
-import org.primefaces.event.RowEditEvent;
 
 import br.com.siesau.control.viaCEP.ViaCEP;
 import br.com.siesau.control.viaCEP.ViaCEPException;
 import br.com.siesau.entity.Cargo;
+import br.com.siesau.entity.Especialidade;
+import br.com.siesau.entity.FuncEspec;
 import br.com.siesau.entity.Funcionario;
 import br.com.siesau.entity.UnidFunc;
 import br.com.siesau.entity.UnidadeSaude;
 import br.com.siesau.persistence.CargoDao;
+import br.com.siesau.persistence.EspecialidadeDao;
 import br.com.siesau.persistence.FuncionarioDao;
 
 /**
@@ -45,21 +45,29 @@ public class ManagerBeanFuncionario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Funcionario funcionario;
+	private Funcionario selecionado;
+	private FuncEspec funcEspec;
 	private List<Funcionario> funcionarios;
+	private List<Funcionario> funcionariosFiltrados;
+	private List<Especialidade> especialidades;
+	private List<Especialidade> especialidadesSelecionadas;
 	private ViaCEP viaCep;
 	private List<Cargo> cargos;
-	private Map<String, String> mostraCargos = new HashMap<String, String>();
+	private Map<String, String> mostraCargos;
 	private UnidadeSaude unidadeSaude;
 	private UnidFunc unidFunc;
 	private String foto;
-	private List<Funcionario> funcionariosFiltrados;
 
 	@PostConstruct
 	public void init() {
+		mostraCargos = new HashMap<String, String>();
 		funcionario = new Funcionario();
+		selecionado = new Funcionario();
+		funcEspec = new FuncEspec();
 		funcionario.setCargo(new Cargo());
 		funcionarios = new FuncionarioDao(new Funcionario()).lista();
-
+		especialidades = new EspecialidadeDao(new Especialidade()).lista();
+		especialidadesSelecionadas = new ArrayList<>();
 		unidadeSaude = new UnidadeSaude();
 		unidFunc = new UnidFunc();
 
@@ -79,16 +87,19 @@ public class ManagerBeanFuncionario implements Serializable {
 
 		try {
 			buscaCep();
+			
+		
 			unidFunc.setFuncionario1(funcionario);
 			unidFunc.setUnidadeSaude1(unidadeSaude);
 			unidFunc.setFuncionario2(funcionario);
 			unidFunc.setUnidadeSaude2(unidadeSaude);
+			funcionario.setEspecialidades(especialidadesSelecionadas);
 			funcionario.setFoto(getFoto());
 			funcionario.setDataAdmis(new Date());
 			funcionario.setAtivo(true);
 
 
-			// new UnidFuncDao(new UnidFunc()).salva(unidFunc);
+		//	new UnidFuncDao(new UnidFunc()).salva(unidFunc);
 			new FuncionarioDao(new Funcionario()).salva(funcionario);
 			fc.addMessage("form1", new FacesMessage("Funcionario " + funcionario.getNome() + " salvo com sucesso."));
 			unidFunc = new UnidFunc();
@@ -106,9 +117,8 @@ public class ManagerBeanFuncionario implements Serializable {
 
 		try {
 
-			new FuncionarioDao(new Funcionario()).deleta(funcionario);
-
-			fc.addMessage("form2", new FacesMessage("Fornecedor " + funcionario.getNome() + " excluído"));
+			fc.addMessage("form2", new FacesMessage("Funcionï¿½rio " + selecionado.getNome() + " excluï¿½do"));
+			new FuncionarioDao(new Funcionario()).deleta(selecionado);
 			funcionarios = new FuncionarioDao(new Funcionario()).lista();
 		} catch (Exception e) {
 			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
@@ -116,14 +126,15 @@ public class ManagerBeanFuncionario implements Serializable {
 		}
 	}
 
-	public void editarLinha(RowEditEvent row) {
+	public void editar() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		try {
-
-			Funcionario selecionado = (Funcionario) row.getObject();
-
+			Funcionario temp = selecionado;
+		
 			new FuncionarioDao(new Funcionario()).atualiza(selecionado);
-			fc.addMessage("form2", new FacesMessage("Funcionario " + selecionado.getNome() + " editado"));
+			fc.addMessage("form2", new FacesMessage("Funcionï¿½rio "+ temp.getNome() + " editado"));
+			selecionado = new Funcionario();
+			temp = new Funcionario();
 			funcionarios = new FuncionarioDao(new Funcionario()).lista();
 
 		} catch (Exception e) {
@@ -145,6 +156,26 @@ public class ManagerBeanFuncionario implements Serializable {
 			funcionario.setUf(viaCep.getUf());
 
 			System.out.println(funcionario.getBairro());
+
+		} catch (ViaCEPException e) {
+			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
+			e.printStackTrace();
+		}
+	}
+	
+	public void buscaCepSelecionado() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+
+		try {
+			viaCep = new ViaCEP();
+			viaCep.buscar(selecionado.getCep().toString());
+
+			selecionado.setCidade(viaCep.getLocalidade());
+			selecionado.setEndereco(viaCep.getLogradouro());
+			selecionado.setBairro(viaCep.getBairro());
+			selecionado.setUf(viaCep.getUf());
+
+			System.out.println(selecionado.getBairro());
 
 		} catch (ViaCEPException e) {
 			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
@@ -179,8 +210,8 @@ public class ManagerBeanFuncionario implements Serializable {
 			imageOutput.close();
 
 			fc.addMessage("form1",
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Foto CAPTURADA com sucesso!", "Informação"));
-			System.out.println("Tenta nesse diretório aqui " + caminhoFoto);
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Foto CAPTURADA com sucesso!", "Informaï¿½ï¿½o"));
+			System.out.println("Tenta nesse diretï¿½rio aqui " + caminhoFoto);
 		} catch (IOException e) {
 			throw new FacesException("Error in writing captured image.", e);
 		}
@@ -189,7 +220,7 @@ public class ManagerBeanFuncionario implements Serializable {
 	private void verificaDiretorio(String param){
 		Path dir = Paths.get(param);
 		if(!dir.toFile().exists()){
-			System.out.println("Criação do diretório: " + param);
+			System.out.println("Criaï¿½ï¿½o do diretï¿½rio: " + param);
 			new File(param).mkdirs();
 		}					
 	}
@@ -211,6 +242,9 @@ public class ManagerBeanFuncionario implements Serializable {
 	}
 
 	public List<Cargo> getCargos() {
+		if(cargos == null){
+			cargos = new CargoDao(new Cargo()).lista();
+		}
 		return cargos;
 	}
 
@@ -219,6 +253,11 @@ public class ManagerBeanFuncionario implements Serializable {
 	}
 
 	public Map<String, String> getMostraCargos() {
+		if(mostraCargos == null){
+			for (int i = 0; i < cargos.size(); i++) {
+				mostraCargos.put(cargos.get(i).getCargo().toString().toUpperCase(), cargos.get(i).getCdCargo().toString());
+			}
+		}
 		return mostraCargos;
 	}
 
@@ -254,6 +293,41 @@ public class ManagerBeanFuncionario implements Serializable {
 		this.foto = foto;
 	}
 
+	public Funcionario getSelecionado() {
+		return selecionado;
+	}
+
+	public void setSelecionado(Funcionario selecionado) {
+		this.selecionado = selecionado;
+	}
+
+	public List<Especialidade> getEspecialidades() {
+		if(especialidades == null){
+			especialidades = new EspecialidadeDao(new Especialidade()).lista();
+		}
+		return especialidades;
+	}
+
+	public void setEspecialidades(List<Especialidade> especialidades) {
+		this.especialidades = especialidades;
+	}
+
+	public List<Especialidade> getEspecialidadesSelecionadas() {
+		return especialidadesSelecionadas;
+	}
+
+	public void setEspecialidadesSelecionadas(List<Especialidade> especialidadesSelecionadas) {
+		this.especialidadesSelecionadas = especialidadesSelecionadas;
+	}
+
+	public FuncEspec getFuncEspec() {
+		return funcEspec;
+	}
+
+	public void setFuncEspec(FuncEspec funcEspec) {
+		this.funcEspec = funcEspec;
+	}
+
 	public List<Funcionario> getFuncionariosFiltrados() {
 		return funcionariosFiltrados;
 	}
@@ -261,6 +335,5 @@ public class ManagerBeanFuncionario implements Serializable {
 	public void setFuncionariosFiltrados(List<Funcionario> funcionariosFiltrados) {
 		this.funcionariosFiltrados = funcionariosFiltrados;
 	}
-	
 	
 }

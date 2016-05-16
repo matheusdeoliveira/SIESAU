@@ -79,5 +79,21 @@ public class Cargo implements Serializable {
 
 		return funcionario;
 	}
+	
+	@Override
+	public int hashCode() {
+		return (cdCargo == null) ? 0 : cdCargo;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (obj instanceof Cargo) {
+			return ((Cargo) obj).getCdCargo().equals(this.cdCargo);
+		}
+		return false;
+	}
+
 
 }
