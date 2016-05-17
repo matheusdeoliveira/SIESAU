@@ -18,7 +18,6 @@ import javax.faces.context.FacesContext;
 import javax.imageio.stream.FileImageOutputStream;
 
 import org.primefaces.event.CaptureEvent;
-import org.primefaces.event.RowEditEvent;
 
 import br.com.siesau.control.GoogleMap;
 import br.com.siesau.control.viaCEP.ViaCEP;
@@ -33,6 +32,7 @@ public class ManagerBeanPaciente implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private Paciente paciente;
+	private Paciente selecionado;
 	private List<Paciente> pacientes;
 	private List<Paciente> pacientesFiltrados;
 	private String foto;
@@ -47,8 +47,6 @@ public class ManagerBeanPaciente implements Serializable {
 	public void salvar() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		try {
-			buscaCep();
-			
 			List<String> coordenadas = GoogleMap
 					.buscaCoordenadas(paciente.getEndereco() + " " + paciente.getBairro() + " " + paciente.getCidade());
 
@@ -59,6 +57,7 @@ public class ManagerBeanPaciente implements Serializable {
 			paciente.setDataCad(new Date());
 			new PacienteDao(new Paciente()).salva(paciente);
 			fc.addMessage("form1", new FacesMessage("Paciente " + paciente.getNome() + " salvo com sucesso"));
+			foto = "";
 			paciente = new Paciente();
 			pacientes = new PacienteDao(new Paciente()).lista();
 
@@ -66,14 +65,14 @@ public class ManagerBeanPaciente implements Serializable {
 			fc.addMessage("form1", new FacesMessage("Error: " + e.getMessage()));
 		}
 	}
-
+	
 	public void excluir() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 
 		try {
 
-			new PacienteDao(new Paciente()).deleta(paciente);
-			fc.addMessage("form2", new FacesMessage("Paciente " + paciente.getNome() + " excluído"));
+			new PacienteDao(new Paciente()).deleta(selecionado);
+			fc.addMessage("form2", new FacesMessage("Paciente " + selecionado.getNome() + " excluído"));
 			pacientes = new PacienteDao(new Paciente()).lista();
 
 		} catch (Exception e) {
@@ -81,16 +80,37 @@ public class ManagerBeanPaciente implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	
 
-	public void editarLinha(RowEditEvent row) {
+	public void editar() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		try {
-			Paciente selecionado = (Paciente) row.getObject();
+			
 			new PacienteDao(new Paciente()).atualiza(selecionado);
 			fc.addMessage("msgs", new FacesMessage("Paciente " + selecionado.getNome() + " editado"));
 			pacientes = new PacienteDao(new Paciente()).lista();
 
 		} catch (Exception e) {
+			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
+			e.printStackTrace();
+		}
+	}
+	
+	public void buscaCepSelecionado() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+
+		try {
+			viaCep = new ViaCEP();
+			viaCep.buscar(selecionado.getCep().toString());
+
+			selecionado.setCidade(viaCep.getLocalidade());
+			selecionado.setEndereco(viaCep.getLogradouro());
+			selecionado.setBairro(viaCep.getBairro());
+			selecionado.setUf(viaCep.getUf());
+
+			System.out.println(selecionado.getBairro());
+
+		} catch (ViaCEPException e) {
 			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
 			e.printStackTrace();
 		}
@@ -107,6 +127,7 @@ public class ManagerBeanPaciente implements Serializable {
 			paciente.setEndereco(viaCep.getLogradouro());
 			paciente.setBairro(viaCep.getBairro());
 			paciente.setUf(viaCep.getUf());
+			
 
 		} catch (ViaCEPException e) {
 			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
@@ -201,6 +222,14 @@ public class ManagerBeanPaciente implements Serializable {
 
 	public void setPacientesFiltrados(List<Paciente> pacientesFiltrados) {
 		this.pacientesFiltrados = pacientesFiltrados;
+	}
+
+	public Paciente getSelecionado() {
+		return selecionado;
+	}
+
+	public void setSelecionado(Paciente selecionado) {
+		this.selecionado = selecionado;
 	}
 
 	
