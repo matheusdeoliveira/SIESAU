@@ -30,7 +30,7 @@
 			<p:tab title="Unidade de Saúde" style="position:relative;">
 
 				<h:form id="form1">
-
+					<p:growl></p:growl>
 					<p:panel id="dados_gerais" header="Dados Gerais"
 						style="background-color:#F0F4F9; color:#000000;">
 						<h:panelGrid STYLE="background-color:#F0F4F9;" columns="3"
@@ -48,7 +48,7 @@
 							<p:row>
 								<h:outputText value="CNPJ:" style="color:#000000;" />
 								<br />
-								<p:inputText value="#{mbUnidadeSaude.unidadeSaude.cnpj}"
+								<p:inputMask mask="99.999.999/9999-99" value="#{mbUnidadeSaude.unidadeSaude.cnpj}"
 									required="true" size="50" />
 							</p:row>
 
@@ -61,24 +61,27 @@
 									<f:selectItem itemValue="true" itemLabel="Ativa"></f:selectItem>
 									<f:selectItem itemValue="false" itemLabel="Inativa"></f:selectItem>
 
-
 								</p:selectOneMenu>
 							</p:row>
-
-
-
 						</h:panelGrid>
-
 					</p:panel>
-
-
 					<p:panel id="end" header="Endereço"
 						style="width:500px; margin-top:20px; background-color:#F0F4F9;color:#000000;">
+						
+						<h:outputText value="CEP: " style="color:#000000;" />
+								<br />
+								<p:inputText maxlength="8"
+									requiredMessage="Favor preencha o CEP"
+									value="#{mbUnidadeSaude.unidadeSaude.cep}" required="true">
+									<p:ajax event="keyup" update="cidade, endereco, bairro, uf"
+										listener="#{mbUnidadeSaude.buscaCep}" />
+								</p:inputText>
+								<br/>
+						
 						<h:outputText value="Rua: " style="color:#000000;" />
 						<br />
-						<p:inputText id="endereco"
-							value="#{mbUnidadeSaude.unidadeSaude.endereco}" required="true"
-							size="60" />
+						<p:inputText id="endereco" disabled="true" value="#{mbUnidadeSaude.unidadeSaude.endereco}"
+							required="true" size="60" />
 
 
 						<h:panelGrid columns="2">
@@ -100,10 +103,10 @@
 
 						<h:outputText value="Bairro" style="color:#000000;" />
 						<br />
-						<p:inputText id="bairro"
-							value="#{mbUnidadeSaude.unidadeSaude.bairro}" required="true"
-							size="40" />
+						<p:inputText disabled="true" id="bairro" value="#{mbUnidadeSaude.unidadeSaude.bairro}"
+							required="true" size="40" />
 						<br />
+
 
 						<h:panelGrid columns="2">
 
@@ -111,69 +114,21 @@
 
 								<h:outputText value="Cidade:" style="color:#000000;" />
 								<br />
-								<p:inputText id="cidade"
-									value="#{mbUnidadeSaude.unidadeSaude.cidade}" required="true"
-									size="30" />
+								<p:inputText disabled="true" id="cidade" value="#{mbUnidadeSaude.unidadeSaude.cidade}"
+									required="true" size="30" />
 								<br />
-
-
-								<h:outputText value="CEP: " size="30" style="color:#000000;" />
-								<br />
-
-								<p:inputText value="#{mbUnidadeSaude.unidadeSaude.cep}"
-									required="true">
-									<p:ajax event="keyup" update="cidade, endereco, bairro"
-										listener="#{mbUnidadeSaude.buscaCep}" />
-								</p:inputText>
+								
 							</p:column>
 
 
 							<p:column>
-								<p:outputLabel for="estado" value="Estado:"
-									style="color:#000000;" />
+								<h:outputText value="Estado:" style="color:#000000;" />
 								<br />
-								<p:selectOneMenu id="estado"
-									value="#{mbUnidadeSaude.unidadeSaude.uf}" style="width:143px">
-									<f:selectItem itemLabel="Selecione" itemValue="" />
-									<f:selectItem itemValue="AC" itemLabel="Acre" />
-									<f:selectItem itemValue="AL" itemLabel="Alagoas" />
-									<f:selectItem itemValue="AM" itemLabel="Amazonas" />
-									<f:selectItem itemValue="AP" itemLabel="Amapa" />
-									<f:selectItem itemValue="BA" itemLabel="Bahia" />
-									<f:selectItem itemValue="CE" itemLabel="Ceara" />
-									<f:selectItem itemValue="DF" itemLabel="Didtrito Federal" />
-									<f:selectItem itemValue="ES" itemLabel="Espirito Santo" />
-									<f:selectItem itemValue="GO" itemLabel="Goias" />
-									<f:selectItem itemValue="MA" itemLabel="Maranhao" />
-									<f:selectItem itemValue="MG" itemLabel="Minas Gerais" />
-									<f:selectItem itemValue="MS" itemLabel="Mato Grosso do Sul" />
-									<f:selectItem itemValue="MT" itemLabel="Mato Grosso" />
-									<f:selectItem itemValue="PA" itemLabel="Para" />
-									<f:selectItem itemValue="PB" itemLabel="Paraiba" />
-									<f:selectItem itemValue="PE" itemLabel="Pernambuco" />
-									<f:selectItem itemValue="PI" itemLabel="Piaui" />
-									<f:selectItem itemValue="PR" itemLabel="Parana" />
-									<f:selectItem itemValue="RJ" itemLabel="Rio de Janeiro" />
-									<f:selectItem itemValue="RN" itemLabel="Rio Grande do Norte" />
-									<f:selectItem itemValue="RO" itemLabel="Rondonia" />
-									<f:selectItem itemValue="RR" itemLabel="Roraima" />
-									<f:selectItem itemValue="RS" itemLabel="Rio Grande do Sul" />
-									<f:selectItem itemValue="SC" itemLabel="Santa Catarina" />
-									<f:selectItem itemValue="SE" itemLabel="Sergipe" />
-									<f:selectItem itemValue="SP" itemLabel="Sao Paulo" />
-									<f:selectItem itemValue="TO" itemLabel="Tocantins" />
-								</p:selectOneMenu>
+								<p:inputText  id="uf" disabled="true" value="#{mbUnidadeSaude.unidadeSaude.uf}"
+									required="true" size="10" />
 								<br />
-								<br />
-								<br />
-
 							</p:column>
-
-
-
 						</h:panelGrid>
-
-
 					</p:panel>
 
 					<p:panel id="cont" header="Contato"
@@ -182,7 +137,7 @@
 							<p:column>
 								<h:outputText value="Telefone:" style="color:#000000;" />
 								<br />
-								<p:inputText value="#{mbUnidadeSaude.unidadeSaude.tel}"
+								<p:inputMask mask="(99)9999-9999" value="#{mbUnidadeSaude.unidadeSaude.tel}"
 									required="true" />
 							</p:column>
 
@@ -221,9 +176,6 @@
 						
 						paginator="true" rows="10" style="margin-bottom:20px">
 
-						<p:ajax event="rowEdit" listener="#{mbUnidadeSaude.editarLinha}"
-							update="tabView:form2:msgs" />
-
 						<f:facet name="header">
 							<p:outputPanel>
 								<h:outputText value="Pesquisa em todos os campos:" />
@@ -233,73 +185,253 @@
 							</p:outputPanel>
 						</f:facet>
 
-						<p:column width="20" filterBy="#{linha.cdUnidsaude}"
+						<p:column width="20" headerText="CNPJ" filterBy="#{linha.cdUnidsaude}"
 							filterMatchMode="contains">
-							<f:facet name="header">
-								<h:outputText value="ID" />
-							</f:facet>
-							<h:outputText value="#{linha.cdUnidsaude}" />
+							<h:outputText value="#{linha.cnpj}" />
 						</p:column>
 
-						<p:column width="20" headerText="Usuario"
-							filterBy="#{linha.fantasia}" filterMatchMode="contains">
-							<p:cellEditor>
-
-								<f:facet name="output">
-									<h:outputText value="#{linha.fantasia}" />
-								</f:facet>
-
-								<f:facet name="input">
-									<p:inputText value="#{linha.fantasia}" />
-								</f:facet>
-							</p:cellEditor>
+						<p:column width="20" headerText="Unidade de Saúde"
+							filterBy="#{linha.fantasia}" filterMatchMode="contains">							
+									<h:outputText value="#{linha.fantasia}" />								
 						</p:column>
 
 						<p:column width="20" headerText="Nome Fantasia"
-							filterBy="#{linha.fantasia}" filterMatchMode="contains">
-							<p:cellEditor>
-
-								<f:facet name="output">
-									<h:outputText value="#{linha.fantasia}" />
-								</f:facet>
-
-								<f:facet name="input">
-									<p:inputText value="#{linha.fantasia}" />
-								</f:facet>
-							</p:cellEditor>
+							filterBy="#{linha.fantasia}" filterMatchMode="contains">							
+									<h:outputText value="#{linha.fantasia}" />							
 						</p:column>
 
 
-						<p:column headerText="Exclusão" width="5"
-							styleClass="text-align:center">
-							<p:commandButton action="#{mbUnidadeSaude.excluir}"
-								update=":tabView:form2" process="@this"
-								icon="ui-icon-trash" ajax="true">
+							<p:column headerText="Exclusão" width="5">
+
+							<p:commandButton styleClass="text-align:center"
+								style="margin-top:-20; float:right;" update=":uniExDetail"
+								oncomplete="PF('uniExDialog').show()" icon="ui-icon-trash">
 								<f:setPropertyActionListener value="#{linha}"
-									target="#{mbUnidadeSaude.unidadeSaude}"></f:setPropertyActionListener>
-								<p:confirm icon="ui-icon-alert" message="Deseja Excluir ?"
-									header="Confirma?" />
+									target="#{mbUnidadeSaude.selecionado}" />
 							</p:commandButton>
 						</p:column>
 
-						<p:column width="20" headerText="Edição">
-							<p:rowEditor />
+						<p:column style="width:32px;text-align: center"
+							headerText="Edição">
+							<p:commandButton update="uniEdDetail"
+								oncomplete="PF('uniEdDialog').show()" icon="ui-icon-search">
+								<f:setPropertyActionListener value="#{linha}"
+									target="#{mbUnidadeSaude.selecionado}" />
+							</p:commandButton>
+
 						</p:column>
+
 					</p:dataTable>
-
-
-					<p:confirmDialog appendTo="@(body)" global="true">
-						<p:commandButton process="@this" value="Sim"
-							styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
-						<p:commandButton process="@this" value="Não"
-							styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
-					</p:confirmDialog>
-
 				</h:form>
 			</p:tab>
+
 		</p:tabView>
+
 	</div>
 
+	<p:dialog header="Fornecedor" widgetVar="uniEdDialog" modal="true"
+		minHeight="600" minWidth="600">
+		<p:outputPanel id="uniEdDetail" style="text-align:center;">
+			<h:form id="form_uniEdModal">
+
+				<p:panelGrid columns="1"
+					rendered="#{not empty mbUnidadeSaude.selecionado}"
+					columnClasses="label,value">
+					<p:tabView>
+						<p:tab title="Dados">
+							<p:panelGrid columns="2">
+								<h:outputLabel value="Nome Unidade de Saúde" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbUnidadeSaude.selecionado.fantasia}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="CNPJ" />
+								<p:panelGrid columns="1">
+									<p:inputMask mask="99.999.999/9999-99" value="#{mbUnidadeSaude.selecionado.cnpj}" 
+									required="true"/>
+								</p:panelGrid>
+
+							
+								<h:outputLabel value="Telefone" />
+								<p:panelGrid columns="1">
+									<p:inputMask mask="(99)9999-9999"
+										value="#{mbUnidadeSaude.selecionado.tel}" required="true" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Email" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbUnidadeSaude.selecionado.email}"
+										required="true" />
+								</p:panelGrid>
+
+
+							</p:panelGrid>
+						</p:tab>
+						<p:tab title="Endereço">
+							<h:panelGrid columns="2">
+
+								<h:outputLabel value="CEP" />
+								<p:panelGrid columns="1">
+									<p:inputText maxlength="8"
+										requiredMessage="Favor preencha o CEP"
+										value="#{mbUnidadeSaude.selecionado.cep}" required="true">
+									</p:inputText>
+								</p:panelGrid>
+
+								<h:outputLabel value="Rua:" />
+								<p:panelGrid columns="1">
+									<p:inputText disabled="true"
+										value="#{mbUnidadeSaude.selecionado.endereco}" required="true"
+										id="endereco" size="60" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Número:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbUnidadeSaude.selecionado.numero}"
+										required="true" id="numero" size="10" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Bairro:" />
+								<p:panelGrid columns="1">
+									<p:inputText disabled="true"
+										value="#{mbUnidadeSaude.selecionado.bairro}" required="true"
+										id="bairro" size="30" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Cidade:" />
+								<p:panelGrid columns="1">
+									<p:inputText disabled="true"
+										value="#{mbUnidadeSaude.selecionado.cidade}" required="true"
+										id="cidade" size="30" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="UF:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<p:inputText id="uf" disabled="true"
+										value="#{mbUnidadeSaude.selecionado.uf}" required="true"
+										size="10" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Complemento:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbUnidadeSaude.selecionado.complemento}"
+										required="true" id="complemnto" size="30" />
+								</p:panelGrid>
+
+
+							</h:panelGrid>
+
+
+						</p:tab>
+					</p:tabView>
+				</p:panelGrid>
+
+				<p:commandButton value="Alterar"
+					style="margin-top:-20; float:right;"
+					action="#{mbUnidadeSaude.editar}" ajax="true" update=":tabView:form2"></p:commandButton>
+			</h:form>
+		</p:outputPanel>
+	</p:dialog>
+	<p:dialog header="Funcionário" widgetVar="uniExDialog" modal="true">
+		<p:outputPanel id="uniExDetail" style="text-align:center;">
+			<h:form id="form_uniExModal">
+				<p:panelGrid columns="1"
+					rendered="#{not empty mbFuncionario.selecionado}"
+					columnClasses="label,value">
+
+					<p:tabView>
+						<p:tab title="Dados pessoais">
+							<p:panelGrid columns="2">
+
+								<h:outputLabel value="Nome" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbUnidadeSaude.selecionado.fantasia}" />
+								</p:panelGrid>
+								
+								<h:outputLabel value="CNPJ" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbUnidadeSaude.selecionado.cnpj}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Telefone" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbUnidadeSaude.selecionado.tel}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Email" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbUnidadeSaude.selecionado.email}" />
+								</p:panelGrid>
+
+
+
+							</p:panelGrid>
+						</p:tab>
+						<p:tab title="Endereço">
+							<h:panelGrid columns="2">
+								<h:outputLabel value="CEP" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbUnidadeSaude.selecionado.cep}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Rua:" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbUnidadeSaude.selecionado.endereco}" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Número:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbUnidadeSaude.selecionado.numero}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Bairro:" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbUnidadeSaude.selecionado.bairro}" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Cidade:" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbUnidadeSaude.selecionado.cidade}" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="UF:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbUnidadeSaude.selecionado.uf}" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Complemento:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbUnidadeSaude.selecionado.complemento}" />
+								</p:panelGrid>
+
+							</h:panelGrid>
+						</p:tab>
+					</p:tabView>
+				</p:panelGrid>
+				<p:commandButton value="Excluir"
+					style="margin-top:-20; float:right;"
+					action="#{mbUnidadeSaude.excluir}" ajax="true"
+					update=":tabView:form2">
+					<p:confirm icon="ui-icon-alert" message="Deseja Excluir ?"
+						header="Confirma?" />
+				</p:commandButton>
+				<p:confirmDialog appendTo="@(body)" global="true">
+					<p:commandButton process="@this" value="Sim" type="button" onclick="PF('uniExDialog').hide()"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
+					<p:commandButton process="@this" value="Não"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
+				</p:confirmDialog>
+			</h:form>
+		</p:outputPanel>
+	</p:dialog>
 	<ui:insert name="footer">
 		<ui:include src="Template/footer.jsf" />
 	</ui:insert>
