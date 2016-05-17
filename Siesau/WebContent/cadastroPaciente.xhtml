@@ -79,7 +79,7 @@
 
 										<h:outputText value="Cartão SUS: " style="color:#000000;" />
 										<br />
-										<p:inputText maxlength="15"
+										<p:inputMask mask="999999999999999" maxlength="15"
 											value="#{mbPaciente.paciente.cartaoSus}" required="true"
 											size="20" />
 										<br />
@@ -129,11 +129,7 @@
 
 								<h:panelGrid columns="2">
 
-
 									<p:column>
-
-
-
 										<h:outputText value="Etnia:" style="color:#000000;" />
 										<br />
 										<p:selectOneMenu value="#{mbPaciente.paciente.etnia}"
@@ -203,9 +199,20 @@
 
 					<p:panel id="end" header="Endereço"
 						style="width:500px; margin-top:20px; background-color:#F0F4F9;color:#000000;">
+						
+						<h:outputText value="CEP: " style="color:#000000;" />
+								<br />
+								<p:inputText maxlength="8"
+									requiredMessage="Favor preencha o CEP"
+									value="#{mbPaciente.paciente.cep}" required="true">
+									<p:ajax event="keyup" update="cidade, endereco, bairro, uf"
+										listener="#{mbPaciente.buscaCep}" />
+								</p:inputText>
+								<br/>
+						
 						<h:outputText value="Rua: " style="color:#000000;" />
 						<br />
-						<p:inputText id="endereco" value="#{mbPaciente.paciente.endereco}"
+						<p:inputText id="endereco" disabled="true" value="#{mbPaciente.paciente.endereco}"
 							required="true" size="60" />
 
 
@@ -228,7 +235,7 @@
 
 						<h:outputText value="Bairro" style="color:#000000;" />
 						<br />
-						<p:inputText id="bairro" value="#{mbPaciente.paciente.bairro}"
+						<p:inputText disabled="true" id="bairro" value="#{mbPaciente.paciente.bairro}"
 							required="true" size="40" />
 						<br />
 
@@ -239,68 +246,21 @@
 
 								<h:outputText value="Cidade:" style="color:#000000;" />
 								<br />
-								<p:inputText id="cidade" value="#{mbPaciente.paciente.cidade}"
+								<p:inputText disabled="true" id="cidade" value="#{mbPaciente.paciente.cidade}"
 									required="true" size="30" />
 								<br />
-
-								<h:outputText value="CEP: " style="color:#000000;" />
-								<br />
-								<p:inputText maxlength="8"
-									requiredMessage="Favor preencha o CEP"
-									value="#{mbPaciente.paciente.cep}" required="true">
-									<p:ajax event="keyup" update="cidade, endereco, bairro"
-										listener="#{mbPaciente.buscaCep}" />
-								</p:inputText>
+								
 							</p:column>
 
 
 							<p:column>
-								<p:outputLabel for="estado" value="Estado:"
-									style="color:#000000;" />
+								<h:outputText value="Estado:" style="color:#000000;" />
 								<br />
-								<p:selectOneMenu id="estado" value="#{mbPaciente.paciente.uf}"
-									style="width:143px">
-									<f:selectItem itemLabel="Selecione" itemValue="" />
-									<f:selectItem itemLabel="AC" itemValue="AC" />
-									<f:selectItem itemLabel="AL" itemValue="AL" />
-									<f:selectItem itemLabel="AM" itemValue="AM" />
-									<f:selectItem itemLabel="AP" itemValue="AP" />
-									<f:selectItem itemLabel="BA" itemValue="BA" />
-									<f:selectItem itemLabel="CE" itemValue="CE" />
-									<f:selectItem itemLabel="DF" itemValue="DF" />
-									<f:selectItem itemLabel="ES" itemValue="ES" />
-									<f:selectItem itemLabel="GO" itemValue="GO" />
-									<f:selectItem itemLabel="MA" itemValue="MA" />
-									<f:selectItem itemLabel="MG" itemValue="MG" />
-									<f:selectItem itemLabel="MS" itemValue="MS" />
-									<f:selectItem itemLabel="MT" itemValue="MT" />
-									<f:selectItem itemLabel="PA" itemValue="PA" />
-									<f:selectItem itemLabel="PB" itemValue="PB" />
-									<f:selectItem itemLabel="PE" itemValue="PE" />
-									<f:selectItem itemLabel="PI" itemValue="PI" />
-									<f:selectItem itemLabel="PR" itemValue="PR" />
-									<f:selectItem itemLabel="RJ" itemValue="RJ" />
-									<f:selectItem itemLabel="RN" itemValue="RN" />
-									<f:selectItem itemLabel="RO" itemValue="RO" />
-									<f:selectItem itemLabel="RR" itemValue="RR" />
-									<f:selectItem itemLabel="RS" itemValue="RS" />
-									<f:selectItem itemLabel="SC" itemValue="SC" />
-									<f:selectItem itemLabel="SE" itemValue="SE" />
-									<f:selectItem itemLabel="SP" itemValue="SP" />
-									<f:selectItem itemLabel="TO" itemValue="TO" />
-								</p:selectOneMenu>
+								<p:inputText  id="uf" disabled="true" value="#{mbPaciente.paciente.uf}"
+									required="true" size="10" />
 								<br />
-								<br />
-								<br />
-
-
 							</p:column>
-
-
-
 						</h:panelGrid>
-
-
 					</p:panel>
 
 					<p:panel id="cont" header="Contato"
@@ -359,11 +319,8 @@
 						reflow="true" value="#{mbPaciente.pacientes}"
 						widgetVar="tabelaPacientes"
 						filteredValue="#{mbPaciente.pacientesFiltrados}"
-						emptyMessage="Não há pacientes." paginator="true" rows="10"
-						style="margin-bottom:20px">
-
-						<p:ajax event="rowEdit" listener="#{mbPaciente.editarLinha}"
-							update="tabView:form2:msgs" />
+						emptyMessage="Não há pacientes."
+						paginator="true" rows="10" style="margin-bottom:20px">
 
 						<f:facet name="header">
 							<p:outputPanel>
@@ -374,61 +331,38 @@
 							</p:outputPanel>
 						</f:facet>
 
-						<p:column width="20" headerText="SUS"
-							filterBy="#{linha.cartaoSus}" filterMatchMode="contains">
+						<p:column width="20" headerText="SUS" filterBy="#{linha.cartaoSus}" filterMatchMode="contains">
 
 							<h:outputText value="#{linha.cartaoSus}" />
 
 						</p:column>
 
-						<p:column width="20" headerText="Nome do Paciente"
-							filterBy="#{linha.nome}" filterMatchMode="contains">
-							<p:cellEditor>
-								<f:facet name="output">
-									<h:outputText value="#{linha.nome}" />
-								</f:facet>
-								<f:facet name="input">
-									<h:inputText value="#{linha.nome}" />
-								</f:facet>
-							</p:cellEditor>
+						<p:column width="20" headerText="Nome do Paciente" filterBy="#{linha.nome}" filterMatchMode="contains">							
+								<h:outputText value="#{linha.nome}" />								
 						</p:column>
 
-						<p:column width="20" headerText="Telefones"
-							filterBy="#{linha.telCel}" filterMatchMode="contains">
-							<p:cellEditor>
-								<f:facet name="output">
-									<h:outputText value="#{linha.telCel}" />
-								</f:facet>
-								<f:facet name="input">
-									<p:inputMask mask="(99)99999-9999" value="#{linha.telCel}" />
-								</f:facet>
-							</p:cellEditor>
+						<p:column width="20" headerText="Telefones" filterBy="#{linha.telCel}" filterMatchMode="contains">						
+								<h:outputText value="#{linha.telCel}" />								
 						</p:column>
 
 						<p:column headerText="Exclusão" width="5"
 							styleClass="text-align:center">
-							<p:commandButton action="#{mbPaciente.excluir}"
-								update=":tabView:form2,tabView:form2:dataTable" process="@this"
-								icon="ui-icon-trash" ajax="true">
+							<p:commandButton update="pacExDetail"
+								oncomplete="PF('pacExDialog').show()" icon="ui-icon-trash">
 								<f:setPropertyActionListener value="#{linha}"
-									target="#{mbPaciente.paciente}"></f:setPropertyActionListener>
-								<p:confirm icon="ui-icon-alert" message="Deseja Excluir ?"
-									header="Confirma?" />
+									target="#{mbPaciente.selecionado}"></f:setPropertyActionListener>
 							</p:commandButton>
 						</p:column>
 
-						<p:column width="20" headerText="Edição">
-							<p:rowEditor></p:rowEditor>
+						<p:column style="width:32px;text-align: center"
+							headerText="Edição">
+							<p:commandButton update="pacEdDetail"
+								oncomplete="PF('pacEdDialog').show()" icon="ui-icon-search">
+								<f:setPropertyActionListener value="#{linha}"
+									target="#{mbPaciente.selecionado}" />
+							</p:commandButton>
 						</p:column>
-
 					</p:dataTable>
-
-					<p:confirmDialog appendTo="@(body)" global="true">
-						<p:commandButton process="@this" value="sim"
-							styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
-						<p:commandButton process="@this" value="Nao"
-							styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
-					</p:confirmDialog>
 
 				</h:form>
 
@@ -437,6 +371,279 @@
 		</p:tabView>
 
 	</div>
+	
+	<p:dialog header="Paciente" widgetVar="pacEdDialog" modal="true"
+		minHeight="600" minWidth="600">
+		<p:outputPanel id="pacEdDetail" style="text-align:center;">
+			<h:form id="form_pacEdModal">
+
+				<p:panelGrid columns="1"
+					rendered="#{not empty mbPaciente.selecionado}"
+					columnClasses="label,value">
+					<f:facet name="header">
+						<p:graphicImage height="150"
+							value="#{pageContext.servletContext.contextPath}/resources/fotos/#{mbPaciente.selecionado.foto}" />
+					</f:facet>
+					<p:tabView>
+						<p:tab title="Dados pessoais">
+							<p:panelGrid columns="4">
+								<h:outputLabel value="Nome" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbPaciente.selecionado.nome}" />
+								</p:panelGrid>
+								
+								<h:outputLabel value="Nome do pai" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbPaciente.selecionado.nomePai}" required="true" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Nome da mãe" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbPaciente.selecionado.nomeMae}" required="true" />
+								</p:panelGrid>
+																
+								<h:outputLabel value="Cartão SUS" />
+								<p:panelGrid columns="1">
+									<p:inputMask mask="999999999999999" value="#{mbPaciente.selecionado.cartaoSus}" required="true" />
+								</p:panelGrid>															
+
+								<h:outputLabel value="CPF" />
+								<p:panelGrid columns="1">
+									<p:inputMask mask="999.999.999-99"
+										value="#{mbPaciente.selecionado.cpf}" required="true" />
+								</p:panelGrid>
+
+								<h:outputLabel value="RG" />
+								<p:panelGrid columns="1">
+									<p:inputMask mask="99.999.999-9"
+										value="#{mbPaciente.selecionado.rg}" required="true" />
+								</p:panelGrid>
+								
+								<h:outputLabel value="Profissão" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbPaciente.selecionado.profissao}" required="true" />
+								</p:panelGrid>								
+
+								<h:outputLabel value="Estado Civil" />
+								<p:panelGrid columns="2">
+									<h:outputText value="#{mbPaciente.selecionado.estCivil}" />
+									<p:selectOneMenu id="estado_civil"
+										value="#{mbPaciente.selecionado.estCivil}">
+										<f:selectItem itemLabel="Selecione" itemValue="" />
+										<f:selectItem itemLabel="Casado" itemValue="CASADO"></f:selectItem>
+										<f:selectItem itemLabel="Solteiro" itemValue="SOLTEIRO"></f:selectItem>
+										<f:selectItem itemLabel="Viuvo" itemValue="VIUVO"></f:selectItem>
+										<f:selectItem itemLabel="Divorciado" itemValue="DIVORCIADO"></f:selectItem>
+									</p:selectOneMenu>
+								</p:panelGrid>
+
+								<h:outputText value="Telefones" />
+								<p:panelGrid columns="2">
+									<p:inputMask mask="(99)99999-9999"
+										value="#{mbPaciente.selecionado.telCel}"
+										placeholder="Digite o telefone Celular" />
+									<p:inputMask mask="(99)9999-9999"
+										value="#{mbPaciente.selecionado.telRes}"
+										placeholder="Digite o telefone Residencial" />
+								</p:panelGrid>
+								
+								<h:outputLabel value="Email" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbPaciente.selecionado.email}" required="true" />
+								</p:panelGrid>								
+							</p:panelGrid>
+						</p:tab>
+						<p:tab title="Endereço">
+							<h:panelGrid columns="2">
+							
+								<h:outputLabel value="CEP" />
+								<p:panelGrid columns="1">
+									<p:inputText maxlength="8"
+										requiredMessage="Favor preencha o CEP"
+										value="#{mbPaciente.selecionado.cep}" required="true">
+										<p:ajax event="keyup" update="cidade, endereco, bairro, uf"
+											listener="#{mbPaciente.buscaCepSelecionado}" />
+									</p:inputText>
+								</p:panelGrid>
+
+								<h:outputLabel value="Rua:" />
+								<p:panelGrid columns="1">
+									<p:inputText disabled="true"
+										value="#{mbPaciente.selecionado.endereco}" required="true"
+										id="endereco" size="60" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Número:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbPaciente.selecionado.numero}"
+										required="true" id="numero" size="10" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Bairro:" />
+								<p:panelGrid columns="1">
+									<p:inputText disabled="true"
+										value="#{mbPaciente.selecionado.bairro}" required="true"
+										id="bairro" size="30" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Cidade:" />
+								<p:panelGrid columns="1">
+									<p:inputText disabled="true"
+										value="#{mbPaciente.selecionado.cidade}" required="true"
+										id="cidade" size="30" />
+								</p:panelGrid>
+
+								<h:outputLabel value="UF:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<p:inputText id="uf" disabled="true"
+										value="#{mbPaciente.selecionado.uf}" required="true"
+										size="10" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Complemento:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<p:inputText value="#{mbPaciente.selecionado.complemento}"
+										required="true" id="complemnto" size="30" />
+								</p:panelGrid>
+
+							</h:panelGrid>
+							
+						</p:tab>
+					</p:tabView>
+				</p:panelGrid>
+
+				<p:commandButton value="Alterar"
+					style="margin-top:-20; float:right;"
+					action="#{mbPaciente.editar}" ajax="true"
+					update=":tabView:form2"></p:commandButton>
+			</h:form>
+		</p:outputPanel>
+	</p:dialog>
+	<p:dialog header="Paciente" widgetVar="pacExDialog" modal="true"
+		minHeight="600" minWidth="600">
+		<p:outputPanel id="pacExDetail" style="text-align:center;">
+			<h:form id="form_pacExModal">
+
+				<p:panelGrid columns="1"
+					rendered="#{not empty mbPaciente.selecionado}"
+					columnClasses="label,value">
+					<f:facet name="header">
+						<p:graphicImage height="150"
+							value="#{pageContext.servletContext.contextPath}/resources/fotos/#{mbPaciente.selecionado.foto}" />
+					</f:facet>
+					<p:tabView>
+						<p:tab title="Dados pessoais">
+							<p:panelGrid columns="4">
+								<h:outputLabel value="Nome" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbPaciente.selecionado.nome}" />
+								</p:panelGrid>
+								
+								<h:outputLabel value="Nome do pai" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbPaciente.selecionado.nomePai}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Nome da mãe" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbPaciente.selecionado.nomeMae}" />
+								</p:panelGrid>
+																
+								<h:outputLabel value="Cartão SUS" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbPaciente.selecionado.cartaoSus}" />
+								</p:panelGrid>															
+
+								<h:outputLabel value="CPF" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbPaciente.selecionado.cpf}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="RG" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbPaciente.selecionado.rg}"/>
+								</p:panelGrid>
+								
+								<h:outputLabel value="Profissão" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbPaciente.selecionado.profissao}" />
+								</p:panelGrid>								
+
+								<h:outputLabel value="Estado Civil" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbPaciente.selecionado.estCivil}" />
+								</p:panelGrid>
+
+								<h:outputText value="Telefones" />
+								<p:panelGrid columns="2">
+									<h:outputText value="#{mbPaciente.selecionado.telCel}"/>
+									<h:outputText value="#{mbPaciente.selecionado.telRes}" />
+								</p:panelGrid>
+								
+								<h:outputLabel value="Email" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbPaciente.selecionado.email}"/>
+								</p:panelGrid>								
+							</p:panelGrid>
+						</p:tab>
+						<p:tab title="Endereço">
+							<h:panelGrid columns="2">
+							
+								<h:outputLabel value="CEP" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbPaciente.selecionado.cep}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Rua:" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbPaciente.selecionado.endereco}"  />
+								</p:panelGrid>
+
+								<h:outputLabel value="Número:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbPaciente.selecionado.numero}"/>
+								</p:panelGrid>
+
+								<h:outputLabel value="Bairro:" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbPaciente.selecionado.bairro}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Cidade:" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbPaciente.selecionado.cidade}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="UF:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbPaciente.selecionado.uf}"/>
+								</p:panelGrid>
+
+								<h:outputLabel value="Complemento:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbPaciente.selecionado.complemento}"/>
+								</p:panelGrid>
+							</h:panelGrid>							
+						</p:tab>
+					</p:tabView>
+				</p:panelGrid>
+
+				<p:commandButton value="Excluir"
+					style="margin-top:-20; float:right;"
+					action="#{mbPaciente.excluir}" ajax="true"
+					update=":tabView:form2">
+					<p:confirm icon="ui-icon-alert" message="Deseja Excluir ?"
+						header="Confirma?" />
+				</p:commandButton>
+				<p:confirmDialog appendTo="@(body)" global="true">
+					<p:commandButton process="@this" value="Sim" type="button" onclick="PF('pacExDialog').hide()"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
+					<p:commandButton process="@this" value="Não"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
+				</p:confirmDialog>
+			</h:form>
+		</p:outputPanel>
+	</p:dialog>
 
 	<ui:insert name="footer">
 		<ui:include src="Template/footer.jsf" />
