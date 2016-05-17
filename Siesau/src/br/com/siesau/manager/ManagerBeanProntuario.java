@@ -20,15 +20,17 @@ import br.com.siesau.entity.Funcionario;
 import br.com.siesau.entity.Laudo;
 import br.com.siesau.entity.Medicamento;
 import br.com.siesau.entity.Paciente;
+import br.com.siesau.entity.ReceiMedic;
 import br.com.siesau.entity.Receita;
 import br.com.siesau.entity.SituacaoAtend;
 import br.com.siesau.persistence.AtendDoencaDao;
+import br.com.siesau.persistence.AtendExameDao;
 import br.com.siesau.persistence.AtendimentoDao;
 import br.com.siesau.persistence.DoencaDao;
 import br.com.siesau.persistence.ExameDao;
 import br.com.siesau.persistence.LaudoDao;
-import br.com.siesau.persistence.MedicamentoDao;
 import br.com.siesau.persistence.PacienteDao;
+import br.com.siesau.persistence.ReceiMedicDao;
 import br.com.siesau.persistence.ReceitaDao;
 
 @ManagedBean(name = "mbProntuario")
@@ -37,6 +39,7 @@ public class ManagerBeanProntuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Paciente paciente;
+	private List<Exame> exames;
 	private int idade;
 	private String itemSelecionado;
 	private int campoBusca;
@@ -54,9 +57,11 @@ public class ManagerBeanProntuario implements Serializable {
 	
 	private AtendDoenca atendDoenca;
 	private AtendExame atendExame;
+	private ReceiMedic receiMedic;
 
 	@PostConstruct
 	public void init() {
+		receiMedic = new ReceiMedic();
 		atendExame = new AtendExame();
 		doencasSelecionadas = new ArrayList<>();
 		atendDoenca = new AtendDoenca();
@@ -93,6 +98,7 @@ public class ManagerBeanProntuario implements Serializable {
 			if (itemSelecionado.equals("cdAtend")) {
 				paciente = new AtendimentoDao(new Atendimento()).pesquisaCodigoAtendimento(campoBusca).getPaciente();
 				atendimento = new AtendimentoDao(new Atendimento()).findByCode(campoBusca);
+				exames = new AtendExameDao(new AtendExame()).listaPorAtendimento(atendimento);
 			}
 
 			atendimento.setPaciente(paciente);
@@ -108,10 +114,17 @@ public class ManagerBeanProntuario implements Serializable {
 
 		try {
 			atendimento = new AtendimentoDao(new Atendimento()).findByCode(campoBusca);
+			receiMedic.setReceita1(new Receita());
+			receiMedic.setMedicamento1(new Medicamento());
+			
 			receita.setAtendimento(atendimento);
 			receita.setData(new Date());
-			receita.setCdReceita(atendimento.getCdAtend() + 100);
-
+			receita.setCdReceita(atendimento.getCdAtend() + 21);
+			receiMedic.setReceita1(receita);
+			receiMedic.setMedicamento1(medicamento);
+			receiMedic.setId(atendimento.getCdAtend() + 12);
+			
+			new ReceiMedicDao(new ReceiMedic()).salva(receiMedic);
 			new ReceitaDao(new Receita()).salva(receita);
 
 			fc.addMessage("form1", new FacesMessage("Receita " + receita.getCdReceita() + " salva."));
@@ -349,15 +362,34 @@ public class ManagerBeanProntuario implements Serializable {
 	}
 
 	public static void main(String[] main) {
-		Receita receita = new Receita();
+		try{
 		Atendimento atendimento = new Atendimento();
+		atendimento.setCdAtend(552);
 		
+		Medicamento medicamento = new Medicamento();
+		medicamento.setCdMedicam(1);
+		
+		ReceiMedic receiMedic = new ReceiMedic();
+		Receita receita = new Receita();
+		
+		atendimento = new AtendimentoDao(new Atendimento()).findByCode(552);
+		receiMedic.setReceita1(new Receita());
+		receiMedic.setMedicamento1(new Medicamento());
 		
 		receita.setAtendimento(atendimento);
 		receita.setData(new Date());
-		receita.setCdReceita(atendimento.getCdAtend() + 100);
-
+		//receita.setCdReceita(atendimento.getCdAtend() + 21);
+		receiMedic.setReceita1(receita);
+		receiMedic.setMedicamento1(medicamento);
+		//receiMedic.setId(atendimento.getCdAtend() + 12);
+		
+		new ReceiMedicDao(new ReceiMedic()).salva(receiMedic);
 		new ReceitaDao(new Receita()).salva(receita);
+
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 }
