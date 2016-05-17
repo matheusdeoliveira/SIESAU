@@ -90,9 +90,7 @@ public abstract class GenericDao<Classe> {
 		return (Classe) manager.find(classe.getClass(), cod);
 		
 	}
-	
-	
-	
+
 }
 
 	
