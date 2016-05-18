@@ -42,7 +42,7 @@ public class ManagerBeanProntuario implements Serializable {
 	private Paciente paciente;
 	private int idade;
 	private String itemSelecionado;
-	private int campoBusca;
+	private String campoBusca;
 	private String campoAlergia;
 
 	private Receita receita;
@@ -120,8 +120,8 @@ public class ManagerBeanProntuario implements Serializable {
 				paciente = new PacienteDao(new Paciente()).pesquisaCartaoSUS(campoBusca);
 			}
 			if (itemSelecionado.equals("cdAtend")) {
-				paciente = new AtendimentoDao(new Atendimento()).pesquisaCodigoAtendimento(campoBusca).getPaciente();
-				atendimento = new AtendimentoDao(new Atendimento()).findByCode(campoBusca);
+				paciente = new AtendimentoDao(new Atendimento()).pesquisaCodigoAtendimento(Integer.parseInt(campoBusca)).getPaciente();
+				atendimento = new AtendimentoDao(new Atendimento()).findByCode(Integer.parseInt(campoBusca));
 				atendExames = new AtendExameDao(new AtendExame()).lista(atendimento);
 				setIdade(paciente.getCdPaciente());;
 			}
@@ -175,7 +175,7 @@ public class ManagerBeanProntuario implements Serializable {
 
 		try {
 
-			atendimento = new AtendimentoDao(new Atendimento()).findByCode(campoBusca);
+			atendimento = new AtendimentoDao(new Atendimento()).findByCode(Integer.parseInt(campoBusca));
 			exame = new ExameDao(new Exame()).findByCode(exame.getCdExame());
 
 			atendExame.setAtendimento2(atendimento);
@@ -197,7 +197,7 @@ public class ManagerBeanProntuario implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
 
 		try {
-			atendimento = new AtendimentoDao(new Atendimento()).findByCode(campoBusca);
+			atendimento = new AtendimentoDao(new Atendimento()).findByCode(Integer.parseInt(campoBusca));
 			exame = new ExameDao(new Exame()).findByCode(exame.getCdExame());
 
 			new LaudoDao(new Laudo()).salva(laudo);
@@ -215,7 +215,7 @@ public class ManagerBeanProntuario implements Serializable {
 
 	public void salvarDoenca() {
 
-		atendimento = new AtendimentoDao(new Atendimento()).findByCode(campoBusca);
+		atendimento = new AtendimentoDao(new Atendimento()).findByCode(Integer.parseInt(campoBusca));
 
 		FacesContext fc = FacesContext.getCurrentInstance();
 
@@ -238,10 +238,10 @@ public class ManagerBeanProntuario implements Serializable {
 
 	public void finalizaAtendimento() {
 		FacesContext fc = FacesContext.getCurrentInstance();
-		atendimento = new AtendimentoDao(new Atendimento()).findByCode(campoBusca);
+		atendimento = new AtendimentoDao(new Atendimento()).findByCode(Integer.parseInt(campoBusca));
 
 		try {
-			atendimento = new AtendimentoDao(new Atendimento()).pesquisaCodigoAtendimento(campoBusca);
+			atendimento = new AtendimentoDao(new Atendimento()).pesquisaCodigoAtendimento(Integer.parseInt(campoBusca));
 			situacao.setCdSitatend(3);
 			atendimento.setSituacaoAtend(situacao);
 			;
@@ -252,7 +252,7 @@ public class ManagerBeanProntuario implements Serializable {
 			fc.addMessage("form1", new FacesMessage("Erro : " + e.getMessage()));
 		}
 		init();
-		campoBusca = 0;
+		campoBusca = "";
 	}
 
 	public Paciente getPaciente() {
@@ -271,11 +271,11 @@ public class ManagerBeanProntuario implements Serializable {
 		this.itemSelecionado = itemSelecionado;
 	}
 
-	public int getCampoBusca() {
+	public String getCampoBusca() {
 		return campoBusca;
 	}
 
-	public void setCampoBusca(int campoBusca) {
+	public void setCampoBusca(String campoBusca) {
 		this.campoBusca = campoBusca;
 	}
 

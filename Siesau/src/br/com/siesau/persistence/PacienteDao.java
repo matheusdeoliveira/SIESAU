@@ -41,7 +41,7 @@ public class PacienteDao extends GenericDao<Paciente> {
 
 	}
 
-	public Paciente pesquisaCPF(Integer cpf) {
+	public Paciente pesquisaCPF(String cpf) {
 		String consulta = "select p from Paciente p where p.cpf = :cpf";
 		TypedQuery<Paciente> query = manager.createQuery(consulta, Paciente.class);
 		query.setParameter("cpf", cpf.toString());
@@ -49,7 +49,7 @@ public class PacienteDao extends GenericDao<Paciente> {
 		return paciente;
 	}
 
-	public Paciente pesquisaRG(Integer rg) {
+	public Paciente pesquisaRG(String rg) {
 		String consulta = "select p from Paciente p where p.rg = :rg";
 		TypedQuery<Paciente> query = manager.createQuery(consulta, Paciente.class);
 		query.setParameter("rg", rg.toString());
@@ -57,7 +57,7 @@ public class PacienteDao extends GenericDao<Paciente> {
 		return paciente;
 	}
 
-	public Paciente pesquisaCartaoSUS(Integer sus) {
+	public Paciente pesquisaCartaoSUS(String sus) {
 		String consulta = "select p from Paciente p where p.cartaoSus = :sus";
 		TypedQuery<Paciente> query = manager.createQuery(consulta, Paciente.class);
 		query.setParameter("sus", sus);

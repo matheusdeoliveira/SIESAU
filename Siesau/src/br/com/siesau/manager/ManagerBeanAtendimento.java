@@ -29,7 +29,7 @@ public class ManagerBeanAtendimento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String itemSelecionado;
-	private int campoBusca;
+	private String campoBusca;
 	private int sitAtend;
 	private int idade;
 
@@ -160,11 +160,11 @@ public class ManagerBeanAtendimento implements Serializable {
 		this.itemSelecionado = itemSelecionado;
 	}
 
-	public int getCampoBusca() {
+	public String getCampoBusca() {
 		return campoBusca;
 	}
 
-	public void setCampoBusca(int campoBusca) {
+	public void setCampoBusca(String campoBusca) {
 		this.campoBusca = campoBusca;
 	}
 
