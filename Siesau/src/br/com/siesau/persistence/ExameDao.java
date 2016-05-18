@@ -6,5 +6,5 @@ public class ExameDao extends GenericDao<Exame> {
 
 	public ExameDao(Exame ex) {
 		super(ex);
-	}
+	}	
 }
