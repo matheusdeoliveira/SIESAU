@@ -28,8 +28,8 @@
 		<p:panel header="Prontuário"
 			style="margin-top:20px;max-width: 1120px; margin-right: auto; margin-left: auto;background-color:#F0F4F9;">
 
-			
-			
+
+
 			<h:form id="form_paciente">
 				<h:panelGrid style="background-color:#F0F4F9;" columns="3"
 					layout="grid">
@@ -54,7 +54,7 @@
 					<p:column>
 						<p:commandButton value="Buscar"
 							action="#{mbProntuario.buscaPaciente}" ajax="true"
-							update="form_paciente" />
+							update="form_paciente, tabView:form_laudo" />
 					</p:column>
 
 				</h:panelGrid>
@@ -83,21 +83,24 @@
 					<p:column>
 						<h:outputText id="idade" value="Idade:"
 							style=" padding:10px;color:#000000;" />
-						<p:inputText value="#{mbProntuario.paciente.dataNasc}"
+						<p:inputText value="#{mbProntuario.idade}"
 							required="true" size="10" disabled="true" />
 					</p:column>
 
 					<p:column>
 
-						<h:outputLabel id="labelAlergico" for="alergico" value="Alérgico?"
-							style=" color:#000000;" />
-						<p:selectOneMenu id="alergico"
-							value="#{mbAtendimento.atendimento.paciente.alergia}"
-							required="true" disabled="true">
-							<f:selectItem itemLabel="Sim" itemValue="Sim"></f:selectItem>
-							<f:selectItem itemLabel="Não" itemValue="Não"></f:selectItem>
+						<h:outputLabel id="labelAlergico" for="alergico"
+							value="Alérgico ?" style=" color:#000000;" />
+						<p:inputText id="alergico"
+							value="#{mbProntuario.campoAlergia}"
+							required="true" disabled="true"></p:inputText>
 
-						</p:selectOneMenu>
+						<h:outputLabel id="labelValorAlergico" for="valorAlergico"
+							value="Informações" style=" color:#000000;" />
+						<p:inputText id="valorAlergico"
+							value="#{mbProntuario.paciente.tipoAlergia}"
+							required="true" disabled="true"></p:inputText>
+
 					</p:column>
 				</h:panelGrid>
 			</h:form>
@@ -112,8 +115,46 @@
 						layout="grid">
 
 						<p:row>
+
+							<p:dataTable paginator="true" rows="6" var="linha"
+								value="#{mbProntuario.medicamentos}"
+								widgetVar="tabelaMedicamentosProntuario"
+								emptyMessage="Não há doenças na base de dados.">
+
+								<f:facet name="header">
+									<p:outputPanel>
+										<h:outputText value="Pesquisa em todos os campos:" />
+										<p:inputText id="globalFilter"
+											onkeyup="PF('tabelaMedicamentosProntuario').filter()"
+											style="width:150px" placeholder="Digite a busca" />
+									</p:outputPanel>
+								</f:facet>
+
+								<p:column headerText="Codigo" filterBy="#{linha.cdMedicam}"
+									filterMatchMode="contains" sortBy="#{linha.cdMedicam}">
+									<h:outputText value="#{linha.cdMedicam}"></h:outputText>
+								</p:column>
+
+								<p:column headerText="Nome Referencia"
+									filterBy="#{linha.nomeRef}" filterMatchMode="contains"
+									sortBy="#{linha.nomeRef}">
+									<h:outputText value="#{linha.nomeRef}"></h:outputText>
+								</p:column>
+
+								<p:column headerText="Fabricante"
+									filterBy="#{linha.fabricante.fantasia}"
+									filterMatchMode="contains"
+									sortBy="#{linha.fabricante.fantasia}">
+									<h:outputText value="#{linha.fabricante.fantasia}"></h:outputText>
+								</p:column>
+								<p:column headerText="Substancia" filterBy="#{linha.subst}"
+									filterMatchMode="contains" sortBy="#{linha.subst}">
+									<h:outputText value="#{linha.subst}"></h:outputText>
+								</p:column>
+							</p:dataTable>
+
 							<p:outputPanel style="float:left;margin-top: 4px">
-								<h:outputText value="Medicamento:"
+								<h:outputText value="Codigo do medicamento"
 									style=" padding:10px;color:#000000;" />
 								<p:inputText id="nomeMedicamento"
 									value="#{mbProntuario.medicamento.cdMedicam}" required="true"
@@ -154,7 +195,33 @@
 				style="background-color:#F0F4F9;position:relative;">
 				<h:form id="form_exame">
 					<h:panelGrid columns="3" layout="grid">
+
 						<p:row>
+
+							<p:dataTable var="linha" value="#{mbProntuario.exames}" rows="6"
+								paginator="true" widgetVar="tabelaExamesProntuario"
+								emptyMessage="Nenhum exame na base de dados.">
+
+								<f:facet name="header">
+									<p:outputPanel>
+										<h:outputText value="Pesquisa em todos os campos:" />
+										<p:inputText id="globalFilter"
+											onkeyup="PF('tabelaExamesProntuario').filter()"
+											style="width:150px" placeholder="Digite a busca" />
+									</p:outputPanel>
+								</f:facet>
+
+								<p:column headerText="Codigo" filterBy="#{linha.cdExame}"
+									filterMatchMode="contains" sortBy="#{linha.cdExame}">
+									<h:outputText value="#{linha.cdExame}"></h:outputText>
+								</p:column>
+
+								<p:column headerText="Nome" filterBy="#{linha.nome}"
+									filterMatchMode="contains" sortBy="#{linha.nome}">
+									<h:outputText value="#{linha.nome}"></h:outputText>
+								</p:column>
+							</p:dataTable>
+
 							<h:outputText value="Codigo do Exame:"
 								style=" padding:10px;color:#000000;" />
 							<p:inputText value="#{mbProntuario.exame.cdExame}"
@@ -165,7 +232,7 @@
 								<h:outputText value="Observação:"
 									style=" color:#000000; padding:26px; float:left;margin-top: 10px " />
 								<p:column>
-								
+
 									<p:inputTextarea value="#{mbProntuario.exame.obs}"
 										required="true" rows="6" cols="60" maxlength="500"
 										autoResize="false" />
@@ -185,54 +252,26 @@
 				</h:form>
 			</p:tab>
 
-
 			<p:tab title="Laudo"
 				style="background-color:#F0F4F9;position:relative;">
 				<h:form id="form_laudo">
 					<h:panelGrid columns="3" layout="grid">
 
+
+
 						<p:row>
-							<p:dataTable id="exames" var="linha"
-								widgetVar="tabelaExames"
-								emptyMessage="Não há exames"
-								value="#{mbAtendimento.atendimento.exames}" editable="true"
-								paginator="true" rows="10" style="padding-bottom:15px;">
-
-								<f:facet name="header">Lista de Exames do Atendimento</f:facet>
-
-								<f:facet name="header">
-									<p:outputPanel>
-										<h:outputText value="Pesquisa em todos os campos:" />
-										<p:inputText id="globalFilter"
-											onkeyup="PF('tabelaExames').filter()"
-											style="width:150px" placeholder="Digite a busca" />
-									</p:outputPanel>
-								</f:facet>
-
+							<p:dataTable var="linha" value="#{mbProntuario.atendExames}">
 								<p:column headerText="Codigo do Exame"
-									filterBy="#{lina.cdExame}" filterMatchMode="contains"
-									sortBy="#{lina.cdExame}">
-									<h:outputText value="#{lina.cdExame}" />
+									filterBy="#{linha.exame2.cdExame}" filterMatchMode="exact">
+									<h:outputText value="#{linha.exame2.cdExame}"></h:outputText>
 								</p:column>
 
-								<p:column headerText="Exame"
-									filterBy="#{linha.nome}" filterMatchMode="contains"
-									sortBy="#{linha.nome}">
-									<h:outputText value="#{linha.nome}" />
+								<p:column headerText="Codigo" sortBy="#{linha.exame2.nome}">
+									<h:outputText value="#{linha.exame2.nome}"></h:outputText>
 								</p:column>
-
-								<p:column headerText="Tipo de Exame"
-									filterBy="#{linha.tipoExame.tipo}"
-									filterMatchMode="contains"
-									sortBy="#{linha.tipoExame.tipo}">
-									<h:outputText value="#{linha.tipoExame.tipo}" />
-								</p:column>
-								
-								
 							</p:dataTable>
-						</p:row>
 
-						<p:row>
+
 							<h:outputText value="Codigo do Exame"
 								style=" padding:10px;color:#000000;" />
 							<p:inputText value="#{mbProntuario.exame.cdExame}"
@@ -248,6 +287,7 @@
 								</p:column>
 							</p:outputPanel>
 						</p:row>
+
 					</h:panelGrid>
 					<p />
 					<p />
@@ -262,7 +302,6 @@
 				</h:form>
 			</p:tab>
 
-
 			<p:tab title="Doença"
 				style="background-color:#F0F4F9;position:relative;">
 				<h:form id="form_doenca">
@@ -270,45 +309,39 @@
 					<h:panelGrid columns="3" layout="grid">
 
 						<p:row>
-							<h:outputText value="CID:" style=" padding:10px; color:#000000;" />
-							<p:inputText value="#{mbProntuario.doenca.cid}" required="true"
-								size="5" />
+							<p:dataTable paginator="true" rows="6" var="linha"
+								value="#{mbProntuario.doencas}"
+								widgetVar="tabelaDoencaProntuario"
+								emptyMessage="Não há doenças na base de dados.">
 
-							<br />
-							<p:outputLabel for="doenca" value="Lista de Doenças" />
+								<f:facet name="header">
+									<p:outputPanel>
+										<h:outputText value="Pesquisa em todos os campos:" />
+										<p:inputText id="globalFilter"
+											onkeyup="PF('tabelaDoencaProntuario').filter()"
+											style="width:150px" placeholder="Digite a busca" />
+									</p:outputPanel>
+								</f:facet>
 
-							<p:selectManyMenu id="doenca" converter="doencaConverter"
-								value="#{mbProntuario.doencasSelecionadas}" var="selecionado"
-								filter="true" filterMatchMode="contains" showCheckbox="true">
-
-								<f:selectItems value="#{mbProntuario.doencas}" var="varDoenca"
-									itemLabel="#{varDoenca.nome}" itemValue="#{varDoenca}" />
-
-								<p:column>
-									<h:outputText value="#{selecionado.cid}" />
+								<p:column headerText="CID da Doença" filterBy="#{linha.cid}"
+									filterMatchMode="contains" sortBy="#{linha.cid}">
+									<h:outputText value="#{linha.cid}"></h:outputText>
 								</p:column>
 
-								<p:column>
-									<h:outputText value="#{selecionado.nome}" />
+								<p:column headerText="Nome da Doença" filterBy="#{linha.cid}"
+									filterMatchMode="contains" sortBy="#{linha.nome}">
+									<h:outputText value="#{linha.nome}"></h:outputText>
 								</p:column>
+							</p:dataTable>
 
-							</p:selectManyMenu>
-
-							<h:outputText value="Nome da Doença:"
+							<h:outputText value="CID da Doença:"
 								style=" padding:8px;color:#000000;" />
-							<p:inputText value="#{mbProntuario.doenca.nome}" required="true"
+							<p:inputText value="#{mbProntuario.doenca.cid}" required="true"
 								rows="5" cols="100" size="44" />
 							<p />
-							<p:outputPanel style="float:left;margin-top: 15px">
-								<h:outputText value="Descrição:"
-									style=" color:#000000; padding:35px; float:left;margin-top: 10px " />
-								<p:column>
-									<p:inputTextarea value="#{mbProntuario.doenca.nome}"
-										required="true" rows="6" cols="60" maxlength="500"
-										autoResize="false" />
-								</p:column>
-							</p:outputPanel>
 						</p:row>
+
+
 					</h:panelGrid>
 					<p />
 					<p />

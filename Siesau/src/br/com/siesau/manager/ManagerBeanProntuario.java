@@ -29,6 +29,7 @@ import br.com.siesau.persistence.AtendimentoDao;
 import br.com.siesau.persistence.DoencaDao;
 import br.com.siesau.persistence.ExameDao;
 import br.com.siesau.persistence.LaudoDao;
+import br.com.siesau.persistence.MedicamentoDao;
 import br.com.siesau.persistence.PacienteDao;
 import br.com.siesau.persistence.ReceiMedicDao;
 import br.com.siesau.persistence.ReceitaDao;
@@ -39,32 +40,51 @@ public class ManagerBeanProntuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Paciente paciente;
-	private List<Exame> exames;
 	private int idade;
 	private String itemSelecionado;
 	private int campoBusca;
+	private String campoAlergia;
+
 	private Receita receita;
+
 	private Medicamento medicamento;
+	private List<Medicamento> medicamentos;
+
 	private Funcionario funcionario;
+
 	private Exame exame;
+	private List<Exame> exames;
+
 	private Laudo laudo;
+
 	private Doenca doenca;
 	private List<Doenca> doencas;
 	private List<Doenca> doencasSelecionadas;
+
 	private Atendimento atendimento;
-	private SituacaoAtend situacao;
 	private List<Atendimento> atendimentosPorEspecialidade;
-	
+
+	private SituacaoAtend situacao;
+
+	private List<AtendDoenca> atendDoencas;
 	private AtendDoenca atendDoenca;
+
+	private List<AtendExame> atendExames;
 	private AtendExame atendExame;
+
 	private ReceiMedic receiMedic;
 
 	@PostConstruct
 	public void init() {
+		campoAlergia = "";
+		idade = 0;
+		exames = new ExameDao(new Exame()).lista();
+		medicamentos = new MedicamentoDao(new Medicamento()).lista();
 		receiMedic = new ReceiMedic();
 		atendExame = new AtendExame();
 		doencasSelecionadas = new ArrayList<>();
 		atendDoenca = new AtendDoenca();
+		atendDoencas = new AtendDoencaDao(new AtendDoenca()).lista();
 		situacao = new SituacaoAtend();
 		paciente = new Paciente();
 		receita = new Receita();
@@ -75,6 +95,10 @@ public class ManagerBeanProntuario implements Serializable {
 		doenca = new Doenca();
 		doencas = new DoencaDao(new Doenca()).lista();
 		atendimento = new Atendimento();
+
+		// Explicação : Diogo Freitas
+		// Listagem de Atendimentos por Especialidade do Funcionario
+		// É só passar o funcionario por parametro e ver a magica acontecer.
 
 		// atendimentosPorEspecialidade = new AtendimentoDao(new
 		// Atendimento()).listaPorEspecialidade(funcionario);
@@ -98,10 +122,12 @@ public class ManagerBeanProntuario implements Serializable {
 			if (itemSelecionado.equals("cdAtend")) {
 				paciente = new AtendimentoDao(new Atendimento()).pesquisaCodigoAtendimento(campoBusca).getPaciente();
 				atendimento = new AtendimentoDao(new Atendimento()).findByCode(campoBusca);
-				exames = new AtendExameDao(new AtendExame()).listaPorAtendimento(atendimento);
+				atendExames = new AtendExameDao(new AtendExame()).lista(atendimento);
+				setIdade(paciente.getCdPaciente());;
 			}
 
 			atendimento.setPaciente(paciente);
+			fc.addMessage("form1", new FacesMessage("Paciente encontrado."));
 
 		} catch (Exception e) {
 			fc.addMessage("form1", new FacesMessage("Error: " + e.getMessage()));
@@ -113,21 +139,28 @@ public class ManagerBeanProntuario implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
 
 		try {
-			atendimento = new AtendimentoDao(new Atendimento()).findByCode(campoBusca);
+			atendimento = new AtendimentoDao(new Atendimento()).findByCode(atendimento.getCdAtend());
+
+			medicamento = new MedicamentoDao(new Medicamento()).findByCode(medicamento.getCdMedicam());
+
 			receiMedic.setReceita1(new Receita());
 			receiMedic.setMedicamento1(new Medicamento());
-			
+
 			receita.setAtendimento(atendimento);
 			receita.setData(new Date());
-			receita.setCdReceita(atendimento.getCdAtend() + 21);
-			receiMedic.setReceita1(receita);
-			receiMedic.setMedicamento1(medicamento);
-			receiMedic.setId(atendimento.getCdAtend() + 12);
-			
-			new ReceiMedicDao(new ReceiMedic()).salva(receiMedic);
-			new ReceitaDao(new Receita()).salva(receita);
 
-			fc.addMessage("form1", new FacesMessage("Receita " + receita.getCdReceita() + " salva."));
+			new ReceitaDao(receita).salva(receita);
+			receita = new ReceitaDao(new Receita()).findByAtendData(receita.getData(), atendimento);
+
+			receiMedic.setReceita1(new Receita());
+			receiMedic.setReceita1(receita);
+			receiMedic.setReceita2(receita);
+			receiMedic.setMedicamento1(new Medicamento());
+			receiMedic.setMedicamento1(medicamento);
+			receiMedic.setMedicamento2(medicamento);
+			new ReceiMedicDao(new ReceiMedic()).salva(receiMedic);
+
+			fc.addMessage("form1", new FacesMessage("Medicamento: " + medicamento.getNomeRef() + " receitado."));
 
 		} catch (Exception e) {
 			fc.addMessage("form1", new FacesMessage("Erro: " + e.getMessage() + "."));
@@ -141,24 +174,21 @@ public class ManagerBeanProntuario implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
 
 		try {
-			
+
 			atendimento = new AtendimentoDao(new Atendimento()).findByCode(campoBusca);
 			exame = new ExameDao(new Exame()).findByCode(exame.getCdExame());
-			
-			
-			
-			exame.setData(new Date());			
+
 			atendExame.setAtendimento2(atendimento);
 			atendExame.setExame2(exame);
-			
+
 			new AtendExameDao(new AtendExame()).salva(atendExame);
-			
-			fc.addMessage("form_exames", new FacesMessage("Exame " + exame.getCdExame() + " salvo."));
+
+			fc.addMessage("form1", new FacesMessage("Exame " + exame.getCdExame() + " salvo."));
 		} catch (Exception e) {
-			fc.addMessage("form_exames", new FacesMessage("Erro: " + e.getMessage() + "."));
+			fc.addMessage("form1", new FacesMessage("Erro: " + e.getMessage() + "."));
 			e.printStackTrace();
 		}
-		
+
 		exame = new Exame();
 		atendExame = new AtendExame();
 	}
@@ -167,37 +197,34 @@ public class ManagerBeanProntuario implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
 
 		try {
-			/**
-			Precisa integrar tabelas de Laudos com Exames.
-			**/
 			atendimento = new AtendimentoDao(new Atendimento()).findByCode(campoBusca);
+			exame = new ExameDao(new Exame()).findByCode(exame.getCdExame());
+
 			new LaudoDao(new Laudo()).salva(laudo);
-			
-			
+
 			fc.addMessage("form_laudo", new FacesMessage("Laudo " + laudo.getCdLaudo() + " salvo."));
 
 		} catch (Exception e) {
 			fc.addMessage("form_laudo", new FacesMessage("Erro: " + e.getMessage() + "."));
 			e.printStackTrace();
 		}
+
+		laudo = new Laudo();
+		exame = new Exame();
 	}
 
 	public void salvarDoenca() {
-		
-		//Botão não responde. Porém metodo funciona
-		
+
 		atendimento = new AtendimentoDao(new Atendimento()).findByCode(campoBusca);
 
 		FacesContext fc = FacesContext.getCurrentInstance();
-		try {
-			for (int i = 0; i < doencasSelecionadas.size(); i++) {
-				Doenca doencaTemp = (Doenca) doencasSelecionadas.get(i);
-				atendDoenca = new AtendDoenca();
-				atendDoenca.setAtendimento2(atendimento);
-				atendDoenca.setDoenca2(doencaTemp);
 
-				new AtendDoencaDao(new AtendDoenca()).salva(atendDoenca);
-			}
+		try {
+
+			atendDoenca.setAtendimento2(atendimento);
+			atendDoenca.setDoenca2(new DoencaDao(new Doenca()).pesquisaCID(doenca));
+
+			new AtendDoencaDao(new AtendDoenca()).salva(atendDoenca);
 
 			fc.addMessage("form_doenca", new FacesMessage("Doenca " + doenca.getNome() + " salva."));
 		} catch (Exception e) {
@@ -206,9 +233,9 @@ public class ManagerBeanProntuario implements Serializable {
 			e.printStackTrace();
 		}
 		atendDoenca = new AtendDoenca();
+		doenca = new Doenca();
 	}
 
-	// Finalizando Atendimento OK
 	public void finalizaAtendimento() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		atendimento = new AtendimentoDao(new Atendimento()).findByCode(campoBusca);
@@ -312,16 +339,7 @@ public class ManagerBeanProntuario implements Serializable {
 		return serialVersionUID;
 	}
 
-	@SuppressWarnings("deprecation")
 	public int getIdade() {
-		try {
-
-			int ano = getPaciente().getDataNasc().getYear();
-			idade = new Date().getYear() - ano;
-
-		} catch (Exception e) {
-			return 0;
-		}
 		return idade;
 	}
 
@@ -361,35 +379,74 @@ public class ManagerBeanProntuario implements Serializable {
 		this.doencasSelecionadas = doencasSelecionadas;
 	}
 
-	public static void main(String[] main) {
-		try{
-		Atendimento atendimento = new Atendimento();
-		atendimento.setCdAtend(552);
-		
-		Medicamento medicamento = new Medicamento();
-		medicamento.setCdMedicam(1);
-		
-		ReceiMedic receiMedic = new ReceiMedic();
-		Receita receita = new Receita();
-		
-		atendimento = new AtendimentoDao(new Atendimento()).findByCode(552);
-		receiMedic.setReceita1(new Receita());
-		receiMedic.setMedicamento1(new Medicamento());
-		
-		receita.setAtendimento(atendimento);
-		receita.setData(new Date());
-		//receita.setCdReceita(atendimento.getCdAtend() + 21);
-		receiMedic.setReceita1(receita);
-		receiMedic.setMedicamento1(medicamento);
-		//receiMedic.setId(atendimento.getCdAtend() + 12);
-		
-		new ReceiMedicDao(new ReceiMedic()).salva(receiMedic);
-		new ReceitaDao(new Receita()).salva(receita);
+	public AtendDoenca getAtendDoenca() {
+		return atendDoenca;
+	}
 
-		}catch(Exception e){
-			System.out.println(e.getMessage());
-			e.printStackTrace();
+	public void setAtendDoenca(AtendDoenca atendDoenca) {
+		this.atendDoenca = atendDoenca;
+	}
+
+	public AtendExame getAtendExame() {
+		return atendExame;
+	}
+
+	public void setAtendExame(AtendExame atendExame) {
+		this.atendExame = atendExame;
+	}
+
+	public ReceiMedic getReceiMedic() {
+		return receiMedic;
+	}
+
+	public void setReceiMedic(ReceiMedic receiMedic) {
+		this.receiMedic = receiMedic;
+	}
+
+	public List<AtendDoenca> getAtendDoencas() {
+		return atendDoencas;
+	}
+
+	public void setAtendDoencas(List<AtendDoenca> atendDoencas) {
+		this.atendDoencas = atendDoencas;
+	}
+
+	public List<AtendExame> getAtendExames() {
+		return atendExames;
+	}
+
+	public void setAtendExames(List<AtendExame> atendExames) {
+		this.atendExames = atendExames;
+	}
+
+	public List<Exame> getExames() {
+		return exames;
+	}
+
+	public void setExames(List<Exame> exames) {
+		this.exames = exames;
+	}
+
+	public List<Medicamento> getMedicamentos() {
+		return medicamentos;
+	}
+
+	public void setMedicamentos(List<Medicamento> medicamentos) {
+		this.medicamentos = medicamentos;
+	}
+
+	public String getCampoAlergia() {
+		if (paciente.isAlergia()) {
+			campoAlergia = "Alérgico";
+		} else {
+			campoAlergia = "Não alérgico.";
 		}
+
+		return campoAlergia;
+	}
+
+	public void setCampoAlergia(String campoAlergia) {
+		this.campoAlergia = campoAlergia;
 	}
 
 }
