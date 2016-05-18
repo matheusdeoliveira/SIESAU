@@ -22,7 +22,7 @@ public class Receita implements Serializable {
 	@Column(name="cd_receita", unique=true, nullable=false)
 	private Integer cdReceita;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date data;
 
 	@Column
