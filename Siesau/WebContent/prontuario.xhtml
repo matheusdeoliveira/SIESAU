@@ -60,9 +60,8 @@
 				</h:panelGrid>
 				<p />
 
-				<p:graphicImage height="150px"
-					value="#{pageContext.servletContext.contextPath}/resources/fotos/#{mbPaciente.foto}"
-					rendered="#{not empty mbPaciente.foto}" />
+				<p:graphicImage height="150"
+							value="#{pageContext.servletContext.contextPath}/resources/fotos/#{mbProntuario.paciente.foto}" />
 
 				<h:outputText id="nome" value="Nome:"
 					style=" padding:10px;color:#000000;" />
