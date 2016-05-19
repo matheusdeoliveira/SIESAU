@@ -11,7 +11,7 @@ import br.com.siesau.persistence.PacienteDao;
 public class ImportaPlanilha {
 
 	public static void main(String[] args) throws BiffException {
-		File file = new File("C:\\Users\\Diogo\\Downloads\\exemplo.xls");
+		File file = new File("C:\\Users\\Diogo\\Downloads\\paciente.xls");
 		xlsInputpaciente(file);
 	}
 
@@ -29,7 +29,7 @@ public class ImportaPlanilha {
 			for (int linha = 2; linha <= linhas; linha++) {
 				try {
 					paciente = new Paciente();
-					
+
 					paciente.setNome((sheet.getCell(0, linha)).getContents());
 					paciente.setCpf((sheet.getCell(1, linha)).getContents());
 					paciente.setRg((sheet.getCell(2, linha)).getContents());
@@ -52,20 +52,37 @@ public class ImportaPlanilha {
 					paciente.setNaturalidade((sheet.getCell(19, linha)).getContents());
 
 					SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-					java.sql.Date data = new java.sql.Date(
-							format.parse((sheet.getCell(20, linha)).getContents()).getTime());
-					paciente.setDataNasc(data);
-
+					if ((sheet.getCell(20, linha)).getContents() != "") {
+						java.sql.Date data = new java.sql.Date(
+								format.parse((sheet.getCell(20, linha)).getContents()).getTime());
+						paciente.setDataNasc(data);
+					}
+					
 					paciente.setObs((sheet.getCell(21, linha)).getContents());
-
-					data = new java.sql.Date(format.parse((sheet.getCell(22, linha)).getContents()).getTime());
-					paciente.setDataCad(data);
-
+					
+					String a = sheet.getCell(22, linha).getContents();
+					
+					if ((sheet.getCell(22, linha)).getContents().toString() != "") {
+						java.sql.Date data2 = new java.sql.Date(
+								format.parse((sheet.getCell(22, linha)).getContents()).getTime());
+						paciente.setDataCad(data2);
+					}
+					
 					paciente.setSexo((sheet.getCell(23, linha)).getContents());
+
+					String alergia = (sheet.getCell(24, linha)).getContents();
+
+					if (alergia.toUpperCase().equals("S") || alergia.toUpperCase().equals("SIM")) {
+						paciente.setAlergia(true);
+					} else {
+						paciente.setAlergia(false);
+					}
+
+					paciente.setTipoAlergia((sheet.getCell(25, linha)).getContents());
 
 					PacienteDao pacienteDao = new PacienteDao(paciente);
 					pacienteDao.salva(paciente);
-					
+
 				} catch (Exception e) {
 					e.getMessage();
 				}
