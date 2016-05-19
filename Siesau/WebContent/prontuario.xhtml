@@ -23,7 +23,7 @@
 	<p:growl id="msgs" showDetail="true" />
 
 	<div
-		style="position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px;">
+		style="position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px;padding-bottom:30px;">
 
 		<p:panel header="Prontuário"
 			style="margin-top:20px;max-width: 1120px; margin-right: auto; margin-left: auto;background-color:#F0F4F9;">
@@ -357,7 +357,7 @@
 		<h:form id="form_pront">
 
 			<p:commandButton value="Finalizar Atendimento"
-				style="margin-top:-60;margin-left:400px;"
+				style="position:absolute;margin-top:-37px;margin-left:250px;"
 				action="#{mbProntuario.finalizaAtendimento}" ajax="false"
 				update="form_paciente, form_exame, form_laudo, form_doenca"
 				process="@all" />

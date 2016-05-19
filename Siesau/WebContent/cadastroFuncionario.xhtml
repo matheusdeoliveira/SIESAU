@@ -26,27 +26,8 @@
 			<p:tab title="Cadastro" style="position:relative;">
 				<h:form id="form1">
 					<p:panel header="Dados Pessoais" style="background-color:#F0F4F9;">
-						<h:panelGrid columns="3" layout="grid">
-							<p:column>
-								<p:outputPanel id="photo">
-									<p:graphicImage height="150px"
-										value="#{pageContext.servletContext.contextPath}/resources/fotos/#{mbFuncionario.foto}"
-										rendered="#{not empty mbFuncionario.foto}" />
-								</p:outputPanel>
-								<p:commandButton value="Capturar Foto" type="button"
-									onclick="PF('webcan').show();" />
+						<h:panelGrid columns="3" layout="grid" cellspacing="30">
 
-								<p:dialog header="Fotagrafia" widgetVar="webcan" minHeight="40">
-
-									<p:photoCam widgetVar="pc"
-										listener="#{mbFuncionario.oncapture}"
-										update=":tabView:form1:photo" />
-									<p:commandButton type="button" value="Fotografar"
-										onclick="PF('pc').capture()" />
-									<p:growl></p:growl>
-								</p:dialog>
-
-							</p:column>
 
 							<p:column>
 
@@ -146,15 +127,42 @@
 											<f:selectItem itemLabel="Feminino" itemValue="F"></f:selectItem>
 											<f:selectItem itemLabel="Outros" itemValue="O"></f:selectItem>
 										</p:selectOneMenu>
+										
 									</p:column>
+									<p/><br/><p/>
 
 								</h:panelGrid>
+
+							</p:column>
+							<p:column>
+								<p:outputLabel for="console" value="Unidade de Saude: "
+									style="color:#000000;" />
+								<br />
 								<h:selectOneMenu id="console"
 									value="#{mbFuncionario.funcionario.unidadeSaudes}">
 									<f:selectItems value="#{mbUnidadeSaude.unidadeSaudes}"
 										var="unidade" itemLabel="#{unidade.fantasia}"
 										itemValue="#{unidade}" />
 								</h:selectOneMenu>
+
+								<p:outputPanel id="photo">
+									<p:graphicImage height="150px"
+										value="#{pageContext.servletContext.contextPath}/resources/fotos/#{mbFuncionario.foto}"
+										rendered="#{not empty mbFuncionario.foto}" />
+								</p:outputPanel>
+								<p:commandButton value="Capturar Foto" type="button"
+									onclick="PF('webcan').show();" />
+
+								<p:dialog header="Fotagrafia" widgetVar="webcan" minHeight="40">
+
+									<p:photoCam widgetVar="pc"
+										listener="#{mbFuncionario.oncapture}"
+										update=":tabView:form1:photo" />
+									<p:commandButton type="button" value="Fotografar"
+										onclick="PF('pc').capture()" />
+									<p:growl></p:growl>
+								</p:dialog>
+
 							</p:column>
 
 
