@@ -59,9 +59,7 @@ public class ImportaPlanilha {
 					}
 					
 					paciente.setObs((sheet.getCell(21, linha)).getContents());
-					
-					String a = sheet.getCell(22, linha).getContents();
-					
+										
 					if ((sheet.getCell(22, linha)).getContents().toString() != "") {
 						java.sql.Date data2 = new java.sql.Date(
 								format.parse((sheet.getCell(22, linha)).getContents()).getTime());
