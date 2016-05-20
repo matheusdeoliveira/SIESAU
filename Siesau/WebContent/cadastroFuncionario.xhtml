@@ -319,41 +319,49 @@
 
 	</div>
 
-	<p:dialog header="Funcionário" widgetVar="funEdDialog" modal="true"
-		minHeight="600" minWidth="600">
+	<p:dialog header="Funcionário" widgetVar="funEdDialog" modal="true" scrollable="true"
+		minHeight="600" minWidth="600" style="background-color:#F0F4F9;">
 		<p:outputPanel id="funEdDetail" style="text-align:center;">
-			<h:form id="form_funEdModal">
+			<h:form id="form_funEdModal"  style="background-color:#E8E8E8;">
 
-				<p:panelGrid columns="1"
+				<h:panelGrid columns="1"
 					rendered="#{not empty mbFuncionario.selecionado}"
-					columnClasses="label,value">
+					columnClasses="label,value" >
 					<f:facet name="header">
 						<p:graphicImage height="150"
 							value="#{pageContext.servletContext.contextPath}/resources/fotos/#{mbFuncionario.selecionado.foto}" />
 					</f:facet>
-					<p:tabView>
-						<p:tab title="Dados pessoais">
-							<p:panelGrid columns="2">
-								<h:outputLabel value="Nome" />
-								<p:panelGrid columns="1">
+					<p:tabView style="background-color:#F0F4F9;">
+						<p:tab title="Dados pessoais" scrollable="true" scrollHeight="50">
+							<h:panelGrid columns="2" layout="" style="text-align:left;border:0px solid black;background-color:#E8E8E8;">
+								<p:column>
+								<h:outputLabel value="Nome"  style="color:#000000;"/>
+								</p:column>
+								<p:column>
 									<p:inputText value="#{mbFuncionario.selecionado.nome}" />
-								</p:panelGrid>
-
-								<h:outputLabel value="CPF" />
-								<p:panelGrid columns="1">
-									<p:inputMask mask="999.999.999-99"
+								</p:column>
+								<p:column>
+								<h:outputLabel value="CPF" style="color:#000000;"/>
+								</p:column>
+								<p:column>
+								<p:inputMask mask="999.999.999-99"
 										value="#{mbFuncionario.selecionado.cpf}" required="true" />
-								</p:panelGrid>
+								</p:column>
 
-								<h:outputLabel value="RG" />
-								<p:panelGrid columns="1">
-									<p:inputMask mask="99.999.999-9"
+								<p:column>
+								<h:outputLabel value="RG" style="color:#000000;"/>
+								</p:column>
+								<p:column>
+								<p:inputMask mask="99.999.999-9"
 										value="#{mbFuncionario.selecionado.rg}" required="true" />
-								</p:panelGrid>
-
-								<h:outputLabel value="Estado Civil" />
-								<p:panelGrid columns="2">
-									<h:outputText value="#{mbFuncionario.selecionado.estadoCivil}" />
+								</p:column>
+								
+								<p:column>
+								<h:outputLabel value="Estado Civil" style="color:#000000;"/>
+								</p:column>
+								<p:column>
+								<h:panelGrid columns="2">
+									<h:outputText value="#{mbFuncionario.selecionado.estadoCivil}" style="color:#000000;" />
 									<p:selectOneMenu id="estado_civil"
 										value="#{mbFuncionario.selecionado.estadoCivil}"
 										required="true">
@@ -363,88 +371,102 @@
 										<f:selectItem itemLabel="Viuvo" itemValue="VIUVO"></f:selectItem>
 										<f:selectItem itemLabel="Divorciado" itemValue="DIVORCIADO"></f:selectItem>
 									</p:selectOneMenu>
-								</p:panelGrid>
+								</h:panelGrid>
+								</p:column>
 
-								<h:outputText value="Telefones" />
-								<p:panelGrid columns="2">
+								<p:column>
+								<h:outputText value="Telefones" style="color:#000000;"/>
+								</p:column>
+								<p:column>
+								<h:panelGrid columns="2">
 									<p:inputMask mask="(99)99999-9999"
 										value="#{mbFuncionario.selecionado.telCel}"
 										placeholder="Digite o telefone Celular" />
 									<p:inputMask mask="(99)9999-9999"
 										value="#{mbFuncionario.selecionado.telRes}"
 										placeholder="Digite o telefone Residencial" />
-								</p:panelGrid>
+								</h:panelGrid>
+								</p:column>
 
-								<h:outputLabel value="Cargo" />
-								<p:panelGrid columns="3">
-									<h:outputText value="#{mbFuncionario.selecionado.cargo.cargo}" />
-									<h:outputLabel value="Selecione o novo Cargo" />
+								<p:column>
+								<h:outputLabel value="Cargo" style="color:#000000;"/>
+								</p:column>
+								<p:column>
+								<h:panelGrid columns="3">
+									<h:outputText value="#{mbFuncionario.selecionado.cargo.cargo}" style="color:#000000;" />
+									<h:outputLabel value="Selecione o novo Cargo" style="color:#000000;" />
 									<p:selectOneMenu id="cargo" label="Selecione o novo Cargo"
 										value="#{mbFuncionario.selecionado.cargo.cdCargo}">
 										<f:selectItems value="#{mbFuncionario.mostraCargos}" />
 									</p:selectOneMenu>
-								</p:panelGrid>
-								<h:outputLabel value="Especialidades" />
+								</h:panelGrid>
+								</p:column>
+								
+								<p:column>
+								<h:outputLabel value="Especialidades" style="color:#000000;"/>
+								</p:column>
+								<p:column>
 								<p:panelGrid columns="2">
 								</p:panelGrid>
-							</p:panelGrid>
+								</p:column>
+							</h:panelGrid>
 						</p:tab>
 						<p:tab title="Endereço">
-							<h:panelGrid columns="2">
+							<h:panelGrid columns="2" style="text-align:left;border:0px solid black;background-color:#E8E8E8;">
 
-								<h:outputLabel value="CEP" />
-								<p:panelGrid columns="1">
+								<h:outputLabel value="CEP" style="color:#000000;"/>
+								<h:panelGrid columns="1">
 									<p:inputText maxlength="8"
 										requiredMessage="Favor preencha o CEP"
 										value="#{mbFuncionario.selecionado.cep}" required="true">
 										<p:ajax event="keyup" update="cidade, endereco, bairro, uf"
 											listener="#{mbFuncionario.buscaCepSelecionado}" />
 									</p:inputText>
-								</p:panelGrid>
+								</h:panelGrid>
 
-								<h:outputLabel value="Rua:" />
-								<p:panelGrid columns="1">
+								<h:outputLabel value="Rua:" style="color:#000000;"/>
+								
 									<p:inputText disabled="true"
 										value="#{mbFuncionario.selecionado.endereco}" required="true"
 										id="endereco" size="60" />
-								</p:panelGrid>
+								
 
 
 								<h:outputLabel value="Número:" style="color:#000000;" />
-								<p:panelGrid columns="1">
+								
 									<p:inputText value="#{mbFuncionario.selecionado.numero}"
 										required="true" id="numero" size="10" />
-								</p:panelGrid>
+								
 
-								<h:outputLabel value="Bairro:" />
-								<p:panelGrid columns="1">
+								<h:outputLabel value="Bairro:" style="color:#000000;"/>
+								
 									<p:inputText disabled="true"
 										value="#{mbFuncionario.selecionado.bairro}" required="true"
 										id="bairro" size="30" />
-								</p:panelGrid>
+								
 
 
-								<h:outputLabel value="Cidade:" />
-								<p:panelGrid columns="1">
+								<h:outputLabel value="Cidade:" style="color:#000000;"/>
+								
 									<p:inputText disabled="true"
 										value="#{mbFuncionario.selecionado.cidade}" required="true"
 										id="cidade" size="30" />
-								</p:panelGrid>
+								
 
 
 								<h:outputLabel value="UF:" style="color:#000000;" />
-								<p:panelGrid columns="1">
+								
 									<p:inputText id="uf" disabled="true"
 										value="#{mbFuncionario.selecionado.uf}" required="true"
 										size="10" />
-								</p:panelGrid>
+								
 
 
 								<h:outputLabel value="Complemento:" style="color:#000000;" />
-								<p:panelGrid columns="1">
+								
 									<p:inputText value="#{mbFuncionario.selecionado.complemento}"
 										required="true" id="complemnto" size="30" />
-								</p:panelGrid>
+								
 
 
 							</h:panelGrid>
@@ -452,7 +474,7 @@
 
 						</p:tab>
 					</p:tabView>
-				</p:panelGrid>
+				</h:panelGrid>
 
 				<p:commandButton value="Alterar"
 					style="margin-top:-20; float:right;"
@@ -464,7 +486,7 @@
 	<p:dialog header="Funcionário" widgetVar="funExDialog" modal="true">
 		<p:outputPanel id="funExDetail" style="text-align:center;">
 			<h:form id="form_funExModal">
-				<p:panelGrid columns="1"
+				<h:panelGrid columns="1"
 					rendered="#{not empty mbFuncionario.selecionado}"
 					columnClasses="label,value">
 					<f:facet name="header">
@@ -552,7 +574,7 @@
 							</h:panelGrid>
 						</p:tab>
 					</p:tabView>
-				</p:panelGrid>
+				</h:panelGrid>
 				<p:commandButton value="Excluir"
 					style="margin-top:-20; float:right;"
 					action="#{mbFuncionario.excluir}" ajax="true"
