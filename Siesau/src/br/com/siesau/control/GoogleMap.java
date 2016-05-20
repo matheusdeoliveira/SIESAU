@@ -42,7 +42,7 @@ public class GoogleMap {
 	
 	public static void main(String[] args) {
 		
-	GoogleMap.buscaCoordenadas("Rua Miracema Nova Iguaçu ");	
+	GoogleMap.buscaCoordenadas("Duque de Caxias");	
 		
 	}
 			

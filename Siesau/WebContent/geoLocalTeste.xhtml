@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:m="http://code.google.com/p/gmaps4jsf/">
+
+<h:head>
+	<h:outputStylesheet library="css" name="geoLocal.css" />
+	<h:outputScript library="javascript" name="heatmap.js" />
+	
+	<script type="text/javascript"
+				src="https://maps.googleapis.com/maps/api/js?libraries=visualization&amp;callback=initMap ">
+				*/
+			</script>
+
+	<script type="text/javascript"
+		src="https://www.gstatic.com/charts/loader.js"></script>
+	<h:outputScript library="javascript" name="piechart.js" />
+	<h:outputScript library="javascript" name="combochart.js" />
+</h:head>
+
+
+<h:body style="margin:0px; border:0; background-color:#E8E8E8;">
+	<div id="wrapper" style="font-size: 12px; font-family: arial;">
+
+		<!-- "FOOTER" -->
+		<div id="top"
+			style="background-color: #B0E2FF; position: relative; max-width: 1420px; height: 80px;">
+
+			<section id="referencia" style="margin-left:20px;"> <a
+				onclick="location.href='index.xhtml'"><h:graphicImage
+					value="/imagem/logo-60.png" width="45" height="45" /></a> <!-- BOTÃO "FILTRAR POR REGIÃO" (LOCALIZADO NO CANTO SUPERIOR ESQUERDO) -->
+			<h:form>
+				<p:growl id="messages" />
+
+				<p:commandButton id="dynaButton" value="Filtrar por Região" />
+				<p:menu overlay="true" trigger="dynaButton" my="left top"
+					at="left bottom">
+					<p:submenu label="Selecione a Região">
+						<p:menuitem value="Pais" actionListener="#{menuView.select}"
+							update="messages" />
+						<p:menuitem value="Estado" actionListener="#{menuView.select}"
+							update="messages" />
+						<p:menuitem value="Cidade" actionListener="#{menuView.select}"
+							update="messages" />
+						<p:menuitem value="Municipio" actionListener="#{menuView.select}"
+							update="messages" />
+						<p:menuitem value="Bairro" actionListener="#{menuView.select}"
+							update="messages" />
+					</p:submenu>
+				</p:menu>
+			</h:form> </section>
+
+			<!-- BOTÕES "AJUDA E IMPRIMIR" (LOCALIZADOS NO CANTO SUPERIOR DIREITO)-->
+			<section id="btn"
+				style="float:right;margin-top:-60px; margin-right:30px;">
+			<p:commandButton value="Ajuda" id="Ajuda" update=""
+				actionListener="#{buttonView.buttonAction}"
+				styleClass="ui-priority-primary" /> <p:commandButton
+				value="Imprimir" id="imprimir" update=""
+				actionListener="#{buttonView.buttonAction}"
+				styleClass="ui-priority-primary" /> </section>
+
+
+		</div>
+
+		<!-- TABELA -->
+		<div id="tabela"
+			style="float: left; margin-top: 0px; background-color: blue; max-width: 400px; height: 80px;">
+
+			<h:form id="form">
+
+				<p:growl id="msgs" showDetail="true" />
+
+
+				<!-- DATA TABLE -->
+				<p:dataTable id="multipleDT" var="car"
+					value="#{dtSelectionView.cars4}" selectionMode="multiple"
+					selection="#{dtSelectionView.selectedCars}" rowKey="#{car.id}"
+					resizableColumns="true">
+
+					<f:facet name="header">Tabela</f:facet>
+
+					<p:column headerText="Cidade">
+						<h:outputText value="#{car.id}" />
+					</p:column>
+					<p:column headerText="Percentual(%)">
+						<h:outputText value="#{car.year}" />
+					</p:column>
+					<p:column headerText="Data(ano)">
+						<h:outputText value="#{car.brand}" />
+					</p:column>
+
+					<f:facet name="footer">
+						<p:commandButton process="multipleDT" update=":form"
+							icon="ui-icon-closethick" value="Limpar" />
+						<p:commandButton process="multipleDT" update=":form"
+							icon="ui-icon-closethick" value="Filtrar" />
+					</f:facet>
+				</p:dataTable>
+
+
+				<p:dialog header="Car Info" widgetVar="carDialog" modal="true"
+					showEffect="fade" hideEffect="fade" resizable="false">
+					<p:outputPanel id="carDetail" style="text-align:center;">
+						<p:panelGrid columns="2" rendered="#{dtSelectionView.selectedCar}"
+							columnClasses="label,value">
+							<f:facet name="header">
+								<p:graphicImage
+									name="demo/images/car/#{dtSelectionView.selectedCar.brand}-big.gif" />
+							</f:facet>
+
+							<h:outputText value="Id:" />
+							<h:outputText value="#{dtSelectionView.selectedCar.id}" />
+
+							<h:outputText value="Year" />
+							<h:outputText value="#{dtSelectionView.selectedCar.year}" />
+
+							<h:outputText value="Color:" />
+							<h:outputText value="#{dtSelectionView.selectedCar.color}"
+								style="color:#{dtSelectionView.selectedCar.color}" />
+
+							<h:outputText value="Price" />
+							<h:outputText value="$#{dtSelectionView.selectedCar.price}" />
+						</p:panelGrid>
+					</p:outputPanel>
+				</p:dialog>
+
+				<p:dialog header="Selected Cars" widgetVar="multiCarDialog"
+					modal="true" showEffect="fade" hideEffect="fade" resizable="false"
+					width="200">
+					<p:outputPanel id="multiCarDetail" style="text-align:center;">
+						<ui:repeat value="#{dtSelectionView.selectedCars}" var="car">
+							<h:outputText value="#{car.id} - #{car.brand}"
+								style="display:block" />
+						</ui:repeat>
+					</p:outputPanel>
+				</p:dialog>
+
+			</h:form>
+		</div>
+
+		<!-- mapa atual (em desenvolvimento) -->
+		<f:view contentType="text/html" encoding="UTF-8">
+
+			
+			<!-- container que contém o mapa -->
+			<h:form id="mapa">
+			
+		<!-- 	<div id="floating-panel" >
+				
+				<h:commandButton type="button" onclick="toggleHeatmap()" value="Toggle Heatmap" />
+				<h:commandButton type="button" onclick="changeGradient()" value="Change gradient" />
+				<h:commandButton type="button" onclick="changeRadius()" value="Change radius" />
+				<h:commandButton type="button" onclick="changeOpacity()" value="Change opacity" />
+			</div> -->
+			
+			 <m:map id="map" submitOnClick="true" latitude="-22.756132" longitude="-43.460742" debug="true" width="700" >
+			<ui:repeat var="pac" value="#{mbMap.pacientes}">
+                     <m:circle latitude="#{pac.latitude}" 
+                               longitude="#{pac.longitude}"  
+                               draggable="true"                                
+                               submitOnValueChange="true"  
+                            	raduis="0.05"   
+                            	               
+                            	              
+                              />
+                 </ui:repeat>			
+			</m:map>
+			</h:form>
+				
+
+			<div class="inset" id="piechart_3d">pieChart</div>
+
+			<div id="chart_div">comboChart</div>
+
+
+
+			
+		</f:view>
+	</div>
+</h:body>
+</html>

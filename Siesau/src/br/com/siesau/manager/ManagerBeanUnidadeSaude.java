@@ -8,7 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.event.RowEditEvent;
+import org.json.JSONException;
 
 import br.com.siesau.control.viaCEP.ViaCEP;
 import br.com.siesau.control.viaCEP.ViaCEPException;
@@ -95,6 +95,9 @@ public class ManagerBeanUnidadeSaude {
 		} catch (ViaCEPException e) {
 			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
 			e.printStackTrace();
+		} catch (JSONException e) {
+			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
+			e.printStackTrace();
 		}
 	}
 
@@ -113,6 +116,9 @@ public class ManagerBeanUnidadeSaude {
 			System.out.println(selecionado.getBairro());
 
 		} catch (ViaCEPException e) {
+			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
+			e.printStackTrace();
+		} catch (JSONException e) {
 			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
 			e.printStackTrace();
 		}

@@ -8,6 +8,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import org.json.JSONException;
 import org.primefaces.event.RowEditEvent;
 
 import br.com.siesau.control.viaCEP.ViaCEP;
@@ -93,6 +94,9 @@ public class ManagerBeanMedico extends ManagerBeanFuncionario implements Seriali
 			medico.setUf(viaCep.getUf());
 			
 		} catch (ViaCEPException e) {
+			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
+			e.printStackTrace();
+		} catch (JSONException e) {
 			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
 			e.printStackTrace();
 		}

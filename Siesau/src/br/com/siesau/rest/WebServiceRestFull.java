@@ -13,8 +13,16 @@ import javax.ws.rs.core.Application;
 
 import com.google.gson.Gson;
 
+import br.com.siesau.entity.AtendDoenca;
+import br.com.siesau.entity.Atendimento;
+import br.com.siesau.entity.Doenca;
 import br.com.siesau.entity.Fornecedor;
 import br.com.siesau.entity.Paciente;
+import br.com.siesau.entity.SituacaoAtend;
+import br.com.siesau.persistence.AtendDoencaDao;
+import br.com.siesau.persistence.AtendExameDao;
+import br.com.siesau.persistence.AtendimentoDao;
+import br.com.siesau.persistence.DoencaDao;
 import br.com.siesau.persistence.FornecedoreDao;
 import br.com.siesau.persistence.PacienteDao;
 
@@ -71,18 +79,23 @@ public class WebServiceRestFull extends Application {
 
 	@GET
 	@Path("/cadatroPaciente/{cartaoSus}/{cpf}/{rg}/{nome}/{nomeMae}/{nomePai}/{sexo}/{dataNascimento}/{endereco}/"
-			+ "{complemento}/{bairro}/{cidade}/{numero}/{telefone}")
+			+ "{complemento}/{bairro}/{cidade}/{numero}/{telefone}/{codCID}")
 	@Produces("text/plain")
-	public String cadastroPaciente(@PathParam("cartaoSus") String cartaoSus, @PathParam("cpf") String cpf,
+	public String cadastroPacienteDoenca(@PathParam("cartaoSus") String cartaoSus, @PathParam("cpf") String cpf,
 			@PathParam("rg") String rg, @PathParam("nome") String nome, @PathParam("nomeMae") String nomeMae,
 			@PathParam("nomePai") String nomePai, @PathParam("sexo") String sexo,
 			@PathParam("dataNascimento") String dataNascimento, @PathParam("endereco") String endereco,
 			@PathParam("complemento") String complemento, @PathParam("bairro") String bairro,
 			@PathParam("cidade") String cidade, @PathParam("numero") String numero,
-			@PathParam("telefone") String telefone) {
+			@PathParam("telefone") String telefone,
+			@PathParam("codCID")String codCID) {
 
 		try {
 			Paciente paciente = new Paciente();
+			Atendimento atendimento = new Atendimento();
+			AtendDoenca atendDoenca = new AtendDoenca();
+			Doenca doenca = new Doenca();
+			paciente.setAlergia(false);
 			paciente.setCartaoSus(cartaoSus);
 			paciente.setCpf(cpf);
 			paciente.setRg(rg);
@@ -98,9 +111,23 @@ public class WebServiceRestFull extends Application {
 			paciente.setNumero(numero);
 			paciente.setTelCel(telefone);
 			paciente.setDataCad(new Date());
+			
+			doenca.setCid(codCID);
+		
+			atendimento.setPaciente(paciente);
+			atendimento.setSituacaoAtend(new SituacaoAtend());
+			atendimento.getSituacaoAtend().setCdSitatend(3);
+			
+			atendDoenca.setAtendimento2(atendimento);
+			atendDoenca.setDoenca2(new DoencaDao(new Doenca()).pesquisaCID(doenca));
 
-			new PacienteDao(new Paciente()).salva(paciente);
-
+			new AtendDoencaDao(new AtendDoenca()).salva(atendDoenca);
+			
+			new PacienteDao(new Paciente()).salva(atendimento.getPaciente());			
+			
+			new AtendimentoDao(new Atendimento()).salva(atendimento);
+			
+			
 			return "Dados Cadastros ...";
 
 		} catch (Exception ex) {

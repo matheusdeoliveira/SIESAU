@@ -9,6 +9,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.json.JSONException;
+
 import br.com.siesau.control.viaCEP.ViaCEP;
 import br.com.siesau.control.viaCEP.ViaCEPException;
 import br.com.siesau.entity.Fornecedor;
@@ -86,7 +88,9 @@ public class ManagerBeanFornecedor implements Serializable {
 
 		try {
 			viaCep = new ViaCEP();
-			viaCep.buscar(fornecedor.getCep().toString());
+			
+				viaCep.buscar(fornecedor.getCep().toString());
+			
 
 			fornecedor.setCidade(viaCep.getLocalidade());
 			fornecedor.setEndereco(viaCep.getLogradouro());
@@ -94,6 +98,9 @@ public class ManagerBeanFornecedor implements Serializable {
 			fornecedor.setUf(viaCep.getUf());
 
 		} catch (ViaCEPException e) {
+			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
+			e.printStackTrace();
+		} catch (JSONException e) {
 			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
 			e.printStackTrace();
 		}

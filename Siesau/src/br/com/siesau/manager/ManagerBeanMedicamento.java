@@ -40,6 +40,7 @@ public class ManagerBeanMedicamento implements Serializable {
 		try {
 			new MedicamentoDao(new Medicamento()).salva(medicamento);
 			fc.addMessage("form1", new FacesMessage("Medicamento " + medicamento.getNomeRef() + " salvo com sucesso."));
+			medicamento = new Medicamento();
 			medicamentos = new MedicamentoDao(new Medicamento()).lista();
 
 		} catch (Exception e) {

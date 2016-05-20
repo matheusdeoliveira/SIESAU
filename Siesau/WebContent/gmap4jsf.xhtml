@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:m="http://code.google.com/p/gmaps4jsf/">
+
+<h:head>
+
+	<script type="text/javascript"
+				src="https://maps.googleapis.com/maps/api/js?libraries=visualization&amp;callback=initMap ">
+				/* libraries=visualization&amp;callback=initMap */
+			</script>	
+	
+</h:head>
+<f:view>
+<h:body style="margin:0px; border:0; background-color:#E8E8E8;">
+			<h:form>
+			 <m:map width="500px" height="500px" latitude="30.01" longitude="31.14" jsVariable="map1" debug="true">
+			</m:map>
+		</h:form>
+		
+	
+</h:body>
+</f:view>
+</html>

@@ -20,6 +20,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.imageio.stream.FileImageOutputStream;
 
+import org.json.JSONException;
 import org.primefaces.event.CaptureEvent;
 
 import br.com.siesau.control.viaCEP.ViaCEP;
@@ -158,6 +159,9 @@ public class ManagerBeanFuncionario implements Serializable {
 		} catch (ViaCEPException e) {
 			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
 			e.printStackTrace();
+		} catch (JSONException e) {
+			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
+			e.printStackTrace();
 		}
 	}
 	
@@ -176,6 +180,9 @@ public class ManagerBeanFuncionario implements Serializable {
 			System.out.println(selecionado.getBairro());
 
 		} catch (ViaCEPException e) {
+			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
+			e.printStackTrace();
+		} catch (JSONException e) {
 			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));
 			e.printStackTrace();
 		}

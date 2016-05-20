@@ -124,7 +124,7 @@ public class Paciente implements Serializable {
 	private String tipoAlergia;
 	
 	@Column
-	private boolean alergia;
+	private Boolean alergia;
 
 	
 	public Paciente() {
@@ -439,7 +439,7 @@ public class Paciente implements Serializable {
 	}
 
 	public boolean isAlergia() {
-		return alergia;
+		return alergia = (alergia==null)?false:(alergia!=null)?alergia:alergia;
 	}
 
 	public void setAlergia(boolean alergia) {
@@ -450,5 +450,14 @@ public class Paciente implements Serializable {
 		return serialVersionUID;
 	}
 
+	public Boolean getAlergia() {
+		return alergia;
+	}
+
+	public void setAlergia(Boolean alergia) {
+		this.alergia = alergia;
+	}
+	
+	
 	
 }

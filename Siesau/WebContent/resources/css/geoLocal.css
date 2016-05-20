@@ -1,0 +1,51 @@
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#map {
+	position: relative;
+	margin-left: 400px;
+	margin-top: 0px;
+	max-width: 957px;
+	height: 350px;
+}
+
+#floating-panel {
+	background-color: #fff;
+	border: 0px solid #999;
+	margin-left: 660px;
+	margin-top: 60px;
+	padding: 0px;
+	position: absolute;
+	top: 10px;
+	z-index: 5;
+}
+
+#piechart_3d {
+	background-color: #EEE9BF;
+	max-width: 500px;
+	height: 225px; 
+	margin-left: 400px;
+	padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    ma
+    
+}
+
+#comboChart {
+	background-color: #4682B4;
+	width: 470px;
+	height: 230px;
+	left: 876px;
+	top: 436px;
+	z-index: 1;
+}
+
+.inset {
+	border-style: inset;
+	
+}
