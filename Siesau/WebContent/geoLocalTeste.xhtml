@@ -40,16 +40,16 @@
 				<p:commandButton id="dynaButton" value="Filtrar por Região" />
 				<p:menu overlay="true" trigger="dynaButton" my="left top"
 					at="left bottom">
-					<p:submenu label="Selecione a Região">
-						<p:menuitem value="Pais" actionListener="#{menuView.select}"
+					<p:submenu label="Selecione a Cidade">
+						<p:menuitem value="Mesquita" actionListener="#{menuView.select}"
 							update="messages" />
-						<p:menuitem value="Estado" actionListener="#{menuView.select}"
+						<p:menuitem value="Nilópolis" actionListener="#{menuView.select}"
 							update="messages" />
-						<p:menuitem value="Cidade" actionListener="#{menuView.select}"
+						<p:menuitem value="Nova Iguaçu" actionListener="#{menuView.select}"
 							update="messages" />
-						<p:menuitem value="Municipio" actionListener="#{menuView.select}"
+						<p:menuitem value="Duque de Caxias" actionListener="#{menuView.select}"
 							update="messages" />
-						<p:menuitem value="Bairro" actionListener="#{menuView.select}"
+						<p:menuitem value="Queimados" actionListener="#{menuView.select}"
 							update="messages" />
 					</p:submenu>
 				</p:menu>
@@ -85,13 +85,13 @@
 
 					<f:facet name="header">Tabela</f:facet>
 
-					<p:column headerText="Cidade">
+					<p:column headerText="Bairro">
 						<h:outputText value="#{car.id}" />
 					</p:column>
-					<p:column headerText="Percentual(%)">
+					<p:column headerText="Sexo">
 						<h:outputText value="#{car.year}" />
 					</p:column>
-					<p:column headerText="Data(ano)">
+					<p:column headerText="Quantidade">
 						<h:outputText value="#{car.brand}" />
 					</p:column>
 
@@ -159,13 +159,13 @@
 				<h:commandButton type="button" onclick="changeOpacity()" value="Change opacity" />
 			</div> -->
 			
-			 <m:map id="map" submitOnClick="true" latitude="-22.756132" longitude="-43.460742" debug="true" width="700" >
+			 <m:map id="map" submitOnClick="false" latitude="-22.756132" longitude="-43.460742" debug="false" width="700" >
 			<ui:repeat var="pac" value="#{mbMap.pacientes}">
                      <m:circle latitude="#{pac.latitude}" 
                                longitude="#{pac.longitude}"  
-                               draggable="true"                                
-                               submitOnValueChange="true"  
-                            	raduis="0.05"   
+                               draggable="false"                                
+                               submitOnValueChange="false"  
+                               raduis="0.05"   
                             	               
                             	              
                               />
