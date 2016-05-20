@@ -54,15 +54,14 @@
 											<f:selectItems value="#{mbFuncionario.mostraCargos}" />
 										</p:selectOneMenu>
 										<br />
-										<!-- Em produção 
-										<p:selectCheckboxMenu label="Especialidades"
+										
+										<p:selectCheckboxMenu label="Especialidades" converter="funcionarioConverter"
 											value="#{mbFuncionario.especialidadesSelecionadas}"
 											filter="true" filterMatchMode="startsWith"
 											panelStyle="width:400px">
 											<f:selectItems value="#{mbFuncionario.especialidades}"
 												var="esp" itemValue="#{esp}" itemLabel="#{esp.especialidade}" />
 										</p:selectCheckboxMenu>
-										-->
 									</p:column>
 
 									<p:column>
