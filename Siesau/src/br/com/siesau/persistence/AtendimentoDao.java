@@ -1,6 +1,7 @@
 package br.com.siesau.persistence;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
@@ -39,5 +40,13 @@ public class AtendimentoDao extends GenericDao<Atendimento> {
 		return manager
 				.createQuery(("FROM " + Atendimento.class.getName() + " WHERE cd_sitatend = 1 OR cd_sitatend = 2"))
 				.getResultList();
+	}
+
+	public Atendimento retornaAtendimentoPorData(Date data) {
+		String consulta = "select p from " + Atendimento.class.getName() + " p where data_atend = :data ";
+		TypedQuery<Atendimento> query = manager.createQuery(consulta, Atendimento.class);
+		query.setParameter("data", data);
+		Atendimento atendimento = query.getSingleResult();
+		return atendimento;
 	}
 }

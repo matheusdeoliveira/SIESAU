@@ -4,16 +4,20 @@ import jxl.*;
 import jxl.read.biff.BiffException;
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import br.com.siesau.entity.AtendDoenca;
+import br.com.siesau.entity.Atendimento;
+import br.com.siesau.entity.Doenca;
 import br.com.siesau.entity.Paciente;
+import br.com.siesau.entity.SituacaoAtend;
+import br.com.siesau.persistence.AtendDoencaDao;
+import br.com.siesau.persistence.AtendimentoDao;
+import br.com.siesau.persistence.DoencaDao;
 import br.com.siesau.persistence.PacienteDao;
+import br.com.siesau.persistence.SituacaoAtendDao;
 
 public class ImportaPlanilha {
-
-	public static void main(String[] args) throws BiffException {
-		File file = new File("C:\\Users\\Diogo\\Downloads\\paciente.xls");
-		xlsInputpaciente(file);
-	}
 
 	public static void xlsInputpaciente(File file) throws BiffException {
 
@@ -24,7 +28,10 @@ public class ImportaPlanilha {
 			Sheet sheet = workbook.getSheet(0);
 
 			int linhas = sheet.getRows();
-			Paciente paciente;
+			Paciente paciente = null;
+			Atendimento atendimento = null;
+			AtendDoenca atendDoenca = null;
+			Doenca doenca;
 
 			for (int linha = 2; linha <= linhas; linha++) {
 				try {
@@ -57,15 +64,15 @@ public class ImportaPlanilha {
 								format.parse((sheet.getCell(20, linha)).getContents()).getTime());
 						paciente.setDataNasc(data);
 					}
-					
+
 					paciente.setObs((sheet.getCell(21, linha)).getContents());
-										
+
 					if ((sheet.getCell(22, linha)).getContents().toString() != "") {
 						java.sql.Date data2 = new java.sql.Date(
 								format.parse((sheet.getCell(22, linha)).getContents()).getTime());
 						paciente.setDataCad(data2);
 					}
-					
+
 					paciente.setSexo((sheet.getCell(23, linha)).getContents());
 
 					String alergia = (sheet.getCell(24, linha)).getContents();
@@ -75,14 +82,37 @@ public class ImportaPlanilha {
 					} else {
 						paciente.setAlergia(false);
 					}
-
 					paciente.setTipoAlergia((sheet.getCell(25, linha)).getContents());
 
 					PacienteDao pacienteDao = new PacienteDao(paciente);
 					pacienteDao.salva(paciente);
+					paciente = new PacienteDao(new Paciente()).pesquisaCPF(paciente.getCpf());
+
+					doenca = new Doenca();
+					doenca.setCid((sheet.getCell(26, linha)).getContents().toUpperCase());
+					doenca = new DoencaDao(new Doenca()).pesquisaCID(doenca);
+
+					atendimento = new Atendimento();
+					atendimento.setPaciente(paciente);
+					atendimento.setDataAtend(new Date());
+					atendimento.setSituacaoAtend(new SituacaoAtendDao(new SituacaoAtend()).findByCode(3));
+
+					new AtendimentoDao(new Atendimento()).salva(atendimento);
+
+					atendimento = new AtendimentoDao(new Atendimento())
+							.retornaAtendimentoPorData(atendimento.getDataAtend());
+
+					atendDoenca = new AtendDoenca();
+					atendDoenca.setAtendimento1(atendimento);
+					atendDoenca.setAtendimento2(atendimento);
+					atendDoenca.setDoenca1(doenca);
+					atendDoenca.setDoenca2(doenca);
+
+					AtendDoencaDao atendDoencaDao = new AtendDoencaDao(atendDoenca);
+					atendDoencaDao.salva(atendDoenca);
 
 				} catch (Exception e) {
-					e.getMessage();
+					e.printStackTrace();
 				}
 			}
 
