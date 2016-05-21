@@ -6,7 +6,6 @@ public class UnidEspecDao extends GenericDao<UnidEspec> {
 
 	public UnidEspecDao(UnidEspec classe) {
 		super(classe);
-		// TODO Auto-generated constructor stub
 	}
 
 }

@@ -39,6 +39,7 @@ public class ManagerBeanUnidadeSaude {
 	@PostConstruct
 	public void init() {
 		especialidadesSelecionadas = new ArrayList<>();
+		unidEspec = new UnidEspec();
 		especialidades = new EspecialidadeDao(new Especialidade()).lista();
 		selecionado = new UnidadeSaude();
 		unidadeSaude = new UnidadeSaude();
@@ -57,10 +58,11 @@ public class ManagerBeanUnidadeSaude {
 
 		try {
 			buscaCep();
+
 			new UnidadeSaudeDao(new UnidadeSaude()).salva(unidadeSaude);
-			
+
 			unidadeSaude = new UnidadeSaudeDao(new UnidadeSaude()).findByCNPJ(unidadeSaude.getCnpj().trim());
-			
+
 			for (int j = 0; j < especialidadesSelecionadas.size(); j++) {
 
 				Especialidade especialidade = new Especialidade();
@@ -75,7 +77,7 @@ public class ManagerBeanUnidadeSaude {
 
 				new UnidEspecDao(new UnidEspec()).salva(unidEspec);
 			}
-			
+
 			fc.addMessage("form1",
 					new FacesMessage("Unidade de CNES : " + unidadeSaude.getCnes() + " salva com sucesso"));
 			unidadeSaude = new UnidadeSaude();
@@ -229,5 +231,4 @@ public class ManagerBeanUnidadeSaude {
 	public void setUnidEspec(UnidEspec unidEspec) {
 		this.unidEspec = unidEspec;
 	}
-
 }

@@ -110,7 +110,7 @@ public class ManagerBeanAtendimento implements Serializable {
 
 			new AtendimentoDao(new Atendimento()).salva(atendimento);
 			fc.addMessage("form_paciente",
-					new FacesMessage("Atendimento nº " + atendimento.getCdAtend() + " agendado."));
+					new FacesMessage("Atendimento do paciente " + atendimento.getPaciente().getNome() + " agendado."));
 			atendimento = new Atendimento();
 			atendimentos = new AtendimentoDao(new Atendimento()).listaNaoFinalizados();
 
