@@ -160,7 +160,7 @@
 			</div> -->
 			
 			 <m:map id="map" submitOnClick="false" latitude="-22.756132" longitude="-43.460742" debug="false" width="700" >
-			<ui:repeat var="pac" value="#{mbMap.pacientes}">
+			<ui:repeat var="pac" value="#{mbMap.pacientesdto}">
                      <m:circle latitude="#{pac.latitude}" 
                                longitude="#{pac.longitude}"  
                                draggable="false"                                
@@ -174,10 +174,18 @@
 			</h:form>
 				
 
-			<div class="inset" id="piechart_3d">pieChart</div>
-
-			<div id="chart_div">comboChart</div>
-
+			<h:form id="form2">
+    <p:growl id="growl" showDetail="true" />
+ 
+    <h:panelGrid columns="2" columnClasses="left,right" style="width:100%" rendered="#{not empty mbMap.pacientes}">
+        <p:chart type="pie" model="#{mbMap.grafico}" style="width:400px;height:300px">
+            <p:ajax event="itemSelect" listener="#{mbMap.itemSeleciondado}" update="growl" />
+        </p:chart>
+ 
+        </h:panelGrid>
+ 
+</h:form>
+			
 
 
 			

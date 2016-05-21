@@ -1,11 +1,14 @@
 package br.com.siesau.persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import br.com.siesau.control.GoogleMap;
 import br.com.siesau.entity.Paciente;
+import br.com.siesau.entity.PacienteDTO;
 
 public class PacienteDao extends GenericDao<Paciente> {
 
@@ -65,6 +68,41 @@ public class PacienteDao extends GenericDao<Paciente> {
 		return paciente;
 	}
 	
-	
-
+	public List<PacienteDTO> pesquisaDoencaCidade(String cidade){
+		String consulta = "select "
+						+"p.bairro, "
+						+"p.latitude, "
+						+"p.longitude, "
+						+"p.sexo, "  
+						+"SUM ((select count(*) from doenca d where ad.cd_doenca = d.cd_doenca)) as quantidade " 
+						+"from " 
+						+"atendimento a, " 
+						+"atend_doenca ad, " 
+						+"doenca d, " 
+						+"paciente p "
+						+"where "
+						+"a.cd_atend = ad.cd_atend and "
+						+"ad.cd_doenca = d.cd_doenca and "
+						+"a.cd_paciente = p.cd_paciente " 
+						+"and p.cidade = :param "
+						+"and d.cid = 'A90' "
+						+"GROUP BY p.bairro, p.sexo, p.latitude, p.longitude, d.cid";
+				
+		Query query = manager.createNativeQuery(consulta);
+		query.setParameter("param", cidade);
+		@SuppressWarnings("unchecked")
+		List<Object[]> resultados = query.getResultList();
+		List<PacienteDTO> pacientesdto = new ArrayList<>();
+		for (Object[] result : resultados) {
+			PacienteDTO pacientedto = new PacienteDTO();
+			pacientedto.setBairro(result[0].toString());
+			pacientedto.setLatitude(Double.parseDouble(result[1].toString()));
+			pacientedto.setLongitude(Double.parseDouble(result[2].toString()));
+			pacientedto.setSexo(result[3].toString());
+			pacientedto.setQuantidade(Integer.parseInt(result[4].toString()));
+			pacientesdto.add(pacientedto);
+			
+		}
+		return pacientesdto;
+	}
 }
