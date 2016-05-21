@@ -1,0 +1,489 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+
+<h:body
+	style=" height: 100%; margin:0px; border:0; background-color:#E8E8E8;">
+	<ui:insert name="header">
+		<ui:include src="Template/header.jsf" />
+	</ui:insert>
+
+	<ui:insert name="menu">
+		<ui:include src="Template/menu.jsf" />
+	</ui:insert>
+	<div
+		style="min-height: 100%; position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px;">
+
+		<p:tabView id="tabView"
+			style="margin-top:10px;position:relative; width:1112px;background-color:#E8E8E8;">
+			<p:tab title="Cadastro de Fabricante" style="position:relative;">
+
+				<h:form id="form1">
+
+					<p:panel id="dados_gerais" header="Dados Gerais"
+						style="background-color:#F0F4F9; color:#000000;">
+						<h:panelGrid columns="3" layout="grid">
+							<p:row>
+								<h:outputText value="Razão social:" style="color:#000000;" />
+								<br />
+								<p:column>
+									<p:inputText value="#{mbFabricante.fabricante.razSocial}"
+										required="true" size="60" />
+								</p:column>
+							</p:row>
+
+							<p:row>
+								<h:outputText value="Nome fantasia:" style="color:#000000;" />
+								<br />
+								<p:inputText value="#{mbFabricante.fabricante.fantasia}"
+									required="true" size="60" />
+							</p:row>
+						</h:panelGrid>
+						<h:panelGrid columns="3">
+
+							<p:column>
+								<p:row>
+									<h:outputText value="CNPJ:" style="color:#000000;" />
+									<br />
+									<p:inputMask mask="99.999.999/9999-99"
+										value="#{mbFabricante.fabricante.cnpj}" required="true" requiredMessage="CNPJ Obrigatório!"
+										size="50" />
+								</p:row>
+							</p:column>
+
+
+							<p:column>
+								<p:row>
+									<h:outputText value="Situação:" style="color:#000000;" />
+									<br />
+									<p:selectOneMenu value="#{mbFabricante.fabricante.ativo}"
+										required="true">
+										<f:selectItem itemValue="selecione" itemLabel="Selecione"
+											noSelectionOption="true"></f:selectItem>
+										<f:selectItem itemValue="true" itemLabel="Ativo"></f:selectItem>
+										<f:selectItem itemValue="false" itemLabel="Inativo"></f:selectItem>
+
+
+									</p:selectOneMenu>
+								</p:row>
+							</p:column>
+						</h:panelGrid>
+
+
+
+					</p:panel>
+
+
+
+					<p:panel id="end" header="Endereço"
+						style="width:500px; margin-top:20px; background-color:#F0F4F9;color:#000000;">
+						<h:outputText value="Rua: " style="color:#000000;" />
+						<br />
+						<p:inputText id="endereco"
+							value="#{mbFabricante.fabricante.endereco}" required="true"
+							size="60" />
+
+
+						<h:panelGrid columns="2">
+							<p:column>
+								<h:outputText value="Número: " style="color:#000000;" />
+								<br />
+								<p:inputText value="#{mbFabricante.fabricante.numero}"
+									required="true" size="15" />
+							</p:column>
+
+						</h:panelGrid>
+
+
+						<h:outputText value="Bairro" style="color:#000000;" />
+						<br />
+						<p:inputText id="bairro" value="#{mbFabricante.fabricante.bairro}"
+							required="true" size="40" />
+						<br />
+
+						<h:panelGrid columns="2">
+
+							<p:column>
+
+								<h:outputText value="Cidade:" style="color:#000000;" />
+								<br />
+								<p:inputText id="cidade"
+									value="#{mbFabricante.fabricante.cidade}" required="true"
+									size="30" />
+								<br />
+
+
+								<h:outputText value="CEP: " style="color:#000000;" />
+								<br />
+								<p:inputText maxlength="8"
+									requiredMessage="Favor preencha o CEP"
+									value="#{mbFabricante.fabricante.cep}" required="true">
+									<p:ajax event="keyup" update="cidade, endereco, bairro"
+										listener="#{mbFabricante.buscaCep}" />
+								</p:inputText>
+								<br />
+
+							</p:column>
+
+
+							<p:column>
+								<p:outputLabel for="estado" value="Estado:"
+									style="color:#000000;" />
+								<br />
+								<p:selectOneMenu id="estado"
+									value="#{mbFabricante.fabricante.uf}" style="width:143px">
+									<f:selectItem itemLabel="Selecione" itemValue="opcao"
+										noSelectionOption="true" />
+									<f:selectItem itemLabel="AC" itemValue="AC" />
+									<f:selectItem itemLabel="AL" itemValue="AL" />
+									<f:selectItem itemLabel="AM" itemValue="AM" />
+									<f:selectItem itemLabel="AP" itemValue="AP" />
+									<f:selectItem itemLabel="BA" itemValue="BA" />
+									<f:selectItem itemLabel="CE" itemValue="CE" />
+									<f:selectItem itemLabel="DF" itemValue="DF" />
+									<f:selectItem itemLabel="ES" itemValue="ES" />
+									<f:selectItem itemLabel="GO" itemValue="GO" />
+									<f:selectItem itemLabel="MA" itemValue="MA" />
+									<f:selectItem itemLabel="MG" itemValue="MG" />
+									<f:selectItem itemLabel="MS" itemValue="MS" />
+									<f:selectItem itemLabel="MT" itemValue="MT" />
+									<f:selectItem itemLabel="PA" itemValue="PA" />
+									<f:selectItem itemLabel="PB" itemValue="PB" />
+									<f:selectItem itemLabel="PE" itemValue="PE" />
+									<f:selectItem itemLabel="PI" itemValue="PI" />
+									<f:selectItem itemLabel="PR" itemValue="PR" />
+									<f:selectItem itemLabel="RJ" itemValue="RJ" />
+									<f:selectItem itemLabel="RN" itemValue="RN" />
+									<f:selectItem itemLabel="RO" itemValue="RO" />
+									<f:selectItem itemLabel="RR" itemValue="RR" />
+									<f:selectItem itemLabel="RS" itemValue="RS" />
+									<f:selectItem itemLabel="SC" itemValue="SC" />
+									<f:selectItem itemLabel="SE" itemValue="SE" />
+									<f:selectItem itemLabel="SP" itemValue="SP" />
+									<f:selectItem itemLabel="TO" itemValue="TO" />
+								</p:selectOneMenu>
+								<br />
+								<br />
+								<br />
+
+							</p:column>
+						</h:panelGrid>
+
+
+					</p:panel>
+
+					<p:panel id="cont" header="Contato"
+						style="postion:relative;float:right;width:500px;height:307px;margin-top:-314px;background-color:#F0F4F9;">
+						<h:panelGrid columns="2">
+							<p:column>
+								<h:outputText value="Telefone Comercial:" style="color:#000000;" />
+								<br />
+								<p:inputMask mask="(99)9999-9999"
+									value="#{mbFabricante.fabricante.tel}" required="true" />
+							</p:column>
+
+						</h:panelGrid>
+
+						<h:outputText value="Email: " style="color:#000000;" />
+						<br />
+						<p:inputText value="#{mbFabricante.fabricante.email}"
+							required="true" size="50" />
+						<br />
+
+					</p:panel>
+
+					<p:panel id="pos_botao"
+						style="padding-bottom:15px; background-color:#E8E8E8; height:50;position: relative; max-width: 1120px; margin-right: auto; margin-left: auto;">
+
+						<p:commandButton value="Salvar"
+							style="margin-top:-20; float:right;"
+							action="#{mbFabricante.salvar}" ajax="true"
+							update=":tabView:form1, :tabView:form2" />
+						<p:growl></p:growl>
+
+						<p:commandButton value="Limpar" style="margin-top:0;float:right"
+							type="reset" />
+						<p:growl></p:growl>
+
+					</p:panel>
+
+				</h:form>
+			</p:tab>
+			<p:tab title="Consulta Fabricante">
+				<h:form id="form2">
+					<p:growl id="msgs" showDetail="true" />
+					<p:dataTable id="dataTable" var="linha" editable="true"
+						widgetVar="tabelafabricante"
+						filteredValue="#{mbFabricante.fabricantesFiltrados}"
+						emptyMessage="Não há fabricantees." reflow="true"
+						value="#{mbFabricante.fabricantes}" paginator="true" rows="10"
+						style="padding-bottom:15px;">
+
+						<f:facet name="header">
+							<p:outputPanel>
+								<h:outputText value="Pesquisa em todos os campos:" />
+								<p:inputText id="globalFilter"
+									onkeyup="PF('tabelafabricante').filter()" style="width:150px"
+									placeholder="Digite a busca" />
+							</p:outputPanel>
+						</f:facet>
+
+						<p:column filterBy="#{linha.cnpj}" filterMatchMode="contains"
+							sortBy="#{linha.cnpj}" width="20" headerText="CNPJ">
+							<h:outputText value="#{linha.cnpj}" />
+						</p:column>
+
+						<p:column filterBy="#{linha.razSocial}" filterMatchMode="contains"
+							sortBy="#{linha.razSocial}" width="20"
+							headerText="Nome do fabricante">
+							<h:outputText value="#{linha.razSocial}" />
+						</p:column>
+
+
+						<p:column filterBy="#{linha.tel}" filterMatchMode="contains"
+							sortBy="#{linha.tel}" width="20"
+							headerText="Telefone do fabricante">
+							<h:outputText value="#{linha.tel}" />
+						</p:column>
+
+						<p:column filterBy="#{linha.cidade}" filterMatchMode="contains"
+							sortBy="#{linha.cidade}" width="20" headerText="Cidade">
+							<h:outputText value="#{linha.cidade}" />
+						</p:column>
+
+
+						<p:column headerText="Exclusão" width="5">
+
+							<p:commandButton styleClass="text-align:center"
+								style="margin-top:-20; float:right;" update=":forExDetail"
+								oncomplete="PF('forExDialog').show()" icon="ui-icon-trash">
+								<f:setPropertyActionListener value="#{linha}"
+									target="#{mbFabricante.selecionado}" />
+							</p:commandButton>
+						</p:column>
+
+						<p:column style="width:32px;text-align: center"
+							headerText="Edição">
+							<p:commandButton update="forEdDetail"
+								oncomplete="PF('forEdDialog').show()" icon="ui-icon-search">
+								<f:setPropertyActionListener value="#{linha}"
+									target="#{mbFabricante.selecionado}" />
+							</p:commandButton>
+
+						</p:column>
+
+					</p:dataTable>
+				</h:form>
+			</p:tab>
+
+		</p:tabView>
+
+	</div>
+
+	<p:dialog header="Fabricante" widgetVar="forEdDialog" modal="true"
+		minHeight="600" minWidth="600" style="background-color:#F0F4F9;">
+		<p:outputPanel id="forEdDetail" style="text-align:center;background-color:#E8E8E8;">
+			<h:form id="form_forEdModal" style="background-color:#E8E8E8;">
+
+				<h:panelGrid columns="1"
+					rendered="#{not empty mbFabricante.selecionado}"
+					columnClasses="label,value">
+					<p:tabView style="background-color:#F0F4F9;">
+						<p:tab title="Dados pessoais">
+							<h:panelGrid columns="2" style="text-align:left;">
+								<h:outputLabel value="Razão Social" style="color:#000000;"/>
+								
+									<p:inputText value="#{mbFabricante.selecionado.razSocial}" />
+								
+
+								<h:outputLabel value="Nome" style="color:#000000;"/>
+								
+									<p:inputText value="#{mbFabricante.selecionado.fantasia}" />
+								
+
+								<h:outputLabel value="CNPJ" style="color:#000000;"/>
+								
+									<p:inputMask mask="99.999.999/9999-99"
+										value="#{mbFabricante.selecionado.cnpj}" required="true" />
+							
+
+
+								<h:outputLabel value="Telefone" style="color:#000000;"/>
+								
+									<p:inputMask mask="(99)9999-9999"
+										value="#{mbFabricante.selecionado.tel}" required="true" />
+								
+
+								<h:outputLabel value="Email" style="color:#000000;"/>
+								
+									<p:inputText value="#{mbFabricante.selecionado.email}"
+										required="true" />
+								
+
+
+							</h:panelGrid>
+						</p:tab>
+						<p:tab title="Endereço">
+							<h:panelGrid columns="2" style="text-align:left;">
+
+								<h:outputLabel value="CEP" style="color:#000000;"/>
+								
+									<p:inputText maxlength="8"
+										requiredMessage="Favor preencha o CEP"
+										value="#{mbFabricante.selecionado.cep}" required="true">
+									</p:inputText>
+					
+								<h:outputLabel value="Rua:" style="color:#000000;"/>
+								
+									<p:inputText disabled="true"
+										value="#{mbFabricante.selecionado.endereco}" required="true"
+										id="endereco" size="60" />
+								
+
+
+								<h:outputLabel value="Número:" style="color:#000000;" />
+								
+									<p:inputText value="#{mbFabricante.selecionado.numero}"
+										required="true" id="numero" size="10" />
+								
+
+								<h:outputLabel value="Bairro:" style="color:#000000;"/>
+								
+									<p:inputText disabled="true"
+										value="#{mbFabricante.selecionado.bairro}" required="true"
+										id="bairro" size="30" />
+								
+
+
+								<h:outputLabel value="Cidade:" style="color:#000000;"/>
+								
+									<p:inputText disabled="true"
+										value="#{mbFabricante.selecionado.cidade}" required="true"
+										id="cidade" size="30" />
+								
+
+
+								<h:outputLabel value="UF:" style="color:#000000;" />
+								
+									<p:inputText id="uf" disabled="true"
+										value="#{mbFabricante.selecionado.uf}" required="true"
+										size="10" />
+
+							</h:panelGrid>
+
+
+						</p:tab>
+					</p:tabView>
+				</h:panelGrid>
+
+				<p:commandButton value="Alterar"
+					style="margin-top:-20; float:right;"
+					action="#{mbFabricante.editar}" ajax="true" update=":tabView:form2"></p:commandButton>
+			</h:form>
+		</p:outputPanel>
+	</p:dialog>
+	<p:dialog header="Fabricante" widgetVar="forExDialog" modal="true">
+		<p:outputPanel id="forExDetail" style="text-align:center;">
+			<h:form id="form_forExModal">
+				<p:panelGrid columns="1"
+					rendered="#{not empty mbFabricante.selecionado}"
+					columnClasses="label,value">
+
+					<p:tabView>
+						<p:tab title="Dados pessoais">
+							<p:panelGrid columns="2">
+								<h:outputLabel value="Razão Social" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFabricante.selecionado.razSocial}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Nome" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFabricante.selecionado.fantasia}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="CNPJ" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFabricante.selecionado.cnpj}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Telefone" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFabricante.selecionado.tel}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Email" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFabricante.selecionado.email}" />
+								</p:panelGrid>
+
+							</p:panelGrid>
+						</p:tab>
+						<p:tab title="Endereço">
+							<h:panelGrid columns="2">
+								<h:outputLabel value="CEP" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFabricante.selecionado.cep}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Rua:" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFabricante.selecionado.endereco}" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Número:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFabricante.selecionado.numero}" />
+								</p:panelGrid>
+
+								<h:outputLabel value="Bairro:" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFabricante.selecionado.bairro}" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="Cidade:" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFabricante.selecionado.cidade}" />
+								</p:panelGrid>
+
+
+								<h:outputLabel value="UF:" style="color:#000000;" />
+								<p:panelGrid columns="1">
+									<h:outputText value="#{mbFabricante.selecionado.uf}" />
+								</p:panelGrid>
+
+							</h:panelGrid>
+						</p:tab>
+					</p:tabView>
+				</p:panelGrid>
+				<p:commandButton value="Excluir"
+					style="margin-top:-20; float:right;"
+					action="#{mbFabricante.excluir}" ajax="true"
+					update=":tabView:form2">
+					<p:confirm icon="ui-icon-alert" message="Deseja Excluir ?"
+						header="Confirma?" />
+				</p:commandButton>
+				<p:confirmDialog appendTo="@(body)" global="true">
+					<p:commandButton process="@this" value="Sim" type="button" onclick="PF('forExDialog').hide()"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
+					<p:commandButton process="@this" value="Não"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
+				</p:confirmDialog>
+			</h:form>
+		</p:outputPanel>
+	</p:dialog>
+	<ui:insert name="footer">
+		<ui:include src="Template/footer.jsf" />
+	</ui:insert>
+</h:body>
+</html>
