@@ -48,8 +48,9 @@
 							<p:row>
 								<h:outputText value="CNPJ:" style="color:#000000;" />
 								<br />
-								<p:inputMask mask="99.999.999/9999-99" value="#{mbUnidadeSaude.unidadeSaude.cnpj}"
-									required="true" size="50" />
+								<p:inputMask mask="99.999.999/9999-99"
+									value="#{mbUnidadeSaude.unidadeSaude.cnpj}" required="true"
+									size="50" />
 							</p:row>
 
 							<p:row>
@@ -60,28 +61,37 @@
 									<f:selectItem itemValue="selecione" itemLabel="Selecione"></f:selectItem>
 									<f:selectItem itemValue="true" itemLabel="Ativa"></f:selectItem>
 									<f:selectItem itemValue="false" itemLabel="Inativa"></f:selectItem>
-
 								</p:selectOneMenu>
+							</p:row>
+
+							<p:row>
+								<p:selectCheckboxMenu label="Especialidades"
+									value="#{mbUnidadeSaude.especialidadesSelecionadas}"
+									filter="true" filterMatchMode="startsWith"
+									panelStyle="width:400px">
+
+									<f:selectItems value="#{mbUnidadeSaude.mostraEspec}" />
+								</p:selectCheckboxMenu>
 							</p:row>
 						</h:panelGrid>
 					</p:panel>
 					<p:panel id="end" header="Endereço"
 						style="width:500px; margin-top:20px; background-color:#F0F4F9;color:#000000;">
-						
+
 						<h:outputText value="CEP: " style="color:#000000;" />
-								<br />
-								<p:inputText maxlength="8"
-									requiredMessage="Favor preencha o CEP"
-									value="#{mbUnidadeSaude.unidadeSaude.cep}" required="true">
-									<p:ajax event="keyup" update="cidade, endereco, bairro, uf"
-										listener="#{mbUnidadeSaude.buscaCep}" />
-								</p:inputText>
-								<br/>
-						
+						<br />
+						<p:inputText maxlength="8" requiredMessage="Favor preencha o CEP"
+							value="#{mbUnidadeSaude.unidadeSaude.cep}" required="true">
+							<p:ajax event="keyup" update="cidade, endereco, bairro, uf"
+								listener="#{mbUnidadeSaude.buscaCep}" />
+						</p:inputText>
+						<br />
+
 						<h:outputText value="Rua: " style="color:#000000;" />
 						<br />
-						<p:inputText id="endereco" disabled="true" value="#{mbUnidadeSaude.unidadeSaude.endereco}"
-							required="true" size="60" />
+						<p:inputText id="endereco" disabled="true"
+							value="#{mbUnidadeSaude.unidadeSaude.endereco}" required="true"
+							size="60" />
 
 
 						<h:panelGrid columns="2">
@@ -103,8 +113,9 @@
 
 						<h:outputText value="Bairro" style="color:#000000;" />
 						<br />
-						<p:inputText disabled="true" id="bairro" value="#{mbUnidadeSaude.unidadeSaude.bairro}"
-							required="true" size="40" />
+						<p:inputText disabled="true" id="bairro"
+							value="#{mbUnidadeSaude.unidadeSaude.bairro}" required="true"
+							size="40" />
 						<br />
 
 
@@ -114,18 +125,20 @@
 
 								<h:outputText value="Cidade:" style="color:#000000;" />
 								<br />
-								<p:inputText disabled="true" id="cidade" value="#{mbUnidadeSaude.unidadeSaude.cidade}"
-									required="true" size="30" />
+								<p:inputText disabled="true" id="cidade"
+									value="#{mbUnidadeSaude.unidadeSaude.cidade}" required="true"
+									size="30" />
 								<br />
-								
+
 							</p:column>
 
 
 							<p:column>
 								<h:outputText value="Estado:" style="color:#000000;" />
 								<br />
-								<p:inputText  id="uf" disabled="true" value="#{mbUnidadeSaude.unidadeSaude.uf}"
-									required="true" size="10" />
+								<p:inputText id="uf" disabled="true"
+									value="#{mbUnidadeSaude.unidadeSaude.uf}" required="true"
+									size="10" />
 								<br />
 							</p:column>
 						</h:panelGrid>
@@ -137,8 +150,8 @@
 							<p:column>
 								<h:outputText value="Telefone:" style="color:#000000;" />
 								<br />
-								<p:inputMask mask="(99)9999-9999" value="#{mbUnidadeSaude.unidadeSaude.tel}"
-									required="true" />
+								<p:inputMask mask="(99)9999-9999"
+									value="#{mbUnidadeSaude.unidadeSaude.tel}" required="true" />
 							</p:column>
 
 						</h:panelGrid>
@@ -172,9 +185,8 @@
 						reflow="true" value="#{mbUnidadeSaude.unidadeSaudes}"
 						widgetVar="tabelaUnidadeSaude"
 						filteredValue="#{mbUnidadeSaude.unidadeSaudesFiltradas}"
-						emptyMessage="Não há Unidades de Saúde."
-						
-						paginator="true" rows="10" style="margin-bottom:20px">
+						emptyMessage="Não há Unidades de Saúde." paginator="true"
+						rows="10" style="margin-bottom:20px">
 
 						<f:facet name="header">
 							<p:outputPanel>
@@ -185,23 +197,23 @@
 							</p:outputPanel>
 						</f:facet>
 
-						<p:column width="20" headerText="CNPJ" filterBy="#{linha.cdUnidsaude}"
-							filterMatchMode="contains">
+						<p:column width="20" headerText="CNPJ"
+							filterBy="#{linha.cdUnidsaude}" filterMatchMode="contains">
 							<h:outputText value="#{linha.cnpj}" />
 						</p:column>
 
 						<p:column width="20" headerText="Unidade de Saúde"
-							filterBy="#{linha.fantasia}" filterMatchMode="contains">							
-									<h:outputText value="#{linha.fantasia}" />								
+							filterBy="#{linha.fantasia}" filterMatchMode="contains">
+							<h:outputText value="#{linha.fantasia}" />
 						</p:column>
 
 						<p:column width="20" headerText="Nome Fantasia"
-							filterBy="#{linha.fantasia}" filterMatchMode="contains">							
-									<h:outputText value="#{linha.fantasia}" />							
+							filterBy="#{linha.fantasia}" filterMatchMode="contains">
+							<h:outputText value="#{linha.fantasia}" />
 						</p:column>
 
 
-							<p:column headerText="Exclusão" width="5">
+						<p:column headerText="Exclusão" width="5">
 
 							<p:commandButton styleClass="text-align:center"
 								style="margin-top:-20; float:right;" update=":uniExDetail"
@@ -247,11 +259,11 @@
 
 								<h:outputLabel value="CNPJ" />
 								<p:panelGrid columns="1">
-									<p:inputMask mask="99.999.999/9999-99" value="#{mbUnidadeSaude.selecionado.cnpj}" 
-									required="true"/>
+									<p:inputMask mask="99.999.999/9999-99"
+										value="#{mbUnidadeSaude.selecionado.cnpj}" required="true" />
 								</p:panelGrid>
 
-							
+
 								<h:outputLabel value="Telefone" />
 								<p:panelGrid columns="1">
 									<p:inputMask mask="(99)9999-9999"
@@ -332,7 +344,8 @@
 
 				<p:commandButton value="Alterar"
 					style="margin-top:-20; float:right;"
-					action="#{mbUnidadeSaude.editar}" ajax="true" update=":tabView:form2"></p:commandButton>
+					action="#{mbUnidadeSaude.editar}" ajax="true"
+					update=":tabView:form2"></p:commandButton>
 			</h:form>
 		</p:outputPanel>
 	</p:dialog>
@@ -351,7 +364,7 @@
 								<p:panelGrid columns="1">
 									<h:outputText value="#{mbUnidadeSaude.selecionado.fantasia}" />
 								</p:panelGrid>
-								
+
 								<h:outputLabel value="CNPJ" />
 								<p:panelGrid columns="1">
 									<h:outputText value="#{mbUnidadeSaude.selecionado.cnpj}" />
@@ -424,7 +437,8 @@
 						header="Confirma?" />
 				</p:commandButton>
 				<p:confirmDialog appendTo="@(body)" global="true">
-					<p:commandButton process="@this" value="Sim" type="button" onclick="PF('uniExDialog').hide()"
+					<p:commandButton process="@this" value="Sim" type="button"
+						onclick="PF('uniExDialog').hide()"
 						styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
 					<p:commandButton process="@this" value="Não"
 						styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>

@@ -10,7 +10,7 @@ import br.com.siesau.entity.UnidadeSaude;
 import br.com.siesau.persistence.UnidadeSaudeDao;
 
 @SuppressWarnings("rawtypes")
-@FacesConverter(forClass = UnidadeSaude.class)
+@FacesConverter(forClass = UnidadeSaude.class, value="unidadeSaudeConverter")
 public class UnidadeSaudeConverter implements Converter {
 
 	@Override

@@ -9,20 +9,23 @@ import br.com.siesau.entity.Especialidade;
 import br.com.siesau.persistence.EspecialidadeDao;
 
 @SuppressWarnings("rawtypes")
-@FacesConverter("funcionarioConverter")
+@FacesConverter("converteEspecialidade")
 public class FuncionarioConverter implements Converter {
 
-	public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
+	@Override
+	public Object getAsObject(FacesContext arg0, UIComponent arg1, String key) {
 		EspecialidadeDao dao = new EspecialidadeDao(new Especialidade());
-		return dao.findByCode(Integer.parseInt(value));
+		return dao.findByCode(Integer.parseInt(key));
 	}
 
-	public String getAsString(FacesContext fc, UIComponent uic, Object especialidadeOb) {
-		if (especialidadeOb != null && especialidadeOb instanceof Especialidade) {
-			Especialidade especialidade = (Especialidade) especialidadeOb;
+	@Override
+	public String getAsString(FacesContext arg0, UIComponent arg1, Object EspecialidadeOb) {
+		if (EspecialidadeOb != null && EspecialidadeOb instanceof Especialidade) {
+			Especialidade especialidade = (Especialidade) EspecialidadeOb;
 
 			return String.valueOf(especialidade.getCdEspec());
 		}
-		return "";
+		return "Deu merda em algum lugar.";
 	}
+
 }

@@ -54,13 +54,13 @@
 											<f:selectItems value="#{mbFuncionario.mostraCargos}" />
 										</p:selectOneMenu>
 										<br />
-										
-										<p:selectCheckboxMenu label="Especialidades" converter="funcionarioConverter"
+
+										<p:selectCheckboxMenu label="Especialidades"
 											value="#{mbFuncionario.especialidadesSelecionadas}"
 											filter="true" filterMatchMode="startsWith"
 											panelStyle="width:400px">
-											<f:selectItems value="#{mbFuncionario.especialidades}"
-												var="esp" itemValue="#{esp}" itemLabel="#{esp.especialidade}" />
+
+											<f:selectItems value="#{mbFuncionario.mostraEspec}" />
 										</p:selectCheckboxMenu>
 									</p:column>
 
@@ -126,9 +126,11 @@
 											<f:selectItem itemLabel="Feminino" itemValue="F"></f:selectItem>
 											<f:selectItem itemLabel="Outros" itemValue="O"></f:selectItem>
 										</p:selectOneMenu>
-										
+
 									</p:column>
-									<p/><br/><p/>
+									<p />
+									<br />
+									<p />
 
 								</h:panelGrid>
 
@@ -137,11 +139,10 @@
 								<p:outputLabel for="console" value="Unidade de Saude: "
 									style="color:#000000;" />
 								<br />
-								<h:selectOneMenu id="console"
-									value="#{mbFuncionario.funcionario.unidadeSaudes}">
-									<f:selectItems value="#{mbUnidadeSaude.unidadeSaudes}"
-										var="unidade" itemLabel="#{unidade.fantasia}"
-										itemValue="#{unidade}" />
+								<h:selectOneMenu id="console" filter="true" filterMatchMode="startsWith"
+									panelStyle="width:400px"
+									value="#{mbFuncionario.unidadesSelecionada}">
+									<f:selectItems value="#{mbFuncionario.mostraUnidades}" />
 								</h:selectOneMenu>
 
 								<p:outputPanel id="photo">
@@ -561,7 +562,8 @@
 						header="Confirma?" />
 				</p:commandButton>
 				<p:confirmDialog appendTo="@(body)" global="true">
-					<p:commandButton process="@this" value="Sim" type="button" onclick="PF('funExDialog').hide()"
+					<p:commandButton process="@this" value="Sim" type="button"
+						onclick="PF('funExDialog').hide()"
 						styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
 					<p:commandButton process="@this" value="Não"
 						styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>

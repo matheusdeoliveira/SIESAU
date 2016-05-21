@@ -19,4 +19,14 @@ public class FuncionarioDao extends GenericDao<Funcionario> {
 		return funcionario;
 	}
 
+	public Funcionario findByCPF(String cpf) {
+
+		String consulta = "select p from Funcionario p where p.cpf = :data";
+		TypedQuery<Funcionario> query = manager.createQuery(consulta, Funcionario.class);
+		query.setParameter("data", cpf);
+		Funcionario funcionario = query.getSingleResult();
+
+		return funcionario;
+	}
+
 }
