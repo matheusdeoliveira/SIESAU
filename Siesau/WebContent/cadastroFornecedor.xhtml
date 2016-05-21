@@ -54,7 +54,7 @@
 									<h:outputText value="CNPJ:" style="color:#000000;" />
 									<br />
 									<p:inputMask mask="99.999.999/9999-99"
-										value="#{mbFornecedor.fornecedor.cnpj}" required="true"
+										value="#{mbFornecedor.fornecedor.cnpj}" required="true" requiredMessage="CNPJ Obrigatório!"
 										size="50" />
 								</p:row>
 							</p:column>
@@ -388,7 +388,7 @@
 								<h:outputLabel value="Complemento:" style="color:#000000;" />
 								
 									<p:inputText value="#{mbFornecedor.selecionado.complemento}"
-										required="true" id="complemnto" size="30" />
+										 id="complemnto" size="30" />
 								
 
 
@@ -409,7 +409,7 @@
 		<p:outputPanel id="forExDetail" style="text-align:center;">
 			<h:form id="form_forExModal">
 				<p:panelGrid columns="1"
-					rendered="#{not empty mbFuncionario.selecionado}"
+					rendered="#{not empty mbFornecedor.selecionado}"
 					columnClasses="label,value">
 
 					<p:tabView>
@@ -489,7 +489,7 @@
 				</p:panelGrid>
 				<p:commandButton value="Excluir"
 					style="margin-top:-20; float:right;"
-					action="#{mbFuncionario.excluir}" ajax="true"
+					action="#{mbFornecedor.excluir}" ajax="true"
 					update=":tabView:form2">
 					<p:confirm icon="ui-icon-alert" message="Deseja Excluir ?"
 						header="Confirma?" />
