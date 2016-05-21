@@ -20,7 +20,6 @@ import br.com.siesau.entity.Fornecedor;
 import br.com.siesau.entity.Paciente;
 import br.com.siesau.entity.SituacaoAtend;
 import br.com.siesau.persistence.AtendDoencaDao;
-import br.com.siesau.persistence.AtendExameDao;
 import br.com.siesau.persistence.AtendimentoDao;
 import br.com.siesau.persistence.DoencaDao;
 import br.com.siesau.persistence.FornecedoreDao;
@@ -79,13 +78,13 @@ public class WebServiceRestFull extends Application {
 	}
 
 	@GET
-	@Path("/cadatroPaciente/{cartaoSus}/{cpf}/{rg}/{nome}/{nomeMae}/{nomePai}/{sexo}/{dataNascimento}/{endereco}/"
+	@Path("/cadatroPaciente/{cartaoSus}/{cpf}/{rg}/{nome}/{nomeMae}/{nomePai}/{sexo}/{cep}/{endereco}/"
 			+ "{complemento}/{bairro}/{cidade}/{numero}/{telefone}/{codCID}")
 	@Produces("text/plain")
 	public String cadastroPacienteDoenca(@PathParam("cartaoSus") String cartaoSus, @PathParam("cpf") String cpf,
 			@PathParam("rg") String rg, @PathParam("nome") String nome, @PathParam("nomeMae") String nomeMae,
 			@PathParam("nomePai") String nomePai, @PathParam("sexo") String sexo,
-			@PathParam("dataNascimento") String dataNascimento, @PathParam("endereco") String endereco,
+			@PathParam("cep") String cep, @PathParam("endereco") String endereco,
 			@PathParam("complemento") String complemento, @PathParam("bairro") String bairro,
 			@PathParam("cidade") String cidade, @PathParam("numero") String numero,
 			@PathParam("telefone") String telefone,
@@ -104,7 +103,7 @@ public class WebServiceRestFull extends Application {
 			paciente.setNomeMae(nomeMae);
 			paciente.setNomePai(nomePai);
 			paciente.setSexo(sexo);
-			// paciente.setDataNasc(new Date());
+			paciente.setCep(new Integer(cep));
 			paciente.setEndereco(endereco);
 			paciente.setComplemento(complemento);
 			paciente.setBairro(bairro);
@@ -112,6 +111,7 @@ public class WebServiceRestFull extends Application {
 			paciente.setNumero(numero);
 			paciente.setTelCel(telefone);
 			paciente.setDataCad(new Date());
+			paciente.setFoto("perfil.jpeg");
 			
 			PacienteDao pacienteDao = new PacienteDao(paciente);
 			pacienteDao.salva(paciente);
