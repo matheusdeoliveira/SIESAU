@@ -295,102 +295,101 @@
 	</div>
 
 	<p:dialog header="Fornecedor" widgetVar="forEdDialog" modal="true"
-		minHeight="600" minWidth="600">
-		<p:outputPanel id="forEdDetail" style="text-align:center;">
-			<h:form id="form_forEdModal">
+		minHeight="600" minWidth="600" style="background-color:#F0F4F9;">
+		<p:outputPanel id="forEdDetail" style="text-align:center;background-color:#E8E8E8;">
+			<h:form id="form_forEdModal" style="background-color:#E8E8E8;">
 
-				<p:panelGrid columns="1"
+				<h:panelGrid columns="1"
 					rendered="#{not empty mbFornecedor.selecionado}"
 					columnClasses="label,value">
-					<p:tabView>
+					<p:tabView style="background-color:#F0F4F9;">
 						<p:tab title="Dados pessoais">
-							<p:panelGrid columns="2">
-								<h:outputLabel value="Razão Social" />
-								<p:panelGrid columns="1">
+							<h:panelGrid columns="2" style="text-align:left;">
+								<h:outputLabel value="Razão Social" style="color:#000000;"/>
+								
 									<p:inputText value="#{mbFornecedor.selecionado.razSocial}" />
-								</p:panelGrid>
+								
 
-								<h:outputLabel value="Nome" />
-								<p:panelGrid columns="1">
+								<h:outputLabel value="Nome" style="color:#000000;"/>
+								
 									<p:inputText value="#{mbFornecedor.selecionado.fantasia}" />
-								</p:panelGrid>
+								
 
-								<h:outputLabel value="CNPJ" />
-								<p:panelGrid columns="1">
+								<h:outputLabel value="CNPJ" style="color:#000000;"/>
+								
 									<p:inputMask mask="99.999.999/9999-99"
 										value="#{mbFornecedor.selecionado.cnpj}" required="true" />
-								</p:panelGrid>
+							
 
 
-								<h:outputLabel value="Telefone" />
-								<p:panelGrid columns="1">
+								<h:outputLabel value="Telefone" style="color:#000000;"/>
+								
 									<p:inputMask mask="(99)9999-9999"
 										value="#{mbFornecedor.selecionado.tel}" required="true" />
-								</p:panelGrid>
+								
 
-								<h:outputLabel value="Email" />
-								<p:panelGrid columns="1">
+								<h:outputLabel value="Email" style="color:#000000;"/>
+								
 									<p:inputText value="#{mbFornecedor.selecionado.email}"
 										required="true" />
-								</p:panelGrid>
+								
 
 
-							</p:panelGrid>
+							</h:panelGrid>
 						</p:tab>
 						<p:tab title="Endereço">
-							<h:panelGrid columns="2">
+							<h:panelGrid columns="2" style="text-align:left;">
 
-								<h:outputLabel value="CEP" />
-								<p:panelGrid columns="1">
+								<h:outputLabel value="CEP" style="color:#000000;"/>
+								
 									<p:inputText maxlength="8"
 										requiredMessage="Favor preencha o CEP"
 										value="#{mbFornecedor.selecionado.cep}" required="true">
 									</p:inputText>
-								</p:panelGrid>
-
-								<h:outputLabel value="Rua:" />
-								<p:panelGrid columns="1">
+					
+								<h:outputLabel value="Rua:" style="color:#000000;"/>
+								
 									<p:inputText disabled="true"
 										value="#{mbFornecedor.selecionado.endereco}" required="true"
 										id="endereco" size="60" />
-								</p:panelGrid>
+								
 
 
 								<h:outputLabel value="Número:" style="color:#000000;" />
-								<p:panelGrid columns="1">
+								
 									<p:inputText value="#{mbFornecedor.selecionado.numero}"
 										required="true" id="numero" size="10" />
-								</p:panelGrid>
+								
 
-								<h:outputLabel value="Bairro:" />
-								<p:panelGrid columns="1">
+								<h:outputLabel value="Bairro:" style="color:#000000;"/>
+								
 									<p:inputText disabled="true"
 										value="#{mbFornecedor.selecionado.bairro}" required="true"
 										id="bairro" size="30" />
-								</p:panelGrid>
+								
 
 
-								<h:outputLabel value="Cidade:" />
-								<p:panelGrid columns="1">
+								<h:outputLabel value="Cidade:" style="color:#000000;"/>
+								
 									<p:inputText disabled="true"
 										value="#{mbFornecedor.selecionado.cidade}" required="true"
 										id="cidade" size="30" />
-								</p:panelGrid>
+								
 
 
 								<h:outputLabel value="UF:" style="color:#000000;" />
-								<p:panelGrid columns="1">
+								
 									<p:inputText id="uf" disabled="true"
 										value="#{mbFornecedor.selecionado.uf}" required="true"
 										size="10" />
-								</p:panelGrid>
+							
 
 
 								<h:outputLabel value="Complemento:" style="color:#000000;" />
-								<p:panelGrid columns="1">
+								
 									<p:inputText value="#{mbFornecedor.selecionado.complemento}"
 										required="true" id="complemnto" size="30" />
-								</p:panelGrid>
+								
 
 
 							</h:panelGrid>
@@ -398,7 +397,7 @@
 
 						</p:tab>
 					</p:tabView>
-				</p:panelGrid>
+				</h:panelGrid>
 
 				<p:commandButton value="Alterar"
 					style="margin-top:-20; float:right;"

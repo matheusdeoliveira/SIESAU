@@ -39,7 +39,7 @@ public class UnidadeSaude implements Serializable {
 	@Column
 	private String complemento;
 
-	@Column(unique = true, nullable = false)
+	@Column(unique = true)
 	private String email;
 
 	@Column

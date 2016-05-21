@@ -47,7 +47,7 @@ public class Paciente implements Serializable {
 	@Column(name="data_nasc")
 	private Date dataNasc;
 
-	@Column(unique = true, nullable = false)
+	@Column(unique = true)
 	private String email;
 
 	@Column
