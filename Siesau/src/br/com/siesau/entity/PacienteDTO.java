@@ -1,12 +1,15 @@
 package br.com.siesau.entity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class PacienteDTO {
 	private String bairro;
 	private String sexo;
 	private Integer quantidade;
 	private Double latitude;
 	private Double longitude;
-
+	private Date ano;
 	public PacienteDTO() {
 		// TODO Auto-generated constructor stub
 	}
@@ -51,4 +54,13 @@ public class PacienteDTO {
 		this.longitude = longitude;
 	}
 
+	public Date getAno() {
+		new SimpleDateFormat("yyyy").format(ano);
+		return ano;
+	}
+
+	public void setAno(Date ano) {
+		this.ano = ano;
+	}
+	
 }

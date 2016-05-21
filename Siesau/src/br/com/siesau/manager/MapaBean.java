@@ -12,20 +12,32 @@ import org.primefaces.model.chart.PieChartModel;
 import br.com.siesau.entity.Paciente;
 import br.com.siesau.entity.PacienteDTO;
 import br.com.siesau.persistence.PacienteDao;
+import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.ChartSeries;
 
 @ManagedBean(name = "mbMap")
 public class MapaBean {
 
 	private List<PacienteDTO> pacientesdto;
+	private List<PacienteDTO> sexodto;
 	private String cidades;
 	private PieChartModel grafico;
+	private BarChartModel grafico2;
 
 	@PostConstruct
-	private void inti() {
+	public void inti() {
+		try {
+			
+			pacientesdto = new PacienteDao(new Paciente()).pesquisaDoencaCidade("DUQUE DE CAXIAS");
+			sexodto = new PacienteDao(new Paciente()).pesquisaSexo();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		pacientesdto = new PacienteDao(new Paciente()).pesquisaDoencaCidade("DUQUE DE CAXIAS");
 		grafico = new PieChartModel();
 		criargrafico();
+		grafico2 = new BarChartModel();
+		criargrafico2();
 	}
 
 	public void itemSeleciondado(ItemSelectEvent event) {
@@ -36,20 +48,43 @@ public class MapaBean {
 
 		grafico.setTitle("Dengue");
 
-		int countHomens = 0;
-		int countMulheres = 0;
-		for (int i = 0; i < pacientesdto.size(); i++) {
+		/*for (int i = 0; i < pacientesdto.size(); i++) {
 			if (pacientesdto.get(i).getSexo().equalsIgnoreCase("M")) {
 				countHomens++;
 			} else if (pacientesdto.get(i).getSexo().equalsIgnoreCase("F")) {
 				countMulheres++;
 			}
 
-		}
-		grafico.set("Homens", countHomens);
-		grafico.set("Mulheres", countMulheres);
+		}*/
+		grafico.set("Homens", sexodto.get(1).getQuantidade());
+		grafico.set("Mulheres", sexodto.get(0).getQuantidade());
 
 		grafico.setLegendPosition("w");
+	}
+
+	private void criargrafico2() {
+		
+		ChartSeries homens = new ChartSeries();
+		ChartSeries mulheres = new ChartSeries();
+
+		homens.setLabel("Homens");
+		mulheres.setLabel("Mulheres");
+
+		/*for (int i = 0; i < sexodto.size(); i++) {
+			if (pacientesdto.get(i).getSexo().equalsIgnoreCase("m")) {
+				homens.set(pacientesdto.get(i).getAno(), pacientesdto.get(i).getQuantidade());
+
+			} else if (pacientesdto.get(i).getSexo().equalsIgnoreCase("f")) {
+				mulheres.set(pacientesdto.get(i).getAno(), pacientesdto.get(i).getQuantidade());
+
+			}
+		}*/
+		homens.set(sexodto.get(0).getAno(),sexodto.get(0).getQuantidade());
+		mulheres.set(sexodto.get(1).getAno(),sexodto.get(1).getQuantidade());
+		grafico2.setTitle("Índices por Ano");
+		grafico2.addSeries(mulheres);
+		grafico2.addSeries(homens);
+		
 	}
 
 	public String getCidades() {
@@ -61,6 +96,13 @@ public class MapaBean {
 	}
 
 	public List<PacienteDTO> getPacientesdto() {
+		if(pacientesdto == null){
+			try{
+			pacientesdto = new PacienteDao(new Paciente()).pesquisaDoencaCidade("DUQUE DE CAXIAS");
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			}
 		return pacientesdto;
 	}
 
@@ -76,4 +118,28 @@ public class MapaBean {
 		this.grafico = grafico;
 	}
 
+	public BarChartModel getGrafico2() {
+		return grafico2;
+	}
+
+	public void setGrafico2(BarChartModel grafico2) {
+		this.grafico2 = grafico2;
+	}
+
+	public List<PacienteDTO> getSexodto() {
+		if(sexodto ==  null){
+			try {
+				sexodto = new PacienteDao(new Paciente()).pesquisaSexo();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return sexodto;
+	}
+
+	public void setSexodto(List<PacienteDTO> sexodto) {
+		this.sexodto = sexodto;
+	}
+
+	
 }
