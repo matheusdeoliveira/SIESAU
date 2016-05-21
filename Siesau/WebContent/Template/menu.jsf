@@ -35,6 +35,8 @@
 								icon="" />
 							<p:menuitem value="Unidade de Saude" url="unidadeSaude.jsf"
 								icon="" />
+							<p:menuitem value="Fabricante" url="cadastroFabricante.jsf"
+								icon="" />
 
 						</p:submenu>
 

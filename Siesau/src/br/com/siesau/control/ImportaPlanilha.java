@@ -57,7 +57,7 @@ public class ImportaPlanilha {
 					paciente.setEstCivil((sheet.getCell(17, linha)).getContents());
 					paciente.setProfissao((sheet.getCell(18, linha)).getContents());
 					paciente.setNaturalidade((sheet.getCell(19, linha)).getContents());
-
+					paciente.setFoto("perfil.jpeg");
 					SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 					if ((sheet.getCell(20, linha)).getContents() != "") {
 						java.sql.Date data = new java.sql.Date(
