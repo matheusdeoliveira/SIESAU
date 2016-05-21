@@ -78,68 +78,25 @@
 
 
 				<!-- DATA TABLE -->
-				<p:dataTable id="multipleDT" var="car"
-					value="#{dtSelectionView.cars4}" selectionMode="multiple"
-					selection="#{dtSelectionView.selectedCars}" rowKey="#{car.id}"
-					resizableColumns="true">
+				<p:dataTable id="tabelaGeo" var="paciente"
+					value="#{mbMap.pacientesdto}"
+					resizableColumns="true" paginator="true" rows="20">
 
 					<f:facet name="header">Tabela</f:facet>
 
 					<p:column headerText="Bairro">
-						<h:outputText value="#{car.id}" />
+						<h:outputText value="#{paciente.bairro}" />
 					</p:column>
 					<p:column headerText="Sexo">
-						<h:outputText value="#{car.year}" />
+						<h:outputText value="#{paciente.sexo}" />
 					</p:column>
 					<p:column headerText="Quantidade">
-						<h:outputText value="#{car.brand}" />
+						<h:outputText value="#{paciente.quantidade}" />
 					</p:column>
-
-					<f:facet name="footer">
-						<p:commandButton process="multipleDT" update=":form"
-							icon="ui-icon-closethick" value="Limpar" />
-						<p:commandButton process="multipleDT" update=":form"
-							icon="ui-icon-closethick" value="Filtrar" />
-					</f:facet>
 				</p:dataTable>
 
 
-				<p:dialog header="Car Info" widgetVar="carDialog" modal="true"
-					showEffect="fade" hideEffect="fade" resizable="false">
-					<p:outputPanel id="carDetail" style="text-align:center;">
-						<p:panelGrid columns="2" rendered="#{dtSelectionView.selectedCar}"
-							columnClasses="label,value">
-							<f:facet name="header">
-								<p:graphicImage
-									name="demo/images/car/#{dtSelectionView.selectedCar.brand}-big.gif" />
-							</f:facet>
-
-							<h:outputText value="Id:" />
-							<h:outputText value="#{dtSelectionView.selectedCar.id}" />
-
-							<h:outputText value="Year" />
-							<h:outputText value="#{dtSelectionView.selectedCar.year}" />
-
-							<h:outputText value="Color:" />
-							<h:outputText value="#{dtSelectionView.selectedCar.color}"
-								style="color:#{dtSelectionView.selectedCar.color}" />
-
-							<h:outputText value="Price" />
-							<h:outputText value="$#{dtSelectionView.selectedCar.price}" />
-						</p:panelGrid>
-					</p:outputPanel>
-				</p:dialog>
-
-				<p:dialog header="Selected Cars" widgetVar="multiCarDialog"
-					modal="true" showEffect="fade" hideEffect="fade" resizable="false"
-					width="200">
-					<p:outputPanel id="multiCarDetail" style="text-align:center;">
-						<ui:repeat value="#{dtSelectionView.selectedCars}" var="car">
-							<h:outputText value="#{car.id} - #{car.brand}"
-								style="display:block" />
-						</ui:repeat>
-					</p:outputPanel>
-				</p:dialog>
+	
 
 			</h:form>
 		</div>
@@ -151,15 +108,8 @@
 			<!-- container que contém o mapa -->
 			<h:form id="mapa">
 			
-		<!-- 	<div id="floating-panel" >
-				
-				<h:commandButton type="button" onclick="toggleHeatmap()" value="Toggle Heatmap" />
-				<h:commandButton type="button" onclick="changeGradient()" value="Change gradient" />
-				<h:commandButton type="button" onclick="changeRadius()" value="Change radius" />
-				<h:commandButton type="button" onclick="changeOpacity()" value="Change opacity" />
-			</div> -->
 			
-			 <m:map id="map" submitOnClick="false" latitude="-22.756132" longitude="-43.460742" debug="false" width="700" >
+			 <m:map id="map" submitOnClick="false" latitude="-22.756132" longitude="-43.460742" debug="false" width="935" height="350">
 			<ui:repeat var="pac" value="#{mbMap.pacientesdto}">
                      <m:circle latitude="#{pac.latitude}" 
                                longitude="#{pac.longitude}"  
@@ -177,7 +127,7 @@
 			<h:form id="form2">
     <p:growl id="growl" showDetail="true" />
  
-    <h:panelGrid columns="2" columnClasses="left,right" style="width:100%" rendered="#{not empty mbMap.pacientes}">
+    <h:panelGrid columns="2" columnClasses="left,right" style="width:100%" rendered="#{pacientedto}">
         <p:chart type="pie" model="#{mbMap.grafico}" style="width:400px;height:300px">
             <p:ajax event="itemSelect" listener="#{mbMap.itemSeleciondado}" update="growl" />
         </p:chart>

@@ -9,7 +9,9 @@ import javax.faces.bean.ManagedBean;
 import org.primefaces.event.ItemSelectEvent;
 import org.primefaces.model.chart.PieChartModel;
 
+import br.com.siesau.entity.Paciente;
 import br.com.siesau.entity.PacienteDTO;
+import br.com.siesau.persistence.PacienteDao;
 
 @ManagedBean(name = "mbMap")
 public class MapaBean {
@@ -21,7 +23,7 @@ public class MapaBean {
 	@PostConstruct
 	private void inti() {
 
-		pacientesdto = new ArrayList<>();
+		pacientesdto = new PacienteDao(new Paciente()).pesquisaDoencaCidade("DUQUE DE CAXIAS");
 		grafico = new PieChartModel();
 		criargrafico();
 	}
