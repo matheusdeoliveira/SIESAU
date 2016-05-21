@@ -25,6 +25,7 @@ import br.com.siesau.persistence.AtendimentoDao;
 import br.com.siesau.persistence.DoencaDao;
 import br.com.siesau.persistence.FornecedoreDao;
 import br.com.siesau.persistence.PacienteDao;
+import br.com.siesau.persistence.SituacaoAtendDao;
 
 @ApplicationPath("/webService")
 @Path("/siesau")
@@ -112,22 +113,32 @@ public class WebServiceRestFull extends Application {
 			paciente.setTelCel(telefone);
 			paciente.setDataCad(new Date());
 			
-			doenca.setCid(codCID);
-		
-			atendimento.setPaciente(paciente);
-			atendimento.setSituacaoAtend(new SituacaoAtend());
-			atendimento.getSituacaoAtend().setCdSitatend(3);
-			
-			atendDoenca.setAtendimento2(atendimento);
-			atendDoenca.setDoenca2(new DoencaDao(new Doenca()).pesquisaCID(doenca));
+			PacienteDao pacienteDao = new PacienteDao(paciente);
+			pacienteDao.salva(paciente);
+			paciente = new PacienteDao(new Paciente()).pesquisaCPF(paciente.getCpf());
 
-			new AtendDoencaDao(new AtendDoenca()).salva(atendDoenca);
-			
-			new PacienteDao(new Paciente()).salva(atendimento.getPaciente());			
-			
+			doenca = new Doenca();
+			doenca.setCid(codCID);
+			doenca = new DoencaDao(new Doenca()).pesquisaCID(doenca);
+
+			atendimento = new Atendimento();
+			atendimento.setPaciente(paciente);
+			atendimento.setDataAtend(new Date());
+			atendimento.setSituacaoAtend(new SituacaoAtendDao(new SituacaoAtend()).findByCode(3));
+
 			new AtendimentoDao(new Atendimento()).salva(atendimento);
-			
-			
+
+			atendimento = new AtendimentoDao(new Atendimento())
+					.retornaAtendimentoPorData(atendimento.getDataAtend());
+
+			atendDoenca = new AtendDoenca();
+			atendDoenca.setAtendimento1(atendimento);
+			atendDoenca.setAtendimento2(atendimento);
+			atendDoenca.setDoenca1(doenca);
+			atendDoenca.setDoenca2(doenca);
+
+			AtendDoencaDao atendDoencaDao = new AtendDoencaDao(atendDoenca);
+			atendDoencaDao.salva(atendDoenca);
 			return "Dados Cadastros ...";
 
 		} catch (Exception ex) {
@@ -143,6 +154,10 @@ public class WebServiceRestFull extends Application {
 	@Produces("application/json;charset=UTF-8")
 	public String listaPacientes() {
 		Gson gson = new Gson();
-		return gson.toJson(pacientes);
+		List<Paciente> lista = new ArrayList<>();
+		for (int i = 20; i < pacientes.size(); i++) {
+			lista.add(pacientes.get(i));
+		}		
+		return gson.toJson(lista);
 	}
 }
