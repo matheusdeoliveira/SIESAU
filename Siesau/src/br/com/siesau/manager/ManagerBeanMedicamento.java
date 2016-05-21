@@ -1,7 +1,9 @@
 package br.com.siesau.manager;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -11,6 +13,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.RowEditEvent;
 
 import br.com.siesau.entity.Fabricante;
+import br.com.siesau.entity.FabricanteDao;
 import br.com.siesau.entity.Medicamento;
 import br.com.siesau.persistence.MedicamentoDao;
 
@@ -26,19 +29,38 @@ public class ManagerBeanMedicamento implements Serializable {
 	private Medicamento medicamento;
 	private List<Medicamento> medicamentos;
 	private List<Medicamento> medicamentosFiltrados;
+	private Map<String, String> mostraFabricante;
+	private List<Fabricante> fabricantes;
+	private String fabricanteSelecionado;
+
 
 	@PostConstruct
 	public void init() {
 		medicamento = new Medicamento();
 		medicamento.setFabricante(new Fabricante());
 		medicamentos = new MedicamentoDao(new Medicamento()).lista();
+		fabricantes = new FabricanteDao(new Fabricante()).lista();
+		
+		// Carregando Itens da Tela
+		mostraFabricante = new HashMap<String, String>();
+		for (int i = 0; i < fabricantes.size(); i++) {
+			mostraFabricante.put(fabricantes.get(i).getCnpj() + " - " + fabricantes.get(i).getFantasia().toUpperCase(), String.valueOf(fabricantes.get(i).getCnpj()));
+		}
+
 	}
 
 	public void salvar() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 
 		try {
+			
+			Fabricante fabricante = new FabricanteDao(new Fabricante()).buscaPorCNPJ(fabricanteSelecionado);
+			
+			medicamento.setFabricante(fabricante);
+			
 			new MedicamentoDao(new Medicamento()).salva(medicamento);
+		
+			
 			fc.addMessage("form1", new FacesMessage("Medicamento " + medicamento.getNomeRef() + " salvo com sucesso."));
 			medicamento = new Medicamento();
 			medicamentos = new MedicamentoDao(new Medicamento()).lista();
@@ -105,6 +127,30 @@ public class ManagerBeanMedicamento implements Serializable {
 
 	public void setMedicamentosFiltrados(List<Medicamento> medicamentosFiltrados) {
 		this.medicamentosFiltrados = medicamentosFiltrados;
+	}
+
+	public Map<String, String> getMostraFabricante() {
+		return mostraFabricante;
+	}
+
+	public void setMostraFabricante(Map<String, String> mostraFabricante) {
+		this.mostraFabricante = mostraFabricante;
+	}
+
+	public List<Fabricante> getFabricantes() {
+		return fabricantes;
+	}
+
+	public void setFabricantes(List<Fabricante> fabricantes) {
+		this.fabricantes = fabricantes;
+	}
+
+	public String getFabricanteSelecionado() {
+		return fabricanteSelecionado;
+	}
+
+	public void setFabricanteSelecionado(String fabricanteSelecionado) {
+		this.fabricanteSelecionado = fabricanteSelecionado;
 	}
 
 }

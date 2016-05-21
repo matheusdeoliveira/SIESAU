@@ -54,14 +54,15 @@
 							<p />
 
 							<p:row>
-								<h:outputText value="Codigo do Laboratório:"
+								<h:outputLabel for="idMedicamento" value="Fabricante : "
 									style="color:#000000;" />
 								<br />
-								<p:column>
-									<p:inputText
-										value="#{mbMedicamento.medicamento.fabricante.cdFabric}"
-										required="true" size="45" />
-								</p:column>
+								<p:selectOneMenu id="idMedicamento"
+									value="#{mbMedicamento.fabricanteSelecionado}" filter="true"
+									filterMatchMode="startsWith" panelStyle="width:400px">
+
+									<f:selectItems value="#{mbMedicamento.mostraFabricante}" />
+								</p:selectOneMenu>
 							</p:row>
 
 							<p:row>
@@ -112,8 +113,8 @@
 					<p:dataTable id="tbl" var="linha" widgetVar="tabelaMedicamentos"
 						value="#{mbMedicamento.medicamentos}"
 						filteredValue="#{mbMedicamento.medicamentosFiltrados}"
-						emptyMessage="Não há medicamentos."
-						paginator="true" rows="10" style="margin-bottom:20px">
+						emptyMessage="Não há medicamentos." paginator="true" rows="10"
+						style="margin-bottom:20px">
 
 						<f:facet name="header">
 							<p:outputPanel>
@@ -138,7 +139,8 @@
 							<h:outputText value="#{linha.forma}" />
 						</p:column>
 
-						<p:column filterBy="#{linha.fabricante.fantasia}" filterMatchMode="contains">
+						<p:column filterBy="#{linha.fabricante.fantasia}"
+							filterMatchMode="contains">
 							<f:facet name="header">
 								<h:outputText value="Nome do Laboratório" />
 							</f:facet>
