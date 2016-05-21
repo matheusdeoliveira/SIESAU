@@ -33,7 +33,7 @@ public class Fabricante implements Serializable {
 	private String cidade;
 
 	@Column(unique = true, nullable = false)
-	private Integer cnpj;
+	private String cnpj;
 
 	@Column(unique = true, nullable = false)
 	private String email;
@@ -108,11 +108,11 @@ public class Fabricante implements Serializable {
 		this.cidade = cidade;
 	}
 
-	public Integer getCnpj() {
+	public String getCnpj() {
 		return this.cnpj;
 	}
 
-	public void setCnpj(Integer cnpj) {
+	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
 

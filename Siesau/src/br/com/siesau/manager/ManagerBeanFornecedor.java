@@ -58,10 +58,10 @@ public class ManagerBeanFornecedor implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
 
 		try {
+			
+			new FornecedoreDao(new Fornecedor()).deleta(selecionado);
 
-			new FornecedoreDao(new Fornecedor()).deleta(fornecedor);
-
-			fc.addMessage("form2", new FacesMessage("Fornecedor " + fornecedor.getRazSocial() + " exclu�do"));
+			fc.addMessage("form2", new FacesMessage("Fornecedor " + selecionado.getRazSocial() + " exclu�do"));
 			fornecedores = new FornecedoreDao(new Fornecedor()).lista();
 		} catch (Exception e) {
 			fc.addMessage("form2", new FacesMessage("Error: " + e.getMessage()));

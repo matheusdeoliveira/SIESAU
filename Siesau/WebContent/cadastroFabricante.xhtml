@@ -24,7 +24,7 @@
 
 		<p:tabView id="tabView"
 			style="margin-top:10px;position:relative; width:1112px;background-color:#E8E8E8;">
-			<p:tab title="Cadastro de Fornecedor" style="position:relative;">
+			<p:tab title="Cadastro de Fabricante" style="position:relative;">
 
 				<h:form id="form1">
 
@@ -35,7 +35,7 @@
 								<h:outputText value="Razão social:" style="color:#000000;" />
 								<br />
 								<p:column>
-									<p:inputText value="#{mbFornecedor.fornecedor.razSocial}"
+									<p:inputText value="#{mbFabricante.fabricante.razSocial}"
 										required="true" size="60" />
 								</p:column>
 							</p:row>
@@ -43,7 +43,7 @@
 							<p:row>
 								<h:outputText value="Nome fantasia:" style="color:#000000;" />
 								<br />
-								<p:inputText value="#{mbFornecedor.fornecedor.fantasia}"
+								<p:inputText value="#{mbFabricante.fabricante.fantasia}"
 									required="true" size="60" />
 							</p:row>
 						</h:panelGrid>
@@ -54,7 +54,7 @@
 									<h:outputText value="CNPJ:" style="color:#000000;" />
 									<br />
 									<p:inputMask mask="99.999.999/9999-99"
-										value="#{mbFornecedor.fornecedor.cnpj}" required="true" requiredMessage="CNPJ Obrigatório!"
+										value="#{mbFabricante.fabricante.cnpj}" required="true" requiredMessage="CNPJ Obrigatório!"
 										size="50" />
 								</p:row>
 							</p:column>
@@ -64,7 +64,7 @@
 								<p:row>
 									<h:outputText value="Situação:" style="color:#000000;" />
 									<br />
-									<p:selectOneMenu value="#{mbFornecedor.fornecedor.ativo}"
+									<p:selectOneMenu value="#{mbFabricante.fabricante.ativo}"
 										required="true">
 										<f:selectItem itemValue="selecione" itemLabel="Selecione"
 											noSelectionOption="true"></f:selectItem>
@@ -88,7 +88,7 @@
 						<h:outputText value="Rua: " style="color:#000000;" />
 						<br />
 						<p:inputText id="endereco"
-							value="#{mbFornecedor.fornecedor.endereco}" required="true"
+							value="#{mbFabricante.fabricante.endereco}" required="true"
 							size="60" />
 
 
@@ -96,22 +96,16 @@
 							<p:column>
 								<h:outputText value="Número: " style="color:#000000;" />
 								<br />
-								<p:inputText value="#{mbFornecedor.fornecedor.numero}"
+								<p:inputText value="#{mbFabricante.fabricante.numero}"
 									required="true" size="15" />
 							</p:column>
 
-							<p:column>
-								<h:outputText value="Complemento: " style="color:#000000;" />
-								<br />
-								<p:inputText value="#{mbFornecedor.fornecedor.complemento}"
-									required="true" size="30" />
-							</p:column>
 						</h:panelGrid>
 
 
 						<h:outputText value="Bairro" style="color:#000000;" />
 						<br />
-						<p:inputText id="bairro" value="#{mbFornecedor.fornecedor.bairro}"
+						<p:inputText id="bairro" value="#{mbFabricante.fabricante.bairro}"
 							required="true" size="40" />
 						<br />
 
@@ -122,7 +116,7 @@
 								<h:outputText value="Cidade:" style="color:#000000;" />
 								<br />
 								<p:inputText id="cidade"
-									value="#{mbFornecedor.fornecedor.cidade}" required="true"
+									value="#{mbFabricante.fabricante.cidade}" required="true"
 									size="30" />
 								<br />
 
@@ -131,9 +125,9 @@
 								<br />
 								<p:inputText maxlength="8"
 									requiredMessage="Favor preencha o CEP"
-									value="#{mbFornecedor.fornecedor.cep}" required="true">
+									value="#{mbFabricante.fabricante.cep}" required="true">
 									<p:ajax event="keyup" update="cidade, endereco, bairro"
-										listener="#{mbFornecedor.buscaCep}" />
+										listener="#{mbFabricante.buscaCep}" />
 								</p:inputText>
 								<br />
 
@@ -145,7 +139,7 @@
 									style="color:#000000;" />
 								<br />
 								<p:selectOneMenu id="estado"
-									value="#{mbFornecedor.fornecedor.uf}" style="width:143px">
+									value="#{mbFabricante.fabricante.uf}" style="width:143px">
 									<f:selectItem itemLabel="Selecione" itemValue="opcao"
 										noSelectionOption="true" />
 									<f:selectItem itemLabel="AC" itemValue="AC" />
@@ -193,14 +187,14 @@
 								<h:outputText value="Telefone Comercial:" style="color:#000000;" />
 								<br />
 								<p:inputMask mask="(99)9999-9999"
-									value="#{mbFornecedor.fornecedor.tel}" required="true" />
+									value="#{mbFabricante.fabricante.tel}" required="true" />
 							</p:column>
 
 						</h:panelGrid>
 
 						<h:outputText value="Email: " style="color:#000000;" />
 						<br />
-						<p:inputText value="#{mbFornecedor.fornecedor.email}"
+						<p:inputText value="#{mbFabricante.fabricante.email}"
 							required="true" size="50" />
 						<br />
 
@@ -211,7 +205,7 @@
 
 						<p:commandButton value="Salvar"
 							style="margin-top:-20; float:right;"
-							action="#{mbFornecedor.salvar}" ajax="true"
+							action="#{mbFabricante.salvar}" ajax="true"
 							update=":tabView:form1, :tabView:form2" />
 						<p:growl></p:growl>
 
@@ -223,21 +217,21 @@
 
 				</h:form>
 			</p:tab>
-			<p:tab title="Consulta Fornecedor">
+			<p:tab title="Consulta Fabricante">
 				<h:form id="form2">
 					<p:growl id="msgs" showDetail="true" />
 					<p:dataTable id="dataTable" var="linha" editable="true"
-						widgetVar="tabelaFornecedor"
-						filteredValue="#{mbFornecedor.fornecedoresFiltrados}"
-						emptyMessage="Não há fornecedores." reflow="true"
-						value="#{mbFornecedor.fornecedores}" paginator="true" rows="10"
+						widgetVar="tabelafabricante"
+						filteredValue="#{mbFabricante.fabricantesFiltrados}"
+						emptyMessage="Não há fabricantees." reflow="true"
+						value="#{mbFabricante.fabricantes}" paginator="true" rows="10"
 						style="padding-bottom:15px;">
 
 						<f:facet name="header">
 							<p:outputPanel>
 								<h:outputText value="Pesquisa em todos os campos:" />
 								<p:inputText id="globalFilter"
-									onkeyup="PF('tabelaFornecedor').filter()" style="width:150px"
+									onkeyup="PF('tabelafabricante').filter()" style="width:150px"
 									placeholder="Digite a busca" />
 							</p:outputPanel>
 						</f:facet>
@@ -249,14 +243,14 @@
 
 						<p:column filterBy="#{linha.razSocial}" filterMatchMode="contains"
 							sortBy="#{linha.razSocial}" width="20"
-							headerText="Nome do fornecedor">
+							headerText="Nome do fabricante">
 							<h:outputText value="#{linha.razSocial}" />
 						</p:column>
 
 
 						<p:column filterBy="#{linha.tel}" filterMatchMode="contains"
 							sortBy="#{linha.tel}" width="20"
-							headerText="Telefone do fornecedor">
+							headerText="Telefone do fabricante">
 							<h:outputText value="#{linha.tel}" />
 						</p:column>
 
@@ -272,7 +266,7 @@
 								style="margin-top:-20; float:right;" update=":forExDetail"
 								oncomplete="PF('forExDialog').show()" icon="ui-icon-trash">
 								<f:setPropertyActionListener value="#{linha}"
-									target="#{mbFornecedor.selecionado}" />
+									target="#{mbFabricante.selecionado}" />
 							</p:commandButton>
 						</p:column>
 
@@ -281,7 +275,7 @@
 							<p:commandButton update="forEdDetail"
 								oncomplete="PF('forEdDialog').show()" icon="ui-icon-search">
 								<f:setPropertyActionListener value="#{linha}"
-									target="#{mbFornecedor.selecionado}" />
+									target="#{mbFabricante.selecionado}" />
 							</p:commandButton>
 
 						</p:column>
@@ -294,43 +288,43 @@
 
 	</div>
 
-	<p:dialog header="Fornecedor" widgetVar="forEdDialog" modal="true"
+	<p:dialog header="Fabricante" widgetVar="forEdDialog" modal="true"
 		minHeight="600" minWidth="600" style="background-color:#F0F4F9;">
 		<p:outputPanel id="forEdDetail" style="text-align:center;background-color:#E8E8E8;">
 			<h:form id="form_forEdModal" style="background-color:#E8E8E8;">
 
 				<h:panelGrid columns="1"
-					rendered="#{not empty mbFornecedor.selecionado}"
+					rendered="#{not empty mbFabricante.selecionado}"
 					columnClasses="label,value">
 					<p:tabView style="background-color:#F0F4F9;">
 						<p:tab title="Dados pessoais">
 							<h:panelGrid columns="2" style="text-align:left;">
 								<h:outputLabel value="Razão Social" style="color:#000000;"/>
 								
-									<p:inputText value="#{mbFornecedor.selecionado.razSocial}" />
+									<p:inputText value="#{mbFabricante.selecionado.razSocial}" />
 								
 
 								<h:outputLabel value="Nome" style="color:#000000;"/>
 								
-									<p:inputText value="#{mbFornecedor.selecionado.fantasia}" />
+									<p:inputText value="#{mbFabricante.selecionado.fantasia}" />
 								
 
 								<h:outputLabel value="CNPJ" style="color:#000000;"/>
 								
 									<p:inputMask mask="99.999.999/9999-99"
-										value="#{mbFornecedor.selecionado.cnpj}" required="true" />
+										value="#{mbFabricante.selecionado.cnpj}" required="true" />
 							
 
 
 								<h:outputLabel value="Telefone" style="color:#000000;"/>
 								
 									<p:inputMask mask="(99)9999-9999"
-										value="#{mbFornecedor.selecionado.tel}" required="true" />
+										value="#{mbFabricante.selecionado.tel}" required="true" />
 								
 
 								<h:outputLabel value="Email" style="color:#000000;"/>
 								
-									<p:inputText value="#{mbFornecedor.selecionado.email}"
+									<p:inputText value="#{mbFabricante.selecionado.email}"
 										required="true" />
 								
 
@@ -344,27 +338,27 @@
 								
 									<p:inputText maxlength="8"
 										requiredMessage="Favor preencha o CEP"
-										value="#{mbFornecedor.selecionado.cep}" required="true">
+										value="#{mbFabricante.selecionado.cep}" required="true">
 									</p:inputText>
 					
 								<h:outputLabel value="Rua:" style="color:#000000;"/>
 								
 									<p:inputText disabled="true"
-										value="#{mbFornecedor.selecionado.endereco}" required="true"
+										value="#{mbFabricante.selecionado.endereco}" required="true"
 										id="endereco" size="60" />
 								
 
 
 								<h:outputLabel value="Número:" style="color:#000000;" />
 								
-									<p:inputText value="#{mbFornecedor.selecionado.numero}"
+									<p:inputText value="#{mbFabricante.selecionado.numero}"
 										required="true" id="numero" size="10" />
 								
 
 								<h:outputLabel value="Bairro:" style="color:#000000;"/>
 								
 									<p:inputText disabled="true"
-										value="#{mbFornecedor.selecionado.bairro}" required="true"
+										value="#{mbFabricante.selecionado.bairro}" required="true"
 										id="bairro" size="30" />
 								
 
@@ -372,7 +366,7 @@
 								<h:outputLabel value="Cidade:" style="color:#000000;"/>
 								
 									<p:inputText disabled="true"
-										value="#{mbFornecedor.selecionado.cidade}" required="true"
+										value="#{mbFabricante.selecionado.cidade}" required="true"
 										id="cidade" size="30" />
 								
 
@@ -380,17 +374,8 @@
 								<h:outputLabel value="UF:" style="color:#000000;" />
 								
 									<p:inputText id="uf" disabled="true"
-										value="#{mbFornecedor.selecionado.uf}" required="true"
+										value="#{mbFabricante.selecionado.uf}" required="true"
 										size="10" />
-							
-
-
-								<h:outputLabel value="Complemento:" style="color:#000000;" />
-								
-									<p:inputText value="#{mbFornecedor.selecionado.complemento}"
-										 id="complemnto" size="30" />
-								
-
 
 							</h:panelGrid>
 
@@ -401,15 +386,15 @@
 
 				<p:commandButton value="Alterar"
 					style="margin-top:-20; float:right;"
-					action="#{mbFornecedor.editar}" ajax="true" update=":tabView:form2"></p:commandButton>
+					action="#{mbFabricante.editar}" ajax="true" update=":tabView:form2"></p:commandButton>
 			</h:form>
 		</p:outputPanel>
 	</p:dialog>
-	<p:dialog header="Funcionário" widgetVar="forExDialog" modal="true">
+	<p:dialog header="Fabricante" widgetVar="forExDialog" modal="true">
 		<p:outputPanel id="forExDetail" style="text-align:center;">
 			<h:form id="form_forExModal">
 				<p:panelGrid columns="1"
-					rendered="#{not empty mbFornecedor.selecionado}"
+					rendered="#{not empty mbFabricante.selecionado}"
 					columnClasses="label,value">
 
 					<p:tabView>
@@ -417,27 +402,27 @@
 							<p:panelGrid columns="2">
 								<h:outputLabel value="Razão Social" />
 								<p:panelGrid columns="1">
-									<h:outputText value="#{mbFornecedor.selecionado.razSocial}" />
+									<h:outputText value="#{mbFabricante.selecionado.razSocial}" />
 								</p:panelGrid>
 
 								<h:outputLabel value="Nome" />
 								<p:panelGrid columns="1">
-									<h:outputText value="#{mbFornecedor.selecionado.fantasia}" />
+									<h:outputText value="#{mbFabricante.selecionado.fantasia}" />
 								</p:panelGrid>
 
 								<h:outputLabel value="CNPJ" />
 								<p:panelGrid columns="1">
-									<h:outputText value="#{mbFornecedor.selecionado.cnpj}" />
+									<h:outputText value="#{mbFabricante.selecionado.cnpj}" />
 								</p:panelGrid>
 
 								<h:outputLabel value="Telefone" />
 								<p:panelGrid columns="1">
-									<h:outputText value="#{mbFornecedor.selecionado.tel}" />
+									<h:outputText value="#{mbFabricante.selecionado.tel}" />
 								</p:panelGrid>
 
 								<h:outputLabel value="Email" />
 								<p:panelGrid columns="1">
-									<h:outputText value="#{mbFornecedor.selecionado.email}" />
+									<h:outputText value="#{mbFabricante.selecionado.email}" />
 								</p:panelGrid>
 
 							</p:panelGrid>
@@ -446,41 +431,35 @@
 							<h:panelGrid columns="2">
 								<h:outputLabel value="CEP" />
 								<p:panelGrid columns="1">
-									<h:outputText value="#{mbFornecedor.selecionado.cep}" />
+									<h:outputText value="#{mbFabricante.selecionado.cep}" />
 								</p:panelGrid>
 
 								<h:outputLabel value="Rua:" />
 								<p:panelGrid columns="1">
-									<h:outputText value="#{mbFornecedor.selecionado.endereco}" />
+									<h:outputText value="#{mbFabricante.selecionado.endereco}" />
 								</p:panelGrid>
 
 
 								<h:outputLabel value="Número:" style="color:#000000;" />
 								<p:panelGrid columns="1">
-									<h:outputText value="#{mbFornecedor.selecionado.numero}" />
+									<h:outputText value="#{mbFabricante.selecionado.numero}" />
 								</p:panelGrid>
 
 								<h:outputLabel value="Bairro:" />
 								<p:panelGrid columns="1">
-									<h:outputText value="#{mbFornecedor.selecionado.bairro}" />
+									<h:outputText value="#{mbFabricante.selecionado.bairro}" />
 								</p:panelGrid>
 
 
 								<h:outputLabel value="Cidade:" />
 								<p:panelGrid columns="1">
-									<h:outputText value="#{mbFornecedor.selecionado.cidade}" />
+									<h:outputText value="#{mbFabricante.selecionado.cidade}" />
 								</p:panelGrid>
 
 
 								<h:outputLabel value="UF:" style="color:#000000;" />
 								<p:panelGrid columns="1">
-									<h:outputText value="#{mbFornecedor.selecionado.uf}" />
-								</p:panelGrid>
-
-
-								<h:outputLabel value="Complemento:" style="color:#000000;" />
-								<p:panelGrid columns="1">
-									<h:outputText value="#{mbFornecedor.selecionado.complemento}" />
+									<h:outputText value="#{mbFabricante.selecionado.uf}" />
 								</p:panelGrid>
 
 							</h:panelGrid>
@@ -489,7 +468,7 @@
 				</p:panelGrid>
 				<p:commandButton value="Excluir"
 					style="margin-top:-20; float:right;"
-					action="#{mbFornecedor.excluir}" ajax="true"
+					action="#{mbFabricante.excluir}" ajax="true"
 					update=":tabView:form2">
 					<p:confirm icon="ui-icon-alert" message="Deseja Excluir ?"
 						header="Confirma?" />
