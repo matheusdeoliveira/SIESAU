@@ -29,17 +29,17 @@
 
 		<!-- "FOOTER" -->
 		<div id="top"
-			style="background-color: #B0E2FF; position: relative; max-width: 1420px; height: 80px;">
+			style="background-color: #B0E2FF; position: relative; max-width: 1420px; height: 83px;">
 
-			<section id="referencia" style="margin-left:20px;"> <a
-				onclick="location.href='index.xhtml'"><h:graphicImage
-					value="/imagem/logo-60.png" width="45" height="45" /></a> <!-- BOTÃO "FILTRAR POR REGIÃO" (LOCALIZADO NO CANTO SUPERIOR ESQUERDO) -->
+			<section id="referencia" style="margin-left:20px;"> 
+			<a onclick="location.href='index.xhtml'"><h:graphicImage
+					value="/imagem/logo-60.png" width="45" height="45" style="margin-top:5px;"/></a> 
 			 </section>
 			 <section id="referencia doenca" style="margin-left:70px;">
 			 <h:form>
 				<p:growl id="doencas" />
 
-				<p:commandButton id="dynaButton" value="Filtrar por Doença" />
+				<p:commandButton id="dynaButton" value="Filtrar por Doença" style="margin-top:-32px;" />
 				<p:menu overlay="true" trigger="dynaButton" my="left top"
 					at="left bottom">
 					<p:submenu label="Selecione a Doença">
@@ -51,41 +51,39 @@
 							update="doencas" />
 					</p:submenu>
 				</p:menu>
-			</h:form>
-			<h:form>
-				<p:growl id="messages" />
-
-				<p:commandButton id="dynaButton" value="Filtrar por Região" />
-				<p:menu overlay="true" trigger="dynaButton" my="left top"
+				<p:growl id="teste" />
+				<p:commandButton id="dynaButton2" value="Filtrar por Região" />
+				<p:menu overlay="true" trigger="dynaButton2" my="left top"
 					at="left bottom">
 					<p:submenu label="Selecione a Cidade">
 						<p:menuitem value="Mesquita" actionListener="#{menuView.select}"
-							update="messages" />
+							update="teste" />
 						<p:menuitem value="Nilópolis" actionListener="#{menuView.select}"
-							update="messages" />
+							update="teste" />
 						<p:menuitem value="Nova Iguaçu" actionListener="#{menuView.select}"
-							update="messages" />
+							update="teste" />
 						<p:menuitem value="Duque de Caxias" actionListener="#{menuView.select}"
-							update="messages" />
+							update="teste" />
 						<p:menuitem value="Queimados" actionListener="#{menuView.select}"
-							update="messages" />
+							update="teste" />
 					</p:submenu>
 				</p:menu>
 			</h:form>
 			 </section>
 
-			<!-- BOTÕES "AJUDA E IMPRIMIR" (LOCALIZADOS NO CANTO SUPERIOR DIREITO)-->
+			
+
+		</div>
+		<!-- BOTÕES "AJUDA E IMPRIMIR" (LOCALIZADOS NO CANTO SUPERIOR DIREITO)-->
 			<section id="btn"
-				style="float:right;margin-top:-60px; margin-right:30px;">
+				style="float:right;margin-top:-30px; margin-right:30px;">
 			<p:commandButton value="Ajuda" id="Ajuda" update=""
 				actionListener="#{buttonView.buttonAction}"
 				styleClass="ui-priority-primary" /> <p:commandButton
 				value="Imprimir" id="imprimir" update=""
 				actionListener="#{buttonView.buttonAction}"
 				styleClass="ui-priority-primary" /> </section>
-
-
-		</div>
+		
 
 		<!-- TABELA -->
 		<div id="tabela"
@@ -99,7 +97,7 @@
 				<!-- DATA TABLE -->
 				<p:dataTable id="tabelaGeo" var="paciente"
 					value="#{mbMap.pacientesdto}"
-					resizableColumns="true" paginator="true" rows="20">
+					resizableColumns="true" paginator="true" rows="21">
 
 					<f:facet name="header">Tabela</f:facet>
 
