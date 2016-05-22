@@ -14,7 +14,7 @@
 	
 	<script type="text/javascript"
 				src="https://maps.googleapis.com/maps/api/js?libraries=visualization&amp;callback=initMap ">
-				*/
+				
 			</script>
 
 	<script type="text/javascript"
@@ -24,7 +24,7 @@
 </h:head>
 
 
-<h:body style="margin:0px; border:0; background-color:#E8E8E8;">
+<h:body style="margin:0px; border:0; background-color:white;">
 	<div id="wrapper" style="font-size: 12px; font-family: arial;">
 
 		<!-- "FOOTER" -->
@@ -34,6 +34,24 @@
 			<section id="referencia" style="margin-left:20px;"> <a
 				onclick="location.href='index.xhtml'"><h:graphicImage
 					value="/imagem/logo-60.png" width="45" height="45" /></a> <!-- BOTÃO "FILTRAR POR REGIÃO" (LOCALIZADO NO CANTO SUPERIOR ESQUERDO) -->
+			 </section>
+			 <section id="referencia doenca" style="margin-left:70px;">
+			 <h:form>
+				<p:growl id="doencas" />
+
+				<p:commandButton id="dynaButton" value="Filtrar por Doença" />
+				<p:menu overlay="true" trigger="dynaButton" my="left top"
+					at="left bottom">
+					<p:submenu label="Selecione a Doença">
+						<p:menuitem value="Dengue" actionListener="#{menuView.select}"
+							update="doencas" />
+						<p:menuitem value="Zika" actionListener="#{menuView.select}"
+							update="doencas" />
+						<p:menuitem value="Chikungunya" actionListener="#{menuView.select}"
+							update="doencas" />
+					</p:submenu>
+				</p:menu>
+			</h:form>
 			<h:form>
 				<p:growl id="messages" />
 
@@ -53,7 +71,8 @@
 							update="messages" />
 					</p:submenu>
 				</p:menu>
-			</h:form> </section>
+			</h:form>
+			 </section>
 
 			<!-- BOTÕES "AJUDA E IMPRIMIR" (LOCALIZADOS NO CANTO SUPERIOR DIREITO)-->
 			<section id="btn"
@@ -106,6 +125,7 @@
 
 			
 			<!-- container que contém o mapa -->
+			<div id="mapadiv" style="position:relative;margin-left:407px; margin-top: 5px;">
 			<h:form id="mapa">
 			
 			
@@ -122,18 +142,19 @@
                  </ui:repeat>			
 			</m:map>
 			</h:form>
+			</div>
 				
 
 			<h:form id="form2">
  	<div id="relatorio"
-			style="background-color: white; position:relative;margin-left:400px; margin-top: 5px; max-width: 1000px; height:300px;">
+			style="background-color: white; position:relative;margin-left:450px; margin-top: 5px; max-width: 1000px; height:300px;">
 	<p:growl id="growl" showDetail="true" />
 	
     <h:panelGrid columns="2" columnClasses="left,right" style="width:100%" rendered="#{not empty mbMap.pacientesdto}">
-        <p:chart type="pie" model="#{mbMap.grafico}" style="width:400px;height:300px">
+        <p:chart type="pie" model="#{mbMap.grafico}" style="width:400px;height:300px" seriesColors="2288AA,AAAAAA">
             <p:ajax event="itemSelect" listener="#{mbMap.itemSeleciondado}" update="growl" />
         </p:chart>
- 		<p:chart type="bar" model="#{mbMap.grafico2}" style="width:400px;height:300px;">
+ 		<p:chart type="bar" model="#{mbMap.grafico2}" style="width:400px;height:300px;" diameter="200">
             <p:ajax event="itemSelect" listener="#{mbMap.itemSeleciondado}" update="growl"/>
         </p:chart>  
         </h:panelGrid>

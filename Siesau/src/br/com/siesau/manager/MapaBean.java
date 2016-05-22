@@ -14,6 +14,7 @@ import br.com.siesau.entity.PacienteDTO;
 import br.com.siesau.persistence.PacienteDao;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.LegendPlacement;
 
 @ManagedBean(name = "mbMap")
 public class MapaBean {
@@ -38,6 +39,10 @@ public class MapaBean {
 		criargrafico();
 		grafico2 = new BarChartModel();
 		criargrafico2();
+		grafico2.setLegendPosition("e");
+		grafico2.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
+		grafico.setSeriesColors("4876FF,FF00FF");
+		grafico2.setSeriesColors("4876FF,FF00FF");
 	}
 
 	public void itemSeleciondado(ItemSelectEvent event) {
