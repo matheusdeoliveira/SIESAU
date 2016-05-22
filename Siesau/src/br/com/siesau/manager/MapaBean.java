@@ -85,7 +85,7 @@ public class MapaBean {
         Axis yAxis = grafico2.getAxis(AxisType.Y);
         yAxis.setLabel("Sexo");
         yAxis.setMin(0);
-        yAxis.setMax(100);
+        yAxis.setMax(1000);
 
 		/*for (int i = 0; i < sexodto.size(); i++) {
 			if (pacientesdto.get(i).getSexo().equalsIgnoreCase("m")) {
@@ -96,11 +96,11 @@ public class MapaBean {
 
 			}
 		}*/
-		homens.set(sexodto.get(0).getAno(),sexodto.get(0).getQuantidade());
-		mulheres.set(sexodto.get(1).getAno(),sexodto.get(1).getQuantidade());
+		homens.set(sexodto.get(1).getAno(),sexodto.get(1).getQuantidade());
+		mulheres.set(sexodto.get(0).getAno(),sexodto.get(0).getQuantidade());
 		grafico2.setTitle("Índices por Ano");
-		grafico2.addSeries(mulheres);
 		grafico2.addSeries(homens);
+		grafico2.addSeries(mulheres);
 		
 	}
 
