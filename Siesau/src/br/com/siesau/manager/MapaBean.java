@@ -12,6 +12,9 @@ import org.primefaces.model.chart.PieChartModel;
 import br.com.siesau.entity.Paciente;
 import br.com.siesau.entity.PacienteDTO;
 import br.com.siesau.persistence.PacienteDao;
+
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LegendPlacement;
@@ -43,6 +46,7 @@ public class MapaBean {
 		grafico2.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
 		grafico.setSeriesColors("4876FF,FF00FF");
 		grafico2.setSeriesColors("4876FF,FF00FF");
+		grafico2.setBarWidth(30);
 	}
 
 	public void itemSeleciondado(ItemSelectEvent event) {
@@ -74,6 +78,14 @@ public class MapaBean {
 
 		homens.setLabel("Homens");
 		mulheres.setLabel("Mulheres");
+		
+		Axis xAxis = grafico2.getAxis(AxisType.X);
+        xAxis.setLabel("Ano");
+         
+        Axis yAxis = grafico2.getAxis(AxisType.Y);
+        yAxis.setLabel("Sexo");
+        yAxis.setMin(0);
+        yAxis.setMax(100);
 
 		/*for (int i = 0; i < sexodto.size(); i++) {
 			if (pacientesdto.get(i).getSexo().equalsIgnoreCase("m")) {
