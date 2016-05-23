@@ -112,7 +112,10 @@ public class ManagerBeanAtendimento implements Serializable {
 			fc.addMessage("form_paciente",
 					new FacesMessage("Atendimento do paciente " + atendimento.getPaciente().getNome() + " agendado."));
 			atendimento = new Atendimento();
+			paciente = new Paciente();
 			atendimentos = new AtendimentoDao(new Atendimento()).listaNaoFinalizados();
+			itemSelecionado = "";
+			campoBusca = "";
 
 		} catch (Exception e) {
 			fc.addMessage("form_paciente", new FacesMessage("Error: " + e.getMessage()));
