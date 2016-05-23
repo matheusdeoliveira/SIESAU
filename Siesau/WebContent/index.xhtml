@@ -18,8 +18,17 @@
 	<ui:insert name="menu">
 		<ui:include src="Template/menu.jsf" />
 	</ui:insert>
-<div id="corpo"
-		style="padding-bottom:300px; "> </div>
+	<div id="corpo"
+		style="min-height: 100%; position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px;">
+		<h:form id="form_buscaUPA">
+			<p:growl id="growl" showDetail="true" />
+			<p:outputLabel for="cep" value="Busca por Unidades Proximas" />
+			<p:inputMask id="cep" mask="99999999" placeholder="Digite seu CEP"
+				value="#{mbBuscaUPA.cep}" />
+			<p:commandLink actionListener="#{mbBuscaUPA.montaLink}"
+				value="Buscar" />
+		</h:form>
+	</div>
 	<ui:insert name="footer">
 		<ui:include src="Template/footer.jsf" />
 	</ui:insert>
