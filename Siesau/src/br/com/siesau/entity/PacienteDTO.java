@@ -10,8 +10,25 @@ public class PacienteDTO {
 	private Double latitude;
 	private Double longitude;
 	private Date ano;
+	
 	public PacienteDTO() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public PacienteDTO(String bairro, String sexo, Integer quantidade, Double latitude, Double longitude, Date ano) {
+		super();
+		this.bairro = bairro;
+		this.sexo = sexo;
+		this.quantidade = quantidade;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.ano = ano;
+	}
+
+	@Override
+	public String toString() {
+		return "PacienteDTO [bairro=" + bairro + ", sexo=" + sexo + ", quantidade=" + quantidade + ", latitude="
+				+ latitude + ", longitude=" + longitude + ", ano=" + ano + "]" +"\n";
 	}
 
 	public String getBairro() {
