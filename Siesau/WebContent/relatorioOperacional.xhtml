@@ -1,0 +1,662 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+<h:body style=" margin:auto;border:0; background-color:#E8E8E8;">
+	<ui:insert name="header">
+		<ui:include src="Template/header.jsf" />
+	</ui:insert>
+
+	<ui:insert name="menu">
+		<ui:include src="Template/menu.jsf" />
+	</ui:insert>
+
+	<div
+		style="margin-top: 20px; padding-bottom: 50px; position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px;">
+
+		<p:tabView id="tabView"
+			style="margin-top:20px;background-color:#F0F4F9;position:relative; width:1112px;">
+
+			<p:tab title="Relatório de Pacientes"
+				style="background-color:#F0F4F9;position:relative;">
+
+				<p:growl />
+
+				<p:panel header="Filtrar Relatorio"
+					style=" backgorund-color:#F0F4F9;">
+					<p:row>
+						<p:outputLabel value="Periodo" style="color:#000000" />
+						<h:panelGroup>
+							<p:spacer width="8" />
+							<h:outputText value="de" style="color:#000000" />
+							<p:spacer width="8" />
+							<p:calendar value="#{relatorioPedidosEmitidosBean.dataInicio}"
+								label="Data inicial" pattern="dd/MM/yyyy" size="8" />
+							<p:spacer width="8" />
+							<h:outputText value="a" style="color:#000000" />
+							<p:spacer width="8" />
+							<p:calendar value="#{relatorioPedidosEmitidosBean.dataFim}"
+								label="Data final" pattern="dd/MM/yyyy" size="8" />
+						</h:panelGroup>
+					</p:row>
+				</p:panel>
+				<br />
+				<p:growl id="msgs" showDetail="true" />
+
+				<p:dataTable id="dataTable" var="linha"
+					value="#{mbPaciente.pacientes}" widgetVar="tabelaPacientes"
+					filteredValue="#{mbPaciente.pacientesFiltrados}"
+					emptyMessage="Não há pacientes." paginator="true" rows="10"
+					style="margin-bottom:20px">
+
+					<f:facet name="header">
+						<p:outputPanel>
+							<h:panelGrid columns="" layout="grid" border="0"
+								style="background-color: #F0F4F9;margin:0;">
+
+
+								<p:column>
+									<h style="float:left;"> <h:graphicImage
+										value="/imagem/logo-60.png" width="90" /></h>
+									<br />
+									<h1 style="font-size: 18px; float: right; margin-top: -20px;">
+										Sistema Estrategico de Saude Urbana<br />
+										<p
+											style="font-size: 14px; text-align: right; margin-bottom: -15px;">
+											Unidade de Saude de Nova Iguaçu<br />
+											<script type="text/javascript">
+												now = new Date
+												document.write(+now.getDay()
+
+												+ now.getDate() + "/"
+														+ now.getMonth() + "/"
+														+ now.getFullYear())
+											</script>
+											<br /> Periodo: 21/04/2016 a 21/05/2016
+										</p>
+
+									</h1>
+								</p:column>
+
+
+
+							</h:panelGrid>
+							<h:outputText value="Pacientes Cadastrados" />
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column style="background-color:#F0F4F9;color:#000000;"
+						width="20" headerText="Nome do Paciente"
+						filterMatchMode="contains" sortBy="#{linha.nome}">
+						<h:outputText style="background-color:#F0F4F9;color:#000000;"
+							value="#{linha.nome}" />
+					</p:column>
+					<p:column sortBy="#{linha.cartaoSus}" style="background-color:#F0F4F9;color:#000000;"
+						width="20" headerText="SUS" filterMatchMode="contains">
+
+						<h:outputText style="background-color:#F0F4F9;color:#000000;"
+							value="#{linha.cartaoSus}" />
+
+					</p:column>
+
+					<p:column sortBy="#{linha.dataCad}" style="background-color:#F0F4F9;color:#000000;"
+						width="20" headerText="Data Cadastro" filterMatchMode="contains">
+
+						<h:outputText style="background-color:#F0F4F9;color:#000000;"
+							value="#{linha.dataCad}" />
+					</p:column>
+
+
+					<p:column sortBy="#{linha.dataNasc}" style="background-color:#F0F4F9;color:#000000;"
+						width="20" headerText="Data Nascimento" filterMatchMode="contains">
+						<h:outputText style="background-color:#F0F4F9;color:#000000;"
+							value="#{linha.dataNasc}" />
+					</p:column>
+
+					<f:facet name="footer">
+						<p:outputPanel>
+							<p:commandButton value="Imprimir" type="button"
+								icon="ui-icon-print" style="display:block;margin-bottom: 20px">
+								<p:printer target="dataTable" />
+							</p:commandButton>
+						</p:outputPanel>
+					</f:facet>
+
+
+				</p:dataTable>
+			</p:tab>
+
+			<p:tab title="Relatório de Funcionários"
+				style="background-color:#F0F4F9;position:relative;">
+
+				<h:form id="form_funcionario">
+					<p:growl />
+
+					<p:panel header="Filtrar Relatorio"
+						style=" backgorund-color:#F0F4F9;">
+						<p:row>
+							<p:outputLabel value="Periodo" style="color:#000000" />
+							<h:panelGroup>
+								<p:spacer width="8" />
+								<h:outputText value="de" style="color:#000000" />
+								<p:spacer width="8" />
+								<p:calendar value="#{relatorioPedidosEmitidosBean.dataInicio}"
+									label="Data inicial" pattern="dd/MM/yyyy" size="8" />
+								<p:spacer width="8" />
+								<h:outputText value="a" style="color:#000000" />
+								<p:spacer width="8" />
+								<p:calendar value="#{relatorioPedidosEmitidosBean.dataFim}"
+									label="Data final" pattern="dd/MM/yyyy" size="8" />
+							</h:panelGroup>
+						</p:row>
+					</p:panel>
+					<br />
+
+					<h:form id="form2">
+						<p:growl id="msgs" showDetail="true" />
+
+						<p:dataTable id="dataTable" var="linha" editable="true"
+							reflow="true" value="#{mbFuncionario.funcionarios}"
+							widgetVar="tabelaFuncionarios"
+							filteredValue="#{mbFuncionario.funcionariosFiltrados}"
+							emptyMessage="Não há Funcionários." paginator="true" rows="10"
+							style="margin-bottom:20px">
+
+							<f:facet name="header">
+								<p:outputPanel>
+									<h:panelGrid columns="" layout="grid" border="0"
+										style="background-color: #F0F4F9;margin:0;">
+
+
+										<p:column>
+											<h style="float:left;"> <h:graphicImage
+												value="/imagem/logo-60.png" width="90" /></h>
+											<br />
+											<h1 style="font-size: 18px; float: right; margin-top: -20px;">
+												Sistema Estrategico de Saude Urbana<br />
+												<p
+													style="font-size: 14px; text-align: right; margin-bottom: -15px;">
+													Unidade de Saude de Nova Iguaçu<br />
+													<script type="text/javascript">
+														now = new Date
+														document
+																.write(+now
+																		.getDay()
+
+																		+ now
+																				.getDate()
+																		+ "/"
+																		+ now
+																				.getMonth()
+																		+ "/"
+																		+ now
+																				.getFullYear())
+													</script>
+													<br /> Periodo: 21/04/2016 a 21/05/2016
+												</p>
+
+											</h1>
+										</p:column>
+
+									</h:panelGrid>
+									<h:outputText value="Funcionarios Cadastrados" />
+								</p:outputPanel>
+							</f:facet>
+
+							<p:column sortBy="#{linha.nome}"
+								style="background-color:#F0F4F9;color:#000000;" width="20"
+								headerText="Nome do Funcionario" filterMatchMode="contains">
+								<h:outputText style="background-color:#F0F4F9;color:#000000;"
+									value="#{linha.nome}" />
+							</p:column>
+
+							<p:column sortBy="#{linha.cargo.cargo}"
+								style="background-color:#F0F4F9;color:#000000;" width="20"
+								headerText="Cargo do Funcionario" filterMatchMode="contains">
+								<h:outputText style="background-color:#F0F4F9;color:#000000;"
+									value="#{linha.cargo.cargo}" />
+							</p:column>
+
+							<p:column sortBy="#{linha.sexo}"
+								style="background-color:#F0F4F9;color:#000000;" width="20"
+								headerText="Sexo" filterMatchMode="contains">
+								<h:outputText style="background-color:#F0F4F9;color:#000000;"
+									value="#{linha.sexo}" />
+							</p:column>
+
+							<p:column sortBy="#{linha.dataAdmis}"
+								style="background-color:#F0F4F9;color:#000000;" width="20"
+								headerText="Data Cadastro" filterMatchMode="contains">
+
+								<p:calendar value="#{linha.dataAdmis}" disabled="true"
+									pattern="dd/MM/yyyy"
+									style="background-color:#F0F4F9;color:#000000;" />
+							</p:column>
+
+							<f:facet name="footer">
+								<p:outputPanel>
+									<p:commandButton value="Imprimir" type="button"
+										icon="ui-icon-print" style="display:block;margin-bottom: 20px">
+										<p:printer target="dataTable" />
+									</p:commandButton>
+								</p:outputPanel>
+							</f:facet>
+
+
+						</p:dataTable>
+
+					</h:form>
+
+				</h:form>
+
+			</p:tab>
+
+			<p:tab title="Relatório de Fornecedores"
+				style="background-color:#F0F4F9;position:relative;">
+
+				<h:form id="form_fornecedor">
+					<p:growl />
+
+					<p:panel header="Filtrar Relatorio"
+						style=" backgorund-color:#F0F4F9;">
+						<p:row>
+							<p:outputLabel value="Periodo" style="color:#000000" />
+							<h:panelGroup>
+								<p:spacer width="8" />
+								<h:outputText value="de" style="color:#000000" />
+								<p:spacer width="8" />
+								<p:calendar value="#{relatorioPedidosEmitidosBean.dataInicio}"
+									label="Data inicial" pattern="dd/MM/yyyy" size="8" />
+								<p:spacer width="8" />
+								<h:outputText value="a" style="color:#000000" />
+								<p:spacer width="8" />
+								<p:calendar value="#{relatorioPedidosEmitidosBean.dataFim}"
+									label="Data final" pattern="dd/MM/yyyy" size="8" />
+							</h:panelGroup>
+						</p:row>
+					</p:panel>
+					<br />
+
+					<h:form id="form2">
+						<p:growl id="msgs" showDetail="true" />
+
+						<p:dataTable id="dataTable" var="linha" editable="true"
+							reflow="true" value="#{mbFornecedor.fornecedores}"
+							widgetVar="tabelaPacientes"
+							filteredValue="#{mbFornecedor.fornecedoresFiltrados}"
+							emptyMessage="Não há Fornecedores." paginator="true" rows="10"
+							style="margin-bottom:20px">
+
+							<f:facet name="header">
+								<p:outputPanel>
+									<h:panelGrid columns="" layout="grid" border="0"
+										style="background-color: #F0F4F9;margin:0;">
+
+
+										<p:column>
+											<h style="float:left;"> <h:graphicImage
+												value="/imagem/logo-60.png" width="90" /></h>
+											<br />
+											<h1 style="font-size: 18px; float: right; margin-top: -20px;">
+												Sistema Estrategico de Saude Urbana<br />
+												<p
+													style="font-size: 14px; text-align: right; margin-bottom: -15px;">
+													Unidade de Saude de Nova Iguaçu<br />
+													<script type="text/javascript">
+														now = new Date
+														document
+																.write(+now
+																		.getDay()
+
+																		+ now
+																				.getDate()
+																		+ "/"
+																		+ now
+																				.getMonth()
+																		+ "/"
+																		+ now
+																				.getFullYear())
+													</script>
+													<br /> Periodo: 21/04/2016 a 21/05/2016
+												</p>
+
+											</h1>
+										</p:column>
+
+
+
+									</h:panelGrid>
+									<h:outputText value="Fornecedores Cadastrados" />
+								</p:outputPanel>
+							</f:facet>
+
+							<p:column sortBy="#{linha.cnpj}"
+								style="background-color:#F0F4F9;color:#000000;" width="20"
+								headerText="CNPJ" filterMatchMode="contains">
+								<h:outputText style="background-color:#F0F4F9;color:#000000;"
+									value="#{linha.cnpj}" />
+							</p:column>
+
+							<p:column sortBy="#{linha.fantasia}"
+								style="background-color:#F0F4F9;color:#000000;" width="20"
+								headerText="Fantasia" filterMatchMode="contains">
+
+								<h:outputText style="background-color:#F0F4F9;color:#000000;"
+									value="#{linha.fantasia}" />
+							</p:column>
+
+							<p:column sortBy="#{linha.razSocial}"
+								style="background-color:#F0F4F9;color:#000000;" width="20"
+								headerText="Razão Social" filterMatchMode="contains">
+
+								<h:outputText style="background-color:#F0F4F9;color:#000000;"
+									value="#{linha.razSocial}" />
+							</p:column>
+
+
+							<p:column sortBy="#{linha.uf}"
+								style="background-color:#F0F4F9;color:#000000;" width="20"
+								headerText="Unidade Federativa" filterMatchMode="contains">
+
+								<h:outputText style="background-color:#F0F4F9;color:#000000;"
+									value="#{linha.uf}" />
+
+							</p:column>
+
+							<f:facet name="footer">
+								<p:outputPanel>
+									<p:commandButton value="Imprimir" type="button"
+										icon="ui-icon-print" style="display:block;margin-bottom: 20px">
+										<p:printer target="dataTable" />
+									</p:commandButton>
+								</p:outputPanel>
+							</f:facet>
+
+
+						</p:dataTable>
+
+					</h:form>
+
+				</h:form>
+
+			</p:tab>
+
+			<p:tab title="Relatório de Medicamentos"
+				style="position: relative; max-width: 1120px; margin-right: auto; margin-left: auto;background-color:#F0F4F9;">
+
+				<h:form id="form_medicamento">
+					<p:growl />
+
+					<p:panel header="Filtrar Relatorio"
+						style=" backgorund-color:#F0F4F9;">
+						<p:row>
+							<p:outputLabel value="Periodo" style="color:#000000" />
+							<h:panelGroup>
+								<p:spacer width="8" />
+								<h:outputText value="de" style="color:#000000" />
+								<p:spacer width="8" />
+								<p:calendar value="#{relatorioPedidosEmitidosBean.dataInicio}"
+									label="Data inicial" pattern="dd/MM/yyyy" size="8" />
+								<p:spacer width="8" />
+								<h:outputText value="a" style="color:#000000" />
+								<p:spacer width="8" />
+								<p:calendar value="#{relatorioPedidosEmitidosBean.dataFim}"
+									label="Data final" pattern="dd/MM/yyyy" size="8" />
+							</h:panelGroup>
+						</p:row>
+					</p:panel>
+					<br />
+
+					<h:form id="form2">
+						<p:growl id="msgs" showDetail="true" />
+
+						<p:dataTable id="dataTable" var="linha" editable="true"
+							reflow="true" value="#{mbMedicamento.medicamentos}"
+							widgetVar="tabelaMedicamento"
+							filteredValue="#{mbMedicamento.medicamentosFiltrados}"
+							emptyMessage="Não há fabricantes." paginator="true" rows="10"
+							style="margin-bottom:20px">
+
+							<f:facet name="header">
+								<p:outputPanel>
+									<h:panelGrid columns="" layout="grid" border="0"
+										style="background-color: #F0F4F9;margin:0;">
+
+
+										<p:column>
+											<h style="float:left;"> <h:graphicImage
+												value="/imagem/logo-60.png" width="90" /></h>
+											<br />
+											<h1 style="font-size: 18px; float: right; margin-top: -20px;">
+												Sistema Estrategico de Saude Urbana<br />
+												<p
+													style="font-size: 14px; text-align: right; margin-bottom: -15px;">
+													Unidade de Saude de Nova Iguaçu<br />
+													<script type="text/javascript">
+														now = new Date
+														document
+																.write(+now
+																		.getDay()
+
+																		+ now
+																				.getDate()
+																		+ "/"
+																		+ now
+																				.getMonth()
+																		+ "/"
+																		+ now
+																				.getFullYear())
+													</script>
+													<br /> Periodo: 21/04/2016 a 21/05/2016
+												</p>
+
+											</h1>
+										</p:column>
+
+
+
+									</h:panelGrid>
+									<h:outputText value="Medicamentos Cadastrados" />
+								</p:outputPanel>
+							</f:facet>
+
+							<p:column sortBy="#{linha.nomeRef}"
+								style="background-color:#F0F4F9;color:#000000;" width="20"
+								headerText="Nome Referencia" filterMatchMode="contains">
+								<h:outputText style="background-color:#F0F4F9;color:#000000;"
+									value="#{linha.nomeRef}" />
+							</p:column>
+							<p:column sortBy="#{linha.subst}"
+								style="background-color:#F0F4F9;color:#000000;" width="20"
+								headerText="Substancia Ativa" filterMatchMode="contains">
+
+								<h:outputText style="background-color:#F0F4F9;color:#000000;"
+									value="#{linha.subst}" />
+
+							</p:column>
+
+							<p:column sortBy="#{linha.fabricante.fantasia}"
+								style="background-color:#F0F4F9;color:#000000;" width="20"
+								headerText="Nome do Fabricante" filterMatchMode="contains">
+
+								<h:outputText style="background-color:#F0F4F9;color:#000000;"
+									value="#{linha.fabricante.fantasia}" />
+							</p:column>
+
+
+							<p:column sortBy="#{linha.concentracao}"
+								style="background-color:#F0F4F9;color:#000000;" width="20"
+								headerText="Concentração" filterMatchMode="contains">
+
+								<h:outputText style="background-color:#F0F4F9;color:#000000;"
+									value="#{linha.concentracao}" />
+							</p:column>
+
+							<f:facet name="footer">
+								<p:outputPanel>
+									<p:commandButton value="Imprimir" type="button"
+										icon="ui-icon-print" style="display:block;margin-bottom: 20px">
+										<p:printer target="dataTable" />
+									</p:commandButton>
+								</p:outputPanel>
+							</f:facet>
+
+
+						</p:dataTable>
+
+					</h:form>
+
+				</h:form>
+
+			</p:tab>
+
+			<p:tab title="Relatório de Fabricantes"
+				style="position: relative; max-width: 1120px; margin-right: auto; margin-left: auto;background-color:#F0F4F9;">
+
+				<h:form id="form_fabricante">
+					<p:growl />
+
+					<p:panel header="Filtrar Relatorio"
+						style=" backgorund-color:#F0F4F9;">
+						<p:row>
+							<p:outputLabel value="Periodo" style="color:#000000" />
+							<h:panelGroup>
+								<p:spacer width="8" />
+								<h:outputText value="de" style="color:#000000" />
+								<p:spacer width="8" />
+								<p:calendar value="#{relatorioPedidosEmitidosBean.dataInicio}"
+									label="Data inicial" pattern="dd/MM/yyyy" size="8" />
+								<p:spacer width="8" />
+								<h:outputText value="a" style="color:#000000" />
+								<p:spacer width="8" />
+								<p:calendar value="#{relatorioPedidosEmitidosBean.dataFim}"
+									label="Data final" pattern="dd/MM/yyyy" size="8" />
+							</h:panelGroup>
+						</p:row>
+					</p:panel>
+					<br />
+
+					<h:form id="form2">
+						<p:growl id="msgs" showDetail="true" />
+
+						<p:dataTable id="dataTable" var="linha" editable="true"
+							reflow="true" value="#{mbFabricante.fabricantes}"
+							widgetVar="tabelaPacientes"
+							filteredValue="#{mbFabricante.fabricantesFiltrados}"
+							emptyMessage="Não há Fabricantes." paginator="true" rows="10"
+							style="margin-bottom:20px">
+
+							<f:facet name="header">
+								<p:outputPanel>
+									<h:panelGrid columns="" layout="grid" border="0"
+										style="background-color: #F0F4F9;margin:0;">
+
+
+										<p:column>
+											<h style="float:left;"> <h:graphicImage
+												value="/imagem/logo-60.png" width="90" /></h>
+											<br />
+											<h1 style="font-size: 18px; float: right; margin-top: -20px;">
+												Sistema Estrategico de Saude Urbana<br />
+												<p
+													style="font-size: 14px; text-align: right; margin-bottom: -15px;">
+													Unidade de Saude de Nova Iguaçu<br />
+													<script type="text/javascript">
+														now = new Date
+														document
+																.write(+now
+																		.getDay()
+
+																		+ now
+																				.getDate()
+																		+ "/"
+																		+ now
+																				.getMonth()
+																		+ "/"
+																		+ now
+																				.getFullYear())
+													</script>
+													<br /> Periodo: 21/04/2016 a 21/05/2016
+												</p>
+
+											</h1>
+										</p:column>
+
+
+
+									</h:panelGrid>
+									<h:outputText value="Fabricantes Cadastrados" />
+								</p:outputPanel>
+							</f:facet>
+
+							<p:column sortBy="#{linha.cnpj}"
+								style="background-color:#F0F4F9;color:#000000;" width="20"
+								headerText="CNPJ" filterMatchMode="contains">
+								<h:outputText style="background-color:#F0F4F9;color:#000000;"
+									value="#{linha.cnpj}" />
+							</p:column>
+
+							<p:column sortBy="#{linha.fantasia}"
+								style="background-color:#F0F4F9;color:#000000;" width="20"
+								headerText="Fantasia" filterMatchMode="contains">
+
+								<h:outputText style="background-color:#F0F4F9;color:#000000;"
+									value="#{linha.fantasia}" />
+							</p:column>
+
+							<p:column sortBy="#{linha.razSocial}"
+								style="background-color:#F0F4F9;color:#000000;" width="20"
+								headerText="Razão Social" filterMatchMode="contains">
+
+								<h:outputText style="background-color:#F0F4F9;color:#000000;"
+									value="#{linha.razSocial}" />
+							</p:column>
+
+
+							<p:column sortBy="#{linha.uf}"
+								style="background-color:#F0F4F9;color:#000000;" width="20"
+								headerText="Unidade Federativa" filterMatchMode="contains">
+
+								<h:outputText style="background-color:#F0F4F9;color:#000000;"
+									value="#{linha.uf}" />
+
+							</p:column>
+
+							<f:facet name="footer">
+								<p:outputPanel>
+									<p:commandButton value="Imprimir" type="button"
+										icon="ui-icon-print" style="display:block;margin-bottom: 20px">
+										<p:printer target="dataTable" />
+									</p:commandButton>
+								</p:outputPanel>
+							</f:facet>
+
+
+						</p:dataTable>
+
+					</h:form>
+
+				</h:form>
+
+			</p:tab>
+
+		</p:tabView>
+
+		<div id="pos_botao"
+			style="padding-bottom: 40px; background-color: #F0F4F9; height: 50; position: relative; max-width: 1120px; margin-right: auto; margin-left: auto;">
+
+		</div>
+
+	</div>
+	<ui:insert name="footer">
+		<ui:include src="Template/footer.jsf" />
+	</ui:insert>
+</h:body>
+</html>
