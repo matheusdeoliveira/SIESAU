@@ -62,6 +62,12 @@
 					actionListener="#{mbMap.buscar}"
 					update=":formDataTable, :formMapa, :formGraficos"
 					style="margin-top:-32px;" />
+					
+					
+				<p:commandButton value="Limpar" ajax="true"
+					actionListener="#{mbMap.limpar}"
+					update=":formDataTable, :formMapa, :formGraficos"
+					style="margin-top:-32px;" />
 
 
 			</h:form> </section>

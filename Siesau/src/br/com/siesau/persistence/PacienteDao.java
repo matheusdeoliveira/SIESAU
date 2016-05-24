@@ -150,14 +150,14 @@ public class PacienteDao extends GenericDao<Paciente> {
 				+"p.sexo, "
 				+ "SUM ((select count(*) from doenca d where ad.cd_doenca = d.cd_doenca)) as quantidade "
 				+"from " 
-				+"atendimento a, " 
-				+"atend_doenca ad, " 
-				+"doenca d, "
-				+"paciente p "
+				+"atendimento a "
+				+ "join " 
+				+"atend_doenca ad on a.cd_atend = ad.cd_atend "
+				+ "join  " 
+				+"doenca d on ad.cd_doenca = d.cd_doenca "
+				+"join "
+				+ "paciente p on a.cd_paciente = p.cd_paciente "
 				+"where "
-				+"a.cd_atend = ad.cd_atend and "
-				+"ad.cd_doenca = d.cd_doenca and "
-				+"a.cd_paciente = p.cd_paciente and "
 				+"d.cid in (:doencas) and "
 				+"p.cidade ~* :cidade "
 				+"GROUP BY p.bairro, p.sexo  order by p.bairro";	
@@ -186,9 +186,14 @@ public class PacienteDao extends GenericDao<Paciente> {
 		        +"p.latitude, "
 		        +"p.longitude, "
 		        +"p.sexo "
-		        +"from  atendimento a, atend_doenca ad, doenca d, paciente p " 
-		        +"where a.cd_atend = ad.cd_atend and ad.cd_doenca = d.cd_doenca and a.cd_paciente = p.cd_paciente "
-		        + "and d.cid in (:doencas ) and p.cidade ~* :cidade";
+		        +"from  atendimento a "
+		        + "join "
+		        + "atend_doenca ad on a.cd_atend = ad.cd_atend "
+		        + "join "
+		        + "doenca d on ad.cd_doenca = d.cd_doenca "
+		        + "join "
+		        + "paciente p on a.cd_paciente = p.cd_paciente " 
+		        +"where d.cid in (:doencas ) and p.cidade ~* :cidade";
 		   
 		
 

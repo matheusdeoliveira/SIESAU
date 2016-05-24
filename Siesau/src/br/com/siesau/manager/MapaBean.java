@@ -72,6 +72,62 @@ public class MapaBean {
 		
 	}
 
+
+	public void limpar(){
+					
+		try {
+
+			pacientedtoMap = new ArrayList<>();
+
+			pacientesdto = new ArrayList<>();
+
+			sexodto = new ArrayList<>();
+			
+			
+			grafico = new PieChartModel();
+			grafico.setTitle("Aguardando Filtros");
+			grafico.set("Homens", 0);
+			grafico.set("Mulheres", 0);
+
+			grafico.setLegendPosition("w");
+
+			
+			grafico2 = new BarChartModel();
+			ChartSeries homens = new ChartSeries();
+			ChartSeries mulheres = new ChartSeries();
+			grafico2 = new BarChartModel();
+			grafico2.setLegendPosition("e");
+			grafico2.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
+			grafico.setSeriesColors("4876FF,FF00FF");
+			grafico2.setSeriesColors("4876FF,FF00FF");
+			grafico2.setBarWidth(30);
+			homens.setLabel("Homens");
+			mulheres.setLabel("Mulheres");
+
+			Axis xAxis = grafico2.getAxis(AxisType.X);
+			xAxis.setLabel("Ano");
+
+			Axis yAxis = grafico2.getAxis(AxisType.Y);
+			yAxis.setLabel("Sexo");
+			yAxis.setMin(0);
+			yAxis.setMax(1000);
+			
+			homens.set(0, 0);
+			mulheres.set(0,0);
+			grafico2.setTitle("Índices por Ano");
+			grafico2.addSeries(homens);
+			grafico2.addSeries(mulheres);	
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+
+	
+	
 	public void itemSeleciondado(ItemSelectEvent event) {
 		/* Aqui se cria as atualizações nos outros componentes */
 	}
