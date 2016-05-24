@@ -16,7 +16,7 @@ import br.com.siesau.control.viaCEP.ViaCEP;
 import br.com.siesau.control.viaCEP.ViaCEPException;
 
 @ViewScoped
-@ManagedBean(name = "mbFornecedor")
+@ManagedBean(name = "mbBuscaUPA")
 public class ManageBeanBuscaUPA implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -37,6 +37,7 @@ public class ManageBeanBuscaUPA implements Serializable {
 
 	public void montaLink() {
 		StringBuilder builder = new StringBuilder();
+		FacesContext fc = FacesContext.getCurrentInstance();
 
 		if (cep != null && cep != "") {
 			try {
@@ -52,10 +53,14 @@ public class ManageBeanBuscaUPA implements Serializable {
 				builder.append(longitude + ",13z/");
 
 				link = builder.toString();
+				fc.getExternalContext().redirect(link);
 				System.out.println(link);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 				link = "";
+				fc.addMessage(null,
+						new FacesMessage("Erro ao Encontrar endereço", 
+								"Por favor, verifique o cep digitado."));
 			}
 		}
 
@@ -142,14 +147,4 @@ public class ManageBeanBuscaUPA implements Serializable {
 	public void setLink(String link) {
 		this.link = link;
 	}
-	
-	public static void main(String args[]){
-		String cep = "26515069";
-		ManageBeanBuscaUPA beanBuscaUPA = new ManageBeanBuscaUPA();
-		
-		beanBuscaUPA.setCep(cep);
-		beanBuscaUPA.montaLink();
-		
-	}
-
 }
