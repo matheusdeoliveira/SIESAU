@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+<h:body style=" margin:auto;border:0; background-color:#E8E8E8;">
+	<ui:insert name="header">
+		<ui:include src="Template/header.jsf" />
+
+	</ui:insert>
+
+	<ui:insert name="menu">
+		<ui:include src="Template/menu.jsf" />
+	</ui:insert>
+	<div
+		style="margin-top: 10px; position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px;">
+
+		<div
+			style="margin-top: 20px; position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px;">
+
+			<p:panel header="Unidade de Saúde"
+				style="background-color:#F0F4F9; color:#000000;">
+				<h:panelGrid columnClasses="rotulo, campo" layout="grid">
+
+					<p:row>
+						<p:selectOneMenu value="#{mbAtendimento.itemSelecionado}"
+							required="true" style="width:150px">
+							<f:selectItem itemValue="" itemLabel="Selecione a Unidade"></f:selectItem>
+							<f:selectItem itemLabel="Unidade 1" itemValue="unidade1" />
+							<f:selectItem itemLabel="Unidade 2" itemValue="unidade2" />
+							<f:selectItem itemLabel="Unidade 3" itemValue="unidade3" />
+						</p:selectOneMenu>
+					</p:row>
+
+					<h:outputText value="Unidade:" style="color:#000000;" />
+					<p:inputText id="nomePaciente" disabled="true"
+						value="#{mbAtendimento.paciente.nome}" required="true" size="75" />
+					<p />
+				</h:panelGrid>
+
+			</p:panel>
+		</div>
+
+		<h:form>
+			<p:panel id="Idade" header="Indice ou Idade"
+				style="margin-top:10px;background-color:#F0F4F9; color:#000000;width:600px;">
+				<h1 style="font-family: arial; font-size: 14px; color: #000000;">Relatorio
+					de Apresentação do Numero de Procura Referente a Idade e Tipos de
+					Doença</h1>
+				<h:outputText value="Tipo de Doença:" style="color:#000000;" />
+				<br />
+
+
+				<p:chart type="pie" model="#{chartGerencial.chartPie}" />
+
+				<p:selectOneMenu value="#{chartGerencial.cid}" required="true">
+				<p:ajax event="change" update="chartDescritivo" listener="#{chartGerencial.recarregaPie}" />
+					<f:selectItem itemValue="" itemLabel="Escolha"></f:selectItem>
+					<f:selectItems value="#{chartGerencial.mostraDoencas}"></f:selectItems>
+				</p:selectOneMenu>
+				
+				<p:chart id="chartDescritivo" type="pie" model="#{chartGerencial.chartPie2}" />
+
+			</p:panel>
+
+			<p:panel id="doenca" header="Indice de Doenças"
+				style="background-color:#F0F4F9; color:#000000;width:480px;height:460px;margin-left:610px;margin-top:-465px;">
+
+				<h1 style="font-family: arial; font-size: 14px; color: #000000;">Relatorio
+					de Apresentação do Crescimento de Doenças em Relação a Pandemia,
+					Epidemia e Endemia.</h1>
+				<h:outputText value="Tipo de doença:" style="color:#000000;" />
+				<br />
+				<p:selectOneMenu value="#{chartGerencial.cid}" required="true"
+					onchange="">
+					<f:selectItem itemValue="" itemLabel="Escolha"></f:selectItem>
+					<f:selectItems value="#{chartGerencial.mostraDoencas}"></f:selectItems>
+				</p:selectOneMenu>
+
+				<!-- 
+						<p:chart type="metergauge" model="#{chartMeter.meterGaugeModel2}"
+							style="width:400px;height:250px" />
+ -->
+
+			</p:panel>
+
+			<p:panel id="linha" header="crescimento em relação ao tempo"
+				style="background-color:#F0F4F9; color:#000000;widht:1100px;margin-top:20px;">
+
+				<h1 style="font-family: arial; font-size: 14px; color: #000000;">Relatorio
+					de Apresentação do Crescimento de Doenças em Relação a Pandemia,
+					Epidemia e Endemia.</h1>
+				<h:outputText value="Tipo de doença:" style="color:#000000;" />
+
+				<br />
+				<p:selectOneMenu value="#{chartGerencial.cid}" required="true"
+					onchange="">
+					<f:selectItem itemValue="" itemLabel="Escolha"></f:selectItem>
+					<f:selectItems value="#{chartGerencial.mostraDoencas}"></f:selectItems>
+				</p:selectOneMenu>
+
+				<p:chart type="line" model="#{chartGerencial.chartLine}"
+					style="height:300px;" />
+			</p:panel>
+		</h:form>
+
+	</div>
+	<ui:insert name="footer">
+		<ui:include src="Template/footer.jsf" />
+	</ui:insert>
+</h:body>
+</html>
