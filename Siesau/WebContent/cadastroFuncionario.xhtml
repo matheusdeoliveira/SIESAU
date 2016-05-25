@@ -47,7 +47,7 @@
 										<p:outputLabel for="cargo" value="Cargo:" style="color:#000000;" />
 										<br />
 										<p:selectOneMenu id="cargo" required="true" requiredMessage="Escolha um cargo."
-											value="#{mbFuncionario.funcionario.cargo.cdCargo}" style="">
+											value="#{mbFuncionario.funcionario.cargo.cdCargo}" style="width:220px;">
 											<f:selectItems value="#{mbFuncionario.mostraCargos}" />
 										</p:selectOneMenu>
 										<br />
@@ -105,7 +105,7 @@
 										<br />
 									<p:selectOneMenu id="estado_civil"
 											value="#{mbFuncionario.funcionario.estadoCivil}"
-											required="true" requiredMessage="Selecione  o estado civil.">
+											required="true" requiredMessage="Selecione o estado civil." style="width:80px;">
 											<f:selectItem itemLabel="Casado" itemValue="CASADO"></f:selectItem>
 											<f:selectItem itemLabel="Solteiro" itemValue="SOLTEIRO"></f:selectItem>
 											<f:selectItem itemLabel="Viuvo" itemValue="VIUVO"></f:selectItem>
@@ -118,7 +118,7 @@
 											style="color:#000000;" />
 										<br />
 										<p:selectOneMenu id="sexo"
-											value="#{mbFuncionario.funcionario.sexo}" required="true" requiredMessage="Informe o sexo.">
+											value="#{mbFuncionario.funcionario.sexo}" required="true" requiredMessage="Informe o sexo." style="width:70px;">
 											<f:selectItem itemLabel="Masculino" itemValue="M"></f:selectItem>
 											<f:selectItem itemLabel="Feminino" itemValue="F"></f:selectItem>
 											<f:selectItem itemLabel="Outros" itemValue="O"></f:selectItem>
