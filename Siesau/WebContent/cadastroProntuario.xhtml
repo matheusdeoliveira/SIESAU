@@ -36,18 +36,18 @@
                      
                        <p:row>
 				    <h:outputText value="Nome do Paciente:"  style="color:#000000;"/><br/>
-					<p:inputText size="60" value="#{mbMed.medico.nomeMedico}" required="true" /><tr></tr>
+					<p:inputText size="60" value="#{mbMed.medico.nomeMedico}" required="true" requiredMessage="Informe o nome do paciente."/><tr></tr>
 					</p:row>
                         
 				    
 					<p:row>					
 					<h:outputText value="Inicio de Tratamento:" style="color:#000000;"/><br/>
-					<p:inputText value="#{mbMed.medico.rgMedico}" required="true"  />
+					<p:inputText value="#{mbMed.medico.rgMedico}" required="true" requiredMessage="Informe a data do início do tratamento" />
 					</p:row>
 					
 					<p:row>
 					<h:outputText value="Fim de Tratamento:" style="color:#000000;"/><br/>
-					<p:inputText value="#{mbMed.medico.crmMedico}" /><tr/>
+					<p:inputText value="#{mbMed.medico.crmMedico}" requiredMessage="Informe a data do final do tratamento."/><tr/>
 					</p:row>
 					
 				
@@ -58,19 +58,19 @@
 					<p:row>
 					<h:outputText value="Resultado dos Exames:" style="color:#000000;" /><br/>
 					<p:inputTextarea value="#{mbPaciente.paciente.obs}"
-							required="true" rows="5" cols="90"/>
+							required="true" rows="5" cols="90" requiredMessage="Informar o resultado dos exames."/>
 					</p:row>
 										
 					<p:row>
 					<h:outputText value="Medicamentos:" style="color:#000000;" /><br/>
 					<p:inputTextarea value="#{mbPaciente.paciente.obs}"
-							required="true" rows="5" cols="90"/>
+							required="true" rows="5" cols="90" requiredMessage="Informe os medicamentos."/>
 					</p:row>
 					
 					<p:row>
 					<h:outputText value="Posologia:" style="color:#000000;" /><br/>
 					<p:inputTextarea value="#{mbPaciente.paciente.obs}"
-							required="true" rows="5" cols="90"/>
+							required="true" rows="5" cols="90" requiredMessage="Informar a posologia."/>
 					</p:row>
 					
 						<p:row>

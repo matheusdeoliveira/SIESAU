@@ -8,6 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+<title>Atendimento</title>
 </h:head>
 
 <h:body style=" margin:auto; border:0; background-color:#E8E8E8;">
@@ -31,16 +32,14 @@
 						style="background-color:#F0F4F9; color:#000000;">
 						<h:panelGrid columns="3" layout="grid">
 
-							<p:selectOneMenu value="#{mbAtendimento.itemSelecionado}"
-								required="true" style="width:125px">
+							<p:selectOneMenu value="#{mbAtendimento.itemSelecionado}" style="width:125px">
 								<f:selectItem itemValue="" itemLabel="Buscar Paciente"></f:selectItem>
 								<f:selectItem itemValue="rg" itemLabel="RG"></f:selectItem>
 								<f:selectItem itemValue="cpf" itemLabel="CPF"></f:selectItem>
 								<f:selectItem itemValue="sus" itemLabel="Cartão SUS"></f:selectItem>
 							</p:selectOneMenu>
 
-							<p:inputText value="#{mbAtendimento.campoBusca}" required="true"
-								size="20" />
+							<p:inputText value="#{mbAtendimento.campoBusca}" size="20" />
 
 
 							<p:commandButton value="Buscar" id="buscar"
@@ -53,7 +52,7 @@
 						<br />
 
 						<p:inputText id="nomePaciente" disabled="true"
-							value="#{mbAtendimento.paciente.nome}" required="true" size="75" />
+							value="#{mbAtendimento.paciente.nome}"  size="75" />
 						<p />
 					</p:panel>
 				</h:form>
@@ -82,7 +81,7 @@
 						<br />
 
 						<p:inputTextarea value="#{mbAtendimento.atendimento.texto}"
-							required="true" rows="5" cols="62" />
+							required="true" rows="5" cols="62" requiredMessage="Preencha a área 'Observações'."/>
 						<br />
 
 						<p:row style="">

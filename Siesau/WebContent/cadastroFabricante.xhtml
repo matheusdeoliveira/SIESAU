@@ -8,6 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+<title>Fabricante</title>
 </h:head>
 
 <h:body
@@ -36,7 +37,7 @@
 								<br />
 								<p:column>
 									<p:inputText value="#{mbFabricante.fabricante.razSocial}"
-										required="true" size="60" />
+										required="true" size="60" requiredMessage="Preencha o campo 'Razão social'."/>
 								</p:column>
 							</p:row>
 
@@ -44,7 +45,7 @@
 								<h:outputText value="Nome fantasia:" style="color:#000000;" />
 								<br />
 								<p:inputText value="#{mbFabricante.fabricante.fantasia}"
-									required="true" size="60" />
+									required="true" size="60" requiredMessage="Preencha o campo 'Nome Fantasia'."/>
 							</p:row>
 						</h:panelGrid>
 						<h:panelGrid columns="3">
@@ -54,7 +55,7 @@
 									<h:outputText value="CNPJ:" style="color:#000000;" />
 									<br />
 									<p:inputMask mask="99.999.999/9999-99"
-										value="#{mbFabricante.fabricante.cnpj}" required="true" requiredMessage="CNPJ Obrigatório!"
+										value="#{mbFabricante.fabricante.cnpj}" required="true" requiredMessage="Preencha o campo 'CNPJ'."
 										size="50" />
 								</p:row>
 							</p:column>
@@ -64,8 +65,7 @@
 								<p:row>
 									<h:outputText value="Situação:" style="color:#000000;" />
 									<br />
-									<p:selectOneMenu value="#{mbFabricante.fabricante.ativo}"
-										required="true">
+									<p:selectOneMenu value="#{mbFabricante.fabricante.ativo}">
 										<f:selectItem itemValue="selecione" itemLabel="Selecione"
 											noSelectionOption="true"></f:selectItem>
 										<f:selectItem itemValue="true" itemLabel="Ativo"></f:selectItem>
@@ -89,7 +89,7 @@
 						<br />
 						<p:inputText id="endereco"
 							value="#{mbFabricante.fabricante.endereco}" required="true"
-							size="60" />
+							size="60" requiredMessage="Preencha o campo 'Rua'."/>
 
 
 						<h:panelGrid columns="2">
@@ -97,7 +97,7 @@
 								<h:outputText value="Número: " style="color:#000000;" />
 								<br />
 								<p:inputText value="#{mbFabricante.fabricante.numero}"
-									required="true" size="15" />
+									required="true" size="15" requiredMessage="Preencha o campo 'Número'."/>
 							</p:column>
 
 						</h:panelGrid>
@@ -106,7 +106,7 @@
 						<h:outputText value="Bairro" style="color:#000000;" />
 						<br />
 						<p:inputText id="bairro" value="#{mbFabricante.fabricante.bairro}"
-							required="true" size="40" />
+							required="true" size="40" requiredMessage="Preencha o campo 'Bairro'."/>
 						<br />
 
 						<h:panelGrid columns="2">
@@ -117,15 +117,15 @@
 								<br />
 								<p:inputText id="cidade"
 									value="#{mbFabricante.fabricante.cidade}" required="true"
-									size="30" />
+									size="30" requiredMessage="Preencha o campo 'Cidade'."/>
 								<br />
 
 
 								<h:outputText value="CEP: " style="color:#000000;" />
 								<br />
 								<p:inputText maxlength="8"
-									requiredMessage="Favor preencha o CEP"
-									value="#{mbFabricante.fabricante.cep}" required="true">
+									requiredMessage="Preencha o campo 'CEP'."
+									value="#{mbFabricante.fabricante.cep}" required="true" >
 									<p:ajax event="keyup" update="cidade, endereco, bairro"
 										listener="#{mbFabricante.buscaCep}" />
 								</p:inputText>
@@ -187,7 +187,7 @@
 								<h:outputText value="Telefone Comercial:" style="color:#000000;" />
 								<br />
 								<p:inputMask mask="(99)9999-9999"
-									value="#{mbFabricante.fabricante.tel}" required="true" />
+									value="#{mbFabricante.fabricante.tel}" required="true" requiredMessage="Informe o número de telefone do fabricante."/>
 							</p:column>
 
 						</h:panelGrid>
@@ -195,7 +195,7 @@
 						<h:outputText value="Email: " style="color:#000000;" />
 						<br />
 						<p:inputText value="#{mbFabricante.fabricante.email}"
-							required="true" size="50" />
+							required="true" size="50" requiredMessage="Informe o endereço de e-mail do fabricante."/>
 						<br />
 
 					</p:panel>

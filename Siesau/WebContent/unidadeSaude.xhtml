@@ -8,6 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+<title>Unidade de Saúde</title>
 </h:head>
 <h:body style="margin:0px; border:0; background-color:#E8E8E8;">
 	<ui:insert name="header">
@@ -41,7 +42,7 @@
 								<br />
 
 								<p:inputText value="#{mbUnidadeSaude.unidadeSaude.fantasia}"
-									required="true" size="60" />
+									required="true" size="60" requiredMessage="Informe o nome da Unidade de saúde." />
 
 							</p:row>
 
@@ -50,7 +51,7 @@
 								<br />
 								<p:inputMask mask="99.999.999/9999-99"
 									value="#{mbUnidadeSaude.unidadeSaude.cnpj}" required="true"
-									size="50" />
+									size="50" requiredMessage="Preencha o campo 'CNPJ'."/>
 							</p:row>
 
 							<p:row>
@@ -80,7 +81,7 @@
 
 						<h:outputText value="CEP: " style="color:#000000;" />
 						<br />
-						<p:inputText maxlength="8" requiredMessage="Favor preencha o CEP"
+						<p:inputText maxlength="8" requiredMessage="Preencha o campo 'CEP'."
 							value="#{mbUnidadeSaude.unidadeSaude.cep}" required="true">
 							<p:ajax event="keyup" update="cidade, endereco, bairro, uf"
 								listener="#{mbUnidadeSaude.buscaCep}" />
@@ -91,7 +92,7 @@
 						<br />
 						<p:inputText id="endereco" disabled="true"
 							value="#{mbUnidadeSaude.unidadeSaude.endereco}" required="true"
-							size="60" />
+							size="60" requiredMessage="Preencha o campo 'Rua'."/>
 
 
 						<h:panelGrid columns="2">
@@ -99,14 +100,13 @@
 								<h:outputText value="Número: " style="color:#000000;" />
 								<br />
 								<p:inputText value="#{mbUnidadeSaude.unidadeSaude.numero}"
-									required="true" size="15" />
+									required="true" size="15" requiredMessage="Preencha o campo 'Número'."/>
 							</p:column>
 
 							<p:column>
 								<h:outputText value="Complemento: " style="color:#000000;" />
 								<br />
-								<p:inputText value="#{mbUnidadeSaude.unidadeSaude.complemento}"
-									required="true" size="30" />
+								<p:inputText value="#{mbUnidadeSaude.unidadeSaude.complemento}" size="30" />
 							</p:column>
 						</h:panelGrid>
 
@@ -115,7 +115,7 @@
 						<br />
 						<p:inputText disabled="true" id="bairro"
 							value="#{mbUnidadeSaude.unidadeSaude.bairro}" required="true"
-							size="40" />
+							size="40" requiredMessage="Preencha o campo 'Bairro'." />
 						<br />
 
 
@@ -127,7 +127,7 @@
 								<br />
 								<p:inputText disabled="true" id="cidade"
 									value="#{mbUnidadeSaude.unidadeSaude.cidade}" required="true"
-									size="30" />
+									size="30" requiredMessage="Preencha o campo 'Cidade'."/>
 								<br />
 
 							</p:column>
@@ -138,7 +138,7 @@
 								<br />
 								<p:inputText id="uf" disabled="true"
 									value="#{mbUnidadeSaude.unidadeSaude.uf}" required="true"
-									size="10" />
+									size="10" requiredMessage="Selecione um 'Estado'." />
 								<br />
 							</p:column>
 						</h:panelGrid>
@@ -151,7 +151,7 @@
 								<h:outputText value="Telefone:" style="color:#000000;" />
 								<br />
 								<p:inputMask mask="(99)9999-9999"
-									value="#{mbUnidadeSaude.unidadeSaude.tel}" required="true" />
+									value="#{mbUnidadeSaude.unidadeSaude.tel}" required="true" requiredMessage="Informe o número de telefone da unidade de saúde." />
 							</p:column>
 
 						</h:panelGrid>
@@ -159,7 +159,7 @@
 						<h:outputText value="Email: " style="color:#000000;" />
 						<br />
 						<p:inputText value="#{mbUnidadeSaude.unidadeSaude.email}"
-							required="true" size="50" />
+							required="true" size="50" requiredMessage="Informe o endereço de e-mail da unidade de saúde."/>
 						<br />
 					</p:panel>
 
@@ -168,11 +168,9 @@
 					<p:panel id="pos_botao"
 						style="padding-bottom:15px;background-color:#E8E8E8; height:20;position: relative; max-width: 1120px; margin-right: auto; margin-left: auto;">
 
-						<p:commandButton value="Limpar" style="margin-top:-20;float:right"
-							type="reset" />
+						<p:commandButton value="Salvar" style="margin-top:-20;float:right" action="#{mbUnidadeSaude.salvar}" ajax="true" update="form1" />
 
-						<p:commandButton value="Salvar" style="margin-top:0;float:right"
-							action="#{mbUnidadeSaude.salvar}" ajax="true" update="form1" />
+						<p:commandButton value="Limpar" style="margin-top:0;float:right" type="reset" />
 					</p:panel>
 
 				</h:form>
@@ -186,11 +184,11 @@
 						widgetVar="tabelaUnidadeSaude"
 						filteredValue="#{mbUnidadeSaude.unidadeSaudesFiltradas}"
 						emptyMessage="Não há Unidades de Saúde." paginator="true"
-						rows="10" style="margin-bottom:20px">
+						rows="10" style="margin-bottom:20px"> 
 
 						<f:facet name="header">
 							<p:outputPanel>
-								<h:outputText value="Pesquisa em todos os campos:" />
+								<h:outputText value="Pesquisa em todos os campos: " />
 								<p:inputText id="globalFilter"
 									onkeyup="PF('tabelaUnidadeSaude').filter()" style="width:150px"
 									placeholder="Digite a busca" />

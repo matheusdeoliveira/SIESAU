@@ -8,6 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+<title>Funcionário</title>
 </h:head>
 <h:body style="margin:0px; border:0; background-color:#E8E8E8;">
 	<ui:insert name="header">
@@ -33,23 +34,19 @@
 
 								<h:outputText value="Nome:" style="color:#000000;" />
 								<br />
-								<p:inputText value="#{mbFuncionario.funcionario.nome}"
-									required="true" size="60" />
+								<p:inputText value="#{mbFuncionario.funcionario.nome}" size="60" required="true" requiredMessage="Informe o nome."  />
 								<br />
 
 								<h:panelGrid columns="2">
-
 									<p:column>
 										<h:outputText value="Usuário:" style="color:#000000;" />
 										<br />
-										<p:inputText value="#{mbFuncionario.funcionario.login}"
-											required="true" size="20" />
-										<br />
+										<p:inputText value="#{mbFuncionario.funcionario.login}" size="20" required="true" requiredMessage="Informe o login." />
+										<br/>
 
-										<p:outputLabel for="cargo" value="Cargo:"
-											style="color:#000000;" />
+										<p:outputLabel for="cargo" value="Cargo:" style="color:#000000;" />
 										<br />
-										<p:selectOneMenu id="cargo" required="true"
+										<p:selectOneMenu id="cargo" required="true" requiredMessage="Escolha um cargo."
 											value="#{mbFuncionario.funcionario.cargo.cdCargo}" style="">
 											<f:selectItems value="#{mbFuncionario.mostraCargos}" />
 										</p:selectOneMenu>
@@ -68,7 +65,7 @@
 										<h:outputText value="Senha:" style="color:#000000;" />
 										<br />
 										<p:password value="#{mbFuncionario.funcionario.senha}"
-											required="true" size="20" />
+											 size="20" required="true" requiredMessage="Informe uma senha." />
 										<br />
 
 										<h:outputText value="Telefone Fixo:" style="color:#000000;" />
@@ -80,7 +77,7 @@
 										<h:outputText value="Telefone Celular" style="color:#000000;" />
 										<br />
 										<p:inputMask mask="(99)99999-9999"
-											value="#{mbFuncionario.funcionario.telCel}" />
+											value="#{mbFuncionario.funcionario.telCel}" required="true" requiredMessage="Informe um número de celular."/>
 									</p:column>
 
 								</h:panelGrid>
@@ -91,13 +88,13 @@
 								<h:outputText value="CPF:" style="color:#000000;" />
 								<br />
 								<p:inputMask mask="999.999.999-99"
-									value="#{mbFuncionario.funcionario.cpf}" required="true" />
+									value="#{mbFuncionario.funcionario.cpf}" required="true" requiredMessage="Informe o CPF."/>
 								<br />
 
 								<h:outputText value="RG:" style="color:#000000;" />
 								<br />
 								<p:inputMask mask="99.999.999-99"
-									value="#{mbFuncionario.funcionario.rg}" />
+									value="#{mbFuncionario.funcionario.rg}" required="true" requiredMessage="Informe o RG." />
 								<br />
 
 								<h:panelGrid columns="2">
@@ -106,9 +103,9 @@
 										<p:outputLabel for="estado_civil" value="Estado Civil: "
 											style="color:#000000;" />
 										<br />
-										<p:selectOneMenu id="estado_civil"
+									<p:selectOneMenu id="estado_civil"
 											value="#{mbFuncionario.funcionario.estadoCivil}"
-											required="true">
+											required="true" requiredMessage="Selecione  o estado civil.">
 											<f:selectItem itemLabel="Casado" itemValue="CASADO"></f:selectItem>
 											<f:selectItem itemLabel="Solteiro" itemValue="SOLTEIRO"></f:selectItem>
 											<f:selectItem itemLabel="Viuvo" itemValue="VIUVO"></f:selectItem>
@@ -121,7 +118,7 @@
 											style="color:#000000;" />
 										<br />
 										<p:selectOneMenu id="sexo"
-											value="#{mbFuncionario.funcionario.sexo}" required="true">
+											value="#{mbFuncionario.funcionario.sexo}" required="true" requiredMessage="Informe o sexo.">
 											<f:selectItem itemLabel="Masculino" itemValue="M"></f:selectItem>
 											<f:selectItem itemLabel="Feminino" itemValue="F"></f:selectItem>
 											<f:selectItem itemLabel="Outros" itemValue="O"></f:selectItem>
@@ -177,7 +174,7 @@
 								<h:outputText value="CEP: " style="color:#000000;" />
 								<br />
 								<p:inputText maxlength="8"
-									requiredMessage="Favor preencha o CEP"
+									requiredMessage="Preencha o CEP"
 									value="#{mbFuncionario.funcionario.cep}" required="true">
 									<p:ajax event="keyup" update="cidade, endereco, bairro, uf"
 										listener="#{mbFuncionario.buscaCep}" />
@@ -233,7 +230,7 @@
 								<h:outputText value="Complemento:" style="color:#000000;" />
 								<br />
 								<p:inputText value="#{mbFuncionario.funcionario.complemento}"
-									required="true" id="complemnto" size="30" />
+									 id="complemnto" size="30" />
 							</p:column>
 
 						</h:panelGrid>

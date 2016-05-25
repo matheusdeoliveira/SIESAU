@@ -8,6 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+<title>Pacientes</title>
 </h:head>
 <h:body style="margin:0px; border:0; background-color:#E8E8E8;">
 
@@ -27,7 +28,7 @@
 			style="margin-top:10px;position:relative; width:1112px;background-color:#E8E8E8;">
 			<p:tab title="Cadastro de Pacientes" style="position:relative;">
 
-				<!--Rafael_p_Ferreira-->
+
 
 				<h:form id="form1">
 
@@ -52,58 +53,46 @@
 									<p:growl></p:growl>
 								</p:dialog>
 							</p:column>
+							
 							<p:column>
-
 								<h:outputText value="Nome: " style="color:#000000;" />
 								<br />
-								<p:inputText value="#{mbPaciente.paciente.nome}" required="true"
-									size="60" />
+								<p:inputText value="#{mbPaciente.paciente.nome}" required="true" requiredMessage="Informe o nome." size="60" />
 								<br />
 
 
 								<h:outputText value="Nome do pai: " style="color:#000000;" />
 								<br />
-								<p:inputText value="#{mbPaciente.paciente.nomePai}"
-									required="true" size="60" />
+								<p:inputText value="#{mbPaciente.paciente.nomePai}" size="60" />
 								<br />
+
 
 								<h:outputText value="Nome da mãe: " style="color:#000000;" />
 								<br />
-								<p:inputText value="#{mbPaciente.paciente.nomeMae}"
-									required="true" size="60" />
+								<p:inputText value="#{mbPaciente.paciente.nomeMae}"	required="true" size="60" requiredMessage="Informe o nome da mãe."/>
 								<br />
 
 
 								<h:panelGrid columns="2">
 									<p:column>
-
 										<h:outputText value="Cartão SUS: " style="color:#000000;" />
 										<br />
-										<p:inputMask mask="999999999999999" maxlength="15"
-											value="#{mbPaciente.paciente.cartaoSus}" required="true"
-											size="20" />
+										<p:inputMask mask="999999999999999" maxlength="15" value="#{mbPaciente.paciente.cartaoSus}"	size="20"  />
 										<br />
 
-										<h:outputText value="Naturalidade: " style="color:#000000;" />
-										<p:inputText value="#{mbPaciente.paciente.naturalidade}"
-											required="true" />
-
+										<h:outputText value="Naturalidade: " style="color:#000000;"/>
+										<p:inputText value="#{mbPaciente.paciente.naturalidade}" required="true" requiredMessage="Informe a naturalidade."/>
 									</p:column>
+									
 									<p:column>
-
 										<h:outputText value="Profissão: " style="color:#000000;" />
 										<br />
-										<p:inputText value="#{mbPaciente.paciente.profissao}"
-											required="true" />
+										<p:inputText value="#{mbPaciente.paciente.profissao}" />
 										<br />
 
-										<h:outputText value="Data de Nascimento:"
-											style="color:#000000;" />
-										<p:calendar pattern="dd/MM/yyyy" mask="99/99/9999"
-											value="#{mbPaciente.paciente.dataNasc}" showOn="button"
-											size="30" />
-
-
+										<h:outputText value="Data de Nascimento:" style="color:#000000;" />
+										<p:calendar pattern="dd/MM/yyyy" mask="99/99/9999" value="#{mbPaciente.paciente.dataNasc}" showOn="button"
+											size="30" required="true" requiredMessage="Informe a data de nascimento." />
 									</p:column>
 								</h:panelGrid>
 
@@ -114,21 +103,16 @@
 							</p:column>
 							<p:column>
 
-								<h:outputText value="CPF: "
-									style="margin-top:-20px; color:#000000;" />
+								<h:outputText value="CPF: "	style="margin-top:-20px; color:#000000;" />
 								<br />
-
-								<p:inputMask mask="999.999.999-99"
-									value="#{mbPaciente.paciente.cpf}" required="true" size="30" />
+								<p:inputMask mask="999.999.999-99" value="#{mbPaciente.paciente.cpf}" size="30" required="true" requiredMessage="Informe o CPF." />
 								<br />
 
 								<h:outputText value="RG: " style="color:#000000;" />
 								<br />
-								<p:inputMask mask="99.999.999-9"
-									value="#{mbPaciente.paciente.rg}" required="true" size="30" />
+								<p:inputMask mask="99.999.999-9" value="#{mbPaciente.paciente.rg}" size="30" required="true" requiredMessage="Informe o RG." />
 
 								<h:panelGrid columns="2">
-
 									<p:column>
 										<h:outputText value="Etnia:" style="color:#000000;" />
 										<br />
@@ -199,21 +183,20 @@
 
 					<p:panel id="end" header="Endereço"
 						style="width:500px; margin-top:20px; background-color:#F0F4F9;color:#000000;">
-						
+
 						<h:outputText value="CEP: " style="color:#000000;" />
-								<br />
-								<p:inputText maxlength="8"
-									requiredMessage="Favor preencha o CEP"
-									value="#{mbPaciente.paciente.cep}" required="true">
-									<p:ajax event="keyup" update="cidade, endereco, bairro, uf"
-										listener="#{mbPaciente.buscaCep}" />
-								</p:inputText>
-								<br/>
-						
+						<br />
+						<p:inputText maxlength="8" requiredMessage="Favor preencha o CEP"
+							value="#{mbPaciente.paciente.cep}" required="true">
+							<p:ajax event="keyup" update="cidade, endereco, bairro, uf"
+								listener="#{mbPaciente.buscaCep}" />
+						</p:inputText>
+						<br />
+
 						<h:outputText value="Rua: " style="color:#000000;" />
 						<br />
-						<p:inputText id="endereco" disabled="true" value="#{mbPaciente.paciente.endereco}"
-							required="true" size="60" />
+						<p:inputText id="endereco" disabled="true"
+							value="#{mbPaciente.paciente.endereco}" required="true" size="60" />
 
 
 						<h:panelGrid columns="2">
@@ -235,8 +218,8 @@
 
 						<h:outputText value="Bairro" style="color:#000000;" />
 						<br />
-						<p:inputText disabled="true" id="bairro" value="#{mbPaciente.paciente.bairro}"
-							required="true" size="40" />
+						<p:inputText disabled="true" id="bairro"
+							value="#{mbPaciente.paciente.bairro}" required="true" size="40" />
 						<br />
 
 
@@ -246,18 +229,18 @@
 
 								<h:outputText value="Cidade:" style="color:#000000;" />
 								<br />
-								<p:inputText disabled="true" id="cidade" value="#{mbPaciente.paciente.cidade}"
-									required="true" size="30" />
+								<p:inputText disabled="true" id="cidade"
+									value="#{mbPaciente.paciente.cidade}" required="true" size="30" />
 								<br />
-								
+
 							</p:column>
 
 
 							<p:column>
 								<h:outputText value="Estado:" style="color:#000000;" />
 								<br />
-								<p:inputText  id="uf" disabled="true" value="#{mbPaciente.paciente.uf}"
-									required="true" size="10" />
+								<p:inputText id="uf" disabled="true"
+									value="#{mbPaciente.paciente.uf}" required="true" size="10" />
 								<br />
 							</p:column>
 						</h:panelGrid>
@@ -311,7 +294,11 @@
 					</p:panel>
 				</h:form>
 
+
 			</p:tab>
+
+
+			<!-- ABA PARA A CONSULTA DOS PACIENTES -->
 			<p:tab title="Consulta Pacientes">
 				<h:form id="form2">
 					<p:growl id="msgs" showDetail="true" />
@@ -319,8 +306,8 @@
 						reflow="true" value="#{mbPaciente.pacientes}"
 						widgetVar="tabelaPacientes"
 						filteredValue="#{mbPaciente.pacientesFiltrados}"
-						emptyMessage="Não há pacientes."
-						paginator="true" rows="10" style="margin-bottom:20px">
+						emptyMessage="Não há pacientes." paginator="true" rows="10"
+						style="margin-bottom:20px">
 
 						<f:facet name="header">
 							<p:outputPanel>
@@ -331,18 +318,21 @@
 							</p:outputPanel>
 						</f:facet>
 
-						<p:column width="20" headerText="SUS" filterBy="#{linha.cartaoSus}" filterMatchMode="contains">
+						<p:column width="20" headerText="SUS"
+							filterBy="#{linha.cartaoSus}" filterMatchMode="contains">
 
 							<h:outputText value="#{linha.cartaoSus}" />
 
 						</p:column>
 
-						<p:column width="20" headerText="Nome do Paciente" filterBy="#{linha.nome}" filterMatchMode="contains">							
-								<h:outputText value="#{linha.nome}" />								
+						<p:column width="20" headerText="Nome do Paciente"
+							filterBy="#{linha.nome}" filterMatchMode="contains">
+							<h:outputText value="#{linha.nome}" />
 						</p:column>
 
-						<p:column width="20" headerText="Telefones" filterBy="#{linha.telCel}" filterMatchMode="contains">						
-								<h:outputText value="#{linha.telCel}" />								
+						<p:column width="20" headerText="Telefones"
+							filterBy="#{linha.telCel}" filterMatchMode="contains">
+							<h:outputText value="#{linha.telCel}" />
 						</p:column>
 
 						<p:column headerText="Exclusão" width="5"
@@ -371,7 +361,7 @@
 		</p:tabView>
 
 	</div>
-	
+
 	<p:dialog header="Paciente" widgetVar="pacEdDialog" modal="true"
 		minHeight="600" minWidth="600" style="background-color:#F0F4F9;">
 		<p:outputPanel id="pacEdDetail" style="text-align:center;">
@@ -386,61 +376,67 @@
 					</f:facet>
 					<p:tabView style="background-color:#F0F4F9;">
 						<p:tab title="Dados pessoais" style="background-color:#F0F4F9;">
-							<h:panelGrid columns="4" style="text-align:left;background-color:#E8E8E8;">
+							<h:panelGrid columns="4"
+								style="text-align:left;background-color:#E8E8E8;">
 								<h:outputLabel value="Nome" style="color:#000000" />
-								
-									<p:inputText value="#{mbPaciente.selecionado.nome}" size="40"/>
-								
-								
-								<h:outputLabel value="Nome do pai" style="color:#000000"/>
-								
-									<p:inputText value="#{mbPaciente.selecionado.nomePai}" required="true" size="40"/>
-								
 
-								<h:outputLabel value="Nome da mãe" style="color:#000000"/>
-								
-									<p:inputText value="#{mbPaciente.selecionado.nomeMae}" required="true" size="40"/>
-								
-																
-								<h:outputLabel value="Cartão SUS" style="color:#000000"/>
-								
-									<p:inputMask mask="999999999999999" value="#{mbPaciente.selecionado.cartaoSus}" required="true" />
-																							
+								<p:inputText value="#{mbPaciente.selecionado.nome}" size="40" />
 
-								<h:outputLabel value="CPF" style="color:#000000"/>
-								
-									<p:inputMask mask="999.999.999-99"
-										value="#{mbPaciente.selecionado.cpf}" required="true" />
-								
 
-								<h:outputLabel value="RG" style="color:#000000"/>
-								
-									<p:inputMask mask="99.999.999-9"
-										value="#{mbPaciente.selecionado.rg}" required="true" />
-								
-								
-								<h:outputLabel value="Profissão" style="color:#000000"/>
-								
-									<p:inputText value="#{mbPaciente.selecionado.profissao}" required="true" />
-																
+								<h:outputLabel value="Nome do pai" style="color:#000000" />
 
-								<h:outputLabel value="Estado Civil" style="color:#000000"/>
-								
-									<p:column>
+								<p:inputText value="#{mbPaciente.selecionado.nomePai}"
+									required="true" size="40" />
+
+
+								<h:outputLabel value="Nome da mãe" style="color:#000000" />
+
+								<p:inputText value="#{mbPaciente.selecionado.nomeMae}"
+									required="true" size="40" />
+
+
+								<h:outputLabel value="Cartão SUS" style="color:#000000" />
+
+								<p:inputMask mask="999999999999999"
+									value="#{mbPaciente.selecionado.cartaoSus}" required="true" />
+
+
+								<h:outputLabel value="CPF" style="color:#000000" />
+
+								<p:inputMask mask="999.999.999-99"
+									value="#{mbPaciente.selecionado.cpf}" required="true" />
+
+
+								<h:outputLabel value="RG" style="color:#000000" />
+
+								<p:inputMask mask="99.999.999-9"
+									value="#{mbPaciente.selecionado.rg}" required="true" />
+
+
+								<h:outputLabel value="Profissão" style="color:#000000" />
+
+								<p:inputText value="#{mbPaciente.selecionado.profissao}"
+									required="true" />
+
+
+								<h:outputLabel value="Estado Civil" style="color:#000000" />
+
+								<p:column>
 									<h:panelGrid columns="2">
-									<h:outputText value="#{mbPaciente.selecionado.estCivil}" style="color:#000000"/>
-									<p:selectOneMenu id="estado_civil"
-										value="#{mbPaciente.selecionado.estCivil}">
-										<f:selectItem itemLabel="Selecione" itemValue="" />
-										<f:selectItem itemLabel="Casado" itemValue="CASADO"></f:selectItem>
-										<f:selectItem itemLabel="Solteiro" itemValue="SOLTEIRO"></f:selectItem>
-										<f:selectItem itemLabel="Viuvo" itemValue="VIUVO"></f:selectItem>
-										<f:selectItem itemLabel="Divorciado" itemValue="DIVORCIADO"></f:selectItem>
-									</p:selectOneMenu>
+										<h:outputText value="#{mbPaciente.selecionado.estCivil}"
+											style="color:#000000" />
+										<p:selectOneMenu id="estado_civil"
+											value="#{mbPaciente.selecionado.estCivil}">
+											<f:selectItem itemLabel="Selecione" itemValue="" />
+											<f:selectItem itemLabel="Casado" itemValue="CASADO"></f:selectItem>
+											<f:selectItem itemLabel="Solteiro" itemValue="SOLTEIRO"></f:selectItem>
+											<f:selectItem itemLabel="Viuvo" itemValue="VIUVO"></f:selectItem>
+											<f:selectItem itemLabel="Divorciado" itemValue="DIVORCIADO"></f:selectItem>
+										</p:selectOneMenu>
 									</h:panelGrid>
 								</p:column>
 
-								<h:outputText value="Telefones" style="color:#000000"/>
+								<h:outputText value="Telefones" style="color:#000000" />
 								<h:panelGrid columns="2">
 									<p:inputMask mask="(99)99999-9999"
 										value="#{mbPaciente.selecionado.telCel}"
@@ -449,76 +445,76 @@
 										value="#{mbPaciente.selecionado.telRes}"
 										placeholder="Digite o telefone Residencial" />
 								</h:panelGrid>
-								
-								<h:outputLabel value="Email" style="color:#000000"/>
-								
-									<p:inputText value="#{mbPaciente.selecionado.email}" required="true" />
-																
+
+								<h:outputLabel value="Email" style="color:#000000" />
+
+								<p:inputText value="#{mbPaciente.selecionado.email}"
+									required="true" />
+
 							</h:panelGrid>
 						</p:tab>
 						<p:tab title="Endereço">
-							<h:panelGrid columns="2" style="text-align:left;background-color:#E8E8E8;">
-							
-								<h:outputLabel value="CEP" style="color:#000000"/>
-								
-									<p:inputText maxlength="8"
-										requiredMessage="Favor preencha o CEP"
-										value="#{mbPaciente.selecionado.cep}" required="true">
-										<p:ajax event="keyup" update="cidade, endereco, bairro, uf"
-											listener="#{mbPaciente.buscaCepSelecionado}" />
-									</p:inputText>
-								
+							<h:panelGrid columns="2"
+								style="text-align:left;background-color:#E8E8E8;">
 
-								<h:outputLabel value="Rua:" style="color:#000000"/>
-								
-									<p:inputText disabled="true"
-										value="#{mbPaciente.selecionado.endereco}" required="true"
-										id="endereco" size="60" />
-								
+								<h:outputLabel value="CEP" style="color:#000000" />
+
+								<p:inputText maxlength="8"
+									requiredMessage="Favor preencha o CEP"
+									value="#{mbPaciente.selecionado.cep}" required="true">
+									<p:ajax event="keyup" update="cidade, endereco, bairro, uf"
+										listener="#{mbPaciente.buscaCepSelecionado}" />
+								</p:inputText>
+
+
+								<h:outputLabel value="Rua:" style="color:#000000" />
+
+								<p:inputText disabled="true"
+									value="#{mbPaciente.selecionado.endereco}" required="true"
+									id="endereco" size="60" />
+
 
 								<h:outputLabel value="Número:" style="color:#000000;" />
-								
-									<p:inputText value="#{mbPaciente.selecionado.numero}"
-										required="true" id="numero" size="10" />
-								
 
-								<h:outputLabel value="Bairro:" style="color:#000000"/>
-								
-									<p:inputText disabled="true"
-										value="#{mbPaciente.selecionado.bairro}" required="true"
-										id="bairro" size="30" />
-								
+								<p:inputText value="#{mbPaciente.selecionado.numero}"
+									required="true" id="numero" size="10" />
 
-								<h:outputLabel value="Cidade:" style="color:#000000;"/>
-								
-									<p:inputText disabled="true"
-										value="#{mbPaciente.selecionado.cidade}" required="true"
-										id="cidade" size="30" />
-								
+
+								<h:outputLabel value="Bairro:" style="color:#000000" />
+
+								<p:inputText disabled="true"
+									value="#{mbPaciente.selecionado.bairro}" required="true"
+									id="bairro" size="30" />
+
+
+								<h:outputLabel value="Cidade:" style="color:#000000;" />
+
+								<p:inputText disabled="true"
+									value="#{mbPaciente.selecionado.cidade}" required="true"
+									id="cidade" size="30" />
+
 
 								<h:outputLabel value="UF:" style="color:#000000;" />
-								
-									<p:inputText id="uf" disabled="true"
-										value="#{mbPaciente.selecionado.uf}" required="true"
-										size="10" />
-								
+
+								<p:inputText id="uf" disabled="true"
+									value="#{mbPaciente.selecionado.uf}" required="true" size="10" />
+
 
 								<h:outputLabel value="Complemento:" style="color:#000000;" />
-								
-									<p:inputText value="#{mbPaciente.selecionado.complemento}"
-										required="true" id="complemnto" size="30" />
-							
+
+								<p:inputText value="#{mbPaciente.selecionado.complemento}"
+									required="true" id="complemnto" size="30" />
+
 
 							</h:panelGrid>
-							
+
 						</p:tab>
 					</p:tabView>
 				</h:panelGrid>
 
 				<p:commandButton value="Alterar"
-					style="margin-top:-20; float:right;"
-					action="#{mbPaciente.editar}" ajax="true"
-					update=":tabView:form2"></p:commandButton>
+					style="margin-top:-20; float:right;" action="#{mbPaciente.editar}"
+					ajax="true" update=":tabView:form2"></p:commandButton>
 			</h:form>
 		</p:outputPanel>
 	</p:dialog>
@@ -541,7 +537,7 @@
 								<p:panelGrid columns="1">
 									<h:outputText value="#{mbPaciente.selecionado.nome}" />
 								</p:panelGrid>
-								
+
 								<h:outputLabel value="Nome do pai" />
 								<p:panelGrid columns="1">
 									<h:outputText value="#{mbPaciente.selecionado.nomePai}" />
@@ -551,11 +547,11 @@
 								<p:panelGrid columns="1">
 									<h:outputText value="#{mbPaciente.selecionado.nomeMae}" />
 								</p:panelGrid>
-																
+
 								<h:outputLabel value="Cartão SUS" />
 								<p:panelGrid columns="1">
 									<h:outputText value="#{mbPaciente.selecionado.cartaoSus}" />
-								</p:panelGrid>															
+								</p:panelGrid>
 
 								<h:outputLabel value="CPF" />
 								<p:panelGrid columns="1">
@@ -564,13 +560,13 @@
 
 								<h:outputLabel value="RG" />
 								<p:panelGrid columns="1">
-									<h:outputText value="#{mbPaciente.selecionado.rg}"/>
+									<h:outputText value="#{mbPaciente.selecionado.rg}" />
 								</p:panelGrid>
-								
+
 								<h:outputLabel value="Profissão" />
 								<p:panelGrid columns="1">
 									<h:outputText value="#{mbPaciente.selecionado.profissao}" />
-								</p:panelGrid>								
+								</p:panelGrid>
 
 								<h:outputLabel value="Estado Civil" />
 								<p:panelGrid columns="1">
@@ -579,19 +575,19 @@
 
 								<h:outputText value="Telefones" />
 								<p:panelGrid columns="2">
-									<h:outputText value="#{mbPaciente.selecionado.telCel}"/>
+									<h:outputText value="#{mbPaciente.selecionado.telCel}" />
 									<h:outputText value="#{mbPaciente.selecionado.telRes}" />
 								</p:panelGrid>
-								
+
 								<h:outputLabel value="Email" />
 								<p:panelGrid columns="1">
-									<h:outputText value="#{mbPaciente.selecionado.email}"/>
-								</p:panelGrid>								
+									<h:outputText value="#{mbPaciente.selecionado.email}" />
+								</p:panelGrid>
 							</p:panelGrid>
 						</p:tab>
 						<p:tab title="Endereço">
 							<h:panelGrid columns="2">
-							
+
 								<h:outputLabel value="CEP" />
 								<p:panelGrid columns="1">
 									<h:outputText value="#{mbPaciente.selecionado.cep}" />
@@ -599,12 +595,12 @@
 
 								<h:outputLabel value="Rua:" />
 								<p:panelGrid columns="1">
-									<h:outputText value="#{mbPaciente.selecionado.endereco}"  />
+									<h:outputText value="#{mbPaciente.selecionado.endereco}" />
 								</p:panelGrid>
 
 								<h:outputLabel value="Número:" style="color:#000000;" />
 								<p:panelGrid columns="1">
-									<h:outputText value="#{mbPaciente.selecionado.numero}"/>
+									<h:outputText value="#{mbPaciente.selecionado.numero}" />
 								</p:panelGrid>
 
 								<h:outputLabel value="Bairro:" />
@@ -619,27 +615,27 @@
 
 								<h:outputLabel value="UF:" style="color:#000000;" />
 								<p:panelGrid columns="1">
-									<h:outputText value="#{mbPaciente.selecionado.uf}"/>
+									<h:outputText value="#{mbPaciente.selecionado.uf}" />
 								</p:panelGrid>
 
 								<h:outputLabel value="Complemento:" style="color:#000000;" />
 								<p:panelGrid columns="1">
-									<h:outputText value="#{mbPaciente.selecionado.complemento}"/>
+									<h:outputText value="#{mbPaciente.selecionado.complemento}" />
 								</p:panelGrid>
-							</h:panelGrid>							
+							</h:panelGrid>
 						</p:tab>
 					</p:tabView>
 				</p:panelGrid>
 
 				<p:commandButton value="Excluir"
-					style="margin-top:-20; float:right;"
-					action="#{mbPaciente.excluir}" ajax="true"
-					update=":tabView:form2">
+					style="margin-top:-20; float:right;" action="#{mbPaciente.excluir}"
+					ajax="true" update=":tabView:form2">
 					<p:confirm icon="ui-icon-alert" message="Deseja Excluir ?"
 						header="Confirma?" />
 				</p:commandButton>
 				<p:confirmDialog appendTo="@(body)" global="true">
-					<p:commandButton process="@this" value="Sim" type="button" onclick="PF('pacExDialog').hide()"
+					<p:commandButton process="@this" value="Sim" type="button"
+						onclick="PF('pacExDialog').hide()"
 						styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
 					<p:commandButton process="@this" value="Não"
 						styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
