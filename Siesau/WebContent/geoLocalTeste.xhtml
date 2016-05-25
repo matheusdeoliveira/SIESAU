@@ -38,38 +38,45 @@
 					style="margin-top:5px;" /></a> </section>
 			<section id="referencia doenca" style="margin-left:70px;">
 			<h:form id="formFiltros">
-				<p:growl id="doencas" />
-				<p:selectCheckboxMenu label="Escolha uma doença" required="true"
-					value="#{mbMap.doencasSelecionadas}" filter="true"
-					filterMatchMode="startsWith" panelStyle="width:400px">
-					<f:selectItem itemValue="A90" itemLabel="Dengue" />
-					<f:selectItem itemValue="U06" itemLabel="Zika" />
-					<f:selectItem itemValue="A92" itemLabel="Chikungunya" />
-				</p:selectCheckboxMenu>
-				
-				
-				
-				<p:selectOneMenu label="Escolha uma cidade"
-					value="#{mbMap.cidadeSelecionada}" panelStyle="width:400px" >
-					<f:selectItem itemValue="" itemLabel="Selecione uma cidade" noSelectionOption="true"/>
-					<f:selectItem itemValue="Nova Iguaçu" itemLabel="Nova Iguaçu" />
-					<f:selectItem itemValue="DUQUE DE CAXIAS"
-						itemLabel="Duque de Caxias" />
-					<f:selectItem itemValue="NILÓPOLIS" itemLabel="Nilópolis" />
-					<f:selectItem itemValue="QUEIMADOS" itemLabel="Queimados" />
-				</p:selectOneMenu>
+				<h:panelGrid columns="4" style="margin-top:-5px;">
+    		<p:column>
+    		<p:selectCheckboxMenu label="Escolha uma doença" required="true"
+     		value="#{mbMap.doencasSelecionadas}" filter="true"
+     		filterMatchMode="startsWith" panelStyle="width:400px">
+		    <f:selectItem itemValue="A90" itemLabel="Dengue" />
+            <f:selectItem itemValue="U06" itemLabel="Zika" />
+            <f:selectItem itemValue="A92" itemLabel="Chikungunya" />
+            </p:selectCheckboxMenu>
+            </p:column>
+    
+            <p:column>
+            <p:selectOneMenu label="Escolha uma cidade"
+            value="#{mbMap.cidadeSelecionada}" style="width:150px" >
+            <f:selectItem itemValue="" itemLabel="Selecione uma cidade" noSelectionOption="true"/>
+            <f:selectItem itemValue="Nova Iguaçu" itemLabel="Nova Iguaçu" />
+            <f:selectItem itemValue="DUQUE DE CAXIAS"
+            itemLabel="Duque de Caxias" />
+            <f:selectItem itemValue="NILÓPOLIS" itemLabel="Nilópolis" />
+            <f:selectItem itemValue="QUEIMADOS" itemLabel="Queimados" />
+            </p:selectOneMenu>
+            </p:column>
+    
+            <p:column>
+            <p:commandButton value="Buscar" ajax="true"
+            actionListener="#{mbMap.buscar}"
+            update=":formDataTable, :formMapa, :formGraficos"
+            />
+            </p:column>
+    
+            <p:column>     
+     
+            <p:commandButton value="Limpar" ajax="true"
+            actionListener="#{mbMap.limpar}"
+            update=":formDataTable, :formMapa, :formGraficos"
+            />
 
-				<p:commandButton value="Buscar" ajax="true"
-					actionListener="#{mbMap.buscar}"
-					update=":formDataTable, :formMapa, :formGraficos"
-					style="margin-top:-32px;" />
-					
-					
-				<p:commandButton value="Limpar" ajax="true"
-					actionListener="#{mbMap.limpar}"
-					update=":formDataTable, :formMapa, :formGraficos"
-					style="margin-top:-32px;" />
-
+            </p:column>
+            </h:panelGrid>
 
 			</h:form> </section>
 

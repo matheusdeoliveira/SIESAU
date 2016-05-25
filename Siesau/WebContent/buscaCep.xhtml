@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h:head>
+</h:head>
+<h:body style=" margin:auto;border:0; background-color:#E8E8E8;">
+
+<p:panel header="Unidade de Saude"
+			style="background-color:#B0C4DE;width:300px;margin-top:100px;margin-left:100px;">
+			<h:form id="form_buscaUPA">
+				<p:growl id="growl" showDetail="true" />
+				<h3>
+					<p:outputLabel for="cep"
+						value="Busque a Unidade de Saude proxima a você:"
+						style="color:#000000;font-size:14px;" />
+				</h3> 
+				<p:inputMask id="cep" mask="99999999" placeholder="Digite seu CEP"
+					value="#{mbBuscaUPA.cep}" />
+				<p:commandButton actionListener="#{mbBuscaUPA.montaLink}"  value="Buscar" style="" />
+					
+					
+			</h:form>
+			
+		</p:panel>
+</h:body>
+</html>

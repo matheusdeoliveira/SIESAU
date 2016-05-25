@@ -64,6 +64,16 @@
 							
 							
 						</p:menuitem>
+						
+						<p:submenu label="Relatorios" icon="ui-icon-image"
+							style="margin-left:20px;font-size:16px;">
+							<p:menuitem value="Operacional" url="relatorioOperacional.jsf"
+								icon="" />
+
+							<p:menuitem value="Gerencial" url="relatorioGerencial.jsf"
+								icon="" />
+
+						</p:submenu>
 
 						<f:facet name="options">
 							
