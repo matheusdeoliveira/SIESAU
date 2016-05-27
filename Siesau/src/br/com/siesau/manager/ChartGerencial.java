@@ -12,8 +12,8 @@ import javax.faces.bean.ViewScoped;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
-import org.primefaces.model.chart.LineChartSeries;
 import org.primefaces.model.chart.PieChartModel;
 
 import br.com.siesau.entity.Doenca;
@@ -31,10 +31,11 @@ public class ChartGerencial implements Serializable {
 	private List<DoencaDTO> dtosIdade;
 	private List<DoencaDTO> dtosNome;
 
-	private PieChartModel chartPie;
-	private PieChartModel chartPie2;
+	private PieChartModel chartGeral;
+	private PieChartModel chartDetalhado;
 
-	private LineChartModel chartLine;
+	private LineChartModel chartLinha;
+
 	private List<Doenca> doencas;
 	private String cid;
 
@@ -42,95 +43,130 @@ public class ChartGerencial implements Serializable {
 
 	@PostConstruct
 	private void init() {
-		dtosIdade = new DoencaDao(new Doenca()).listaDoecaPorIdade();
-		dtosNome = new DoencaDao(new Doenca()).listaDoecaPorNome();
-		doencas = new DoencaDao(new Doenca()).lista();
-		criarModeloPie();
-		criarModeloLine();
+
+		doencas = new DoencaDao(new Doenca()).listaDoecasOcorridas();
 
 		// Carregando Itens da Tela
 		mostraDoencas = new HashMap<String, String>();
 		for (int i = 0; i < doencas.size(); i++) {
 			mostraDoencas.put(doencas.get(i).getNome().toString().toUpperCase(), doencas.get(i).getCid().toString());
 		}
+
+		setCid("A90");
+
+		iniciarModeloPieGeral();
+		iniciarModeloPieDetalhado();
+		iniciarModeloLinha();
+
 	}
 
-	public void recarregaPie(){
-		iniciarModeloPie2();
-	}
-	
-	public void criarModeloPie() {
-		iniciarModeloPie();
-		iniciarModeloPie2();
-	}
+	public void iniciarModeloPieGeral() {
+		dtosNome = new DoencaDao(new Doenca()).listaDoecaPorNome();
 
-	public void criarModeloLine() {
-		chartLine = iniciarModeloLine();
-		int max = 0;
-
+		chartGeral = new PieChartModel();
 		for (int i = 0; i < dtosNome.size(); i++) {
-			max = +dtosNome.get(i).getQnt();
+			chartGeral.set(dtosNome.get(i).getNomeDoenca(), dtosNome.get(i).getQnt());
 		}
-
-		chartLine.setTitle("Evolução das Doenças através do Tempo");
-		chartLine.setLegendPosition("e");
-		chartLine.setShowPointLabels(true);
-		chartLine.getAxes().put(AxisType.X, new CategoryAxis("Years"));
-		Axis yAxis = chartLine.getAxis(AxisType.Y);
-		yAxis.setLabel("Numero de Casos");
-		yAxis.setMin(0);
-		yAxis.setMax(max);
+		chartGeral.setTitle("Casos Registrados de Doenças.");
+		chartGeral.setShowDataLabels(true);
+		chartGeral.setLegendPosition("w");
 	}
 
-	public LineChartModel iniciarModeloLine() {
-		LineChartModel model = new LineChartModel();
+	public void iniciarModeloPieDetalhado() {
+		dtosIdade = new DoencaDao(new Doenca()).listaDoecaPorCID(getCid());
+		chartDetalhado = new PieChartModel();
 
-		LineChartSeries linhaDoenca = new LineChartSeries();
+		String texto;
+		String doenca = "";
 
-		String temp = "";
+		for (int i = 0; i < dtosIdade.size(); i++) {
 
-		for (int j = 0; j < dtosNome.size(); j++) {
+			doenca = dtosIdade.get(i).getNomeDoenca();
 
-			if (temp != dtosNome.get(j).getNomeDoenca()) {
-				temp = dtosNome.get(j).getNomeDoenca();
+			if (dtosIdade.get(i).getIdade() < 1) {
+				texto = "Caso de pacientes recem nascidos (Menores de 1 ano)";
+			} else {
+				texto = "Caso de pacientes com " + dtosIdade.get(i).getIdade().intValue() + " anos.";
+			}
 
-				for (int i = 0; i < dtosNome.size(); i++) {
-					linhaDoenca.setLabel(temp);
+			chartDetalhado.set(texto, dtosIdade.get(i).getQnt());
+		}
+		chartDetalhado.setTitle("Detalhamento da Doença " + doenca);
+		chartDetalhado.setShowDataLabels(true);
+		chartDetalhado.setDiameter(250);
+	}
 
-					if (dtosNome.get(i).getNomeDoenca().equals(temp)) {
-						linhaDoenca.set(String.valueOf(dtosNome.get(i).getAno().intValue()), dtosNome.get(i).getQnt());
-					}
-				}
-				model.addSeries(linhaDoenca);
+	public void iniciarModeloLinha() {
+		dtosIdade = new DoencaDao(new Doenca()).listaDoecaPorCIDporAno(getCid());
+		chartLinha = new LineChartModel();
+		ChartSeries linha;
+
+		int max = 0;
+		int qnt = 0;
+		int anoTemp = dtosIdade.get(0).getAno().intValue();
+		linha = new ChartSeries();
+
+		for (int i = 0; i < dtosIdade.size(); i++) {
+			
+			if (dtosIdade.get(i).getAno().intValue() != anoTemp){
+				linha.set(anoTemp,qnt);
+				qnt = 0;
+				anoTemp = dtosIdade.get(i).getAno().intValue();
+			}
+
+			qnt = qnt + dtosIdade.get(i).getQnt();
+			
+			if (max < qnt) {
+				max = max + qnt;
 			}
 		}
-		return model;
+
+		linha.set(anoTemp,qnt);
+		linha.setLabel(dtosIdade.get(0).getNomeDoenca());
+
+		chartLinha.addSeries(linha);
+		chartLinha.setShowPointLabels(true);
+		chartLinha.setLegendPosition("w");
+		chartLinha.setTitle("Evolução através do tempo");
+		chartLinha.setLegendPosition("e");
+		chartLinha.setShowPointLabels(true);
+		chartLinha.getAxes().put(AxisType.X, new CategoryAxis("Years"));
+		Axis yAxis = chartLinha.getAxis(AxisType.Y);
+		yAxis.setLabel("Casos");
+		yAxis.setMin(0);
+		yAxis.setMax(max * 2);
 	}
 
-	public void iniciarModeloPie() {
-		chartPie = new PieChartModel();
-		for (int i = 0; i < dtosNome.size(); i++) {
-			chartPie.set(dtosNome.get(i).getNomeDoenca(), dtosNome.get(i).getQnt());
-		}
+	public List<DoencaDTO> getDtosIdade() {
+		return dtosIdade;
 	}
 
-	public void iniciarModeloPie2() {
-		System.out.println(cid);
-		List<DoencaDTO> dtosCID = new DoencaDao(new Doenca()).listaDoecaPorCID(cid);
-		chartPie2 = new PieChartModel();
-			for (int i = 0; i < dtosCID.size(); i++) {
-				chartPie2.set("Casos de " + dtosCID.get(i).getNomeDoenca() + " com "
-						+ dtosCID.get(i).getIdade().intValue() + " anos", dtosCID.get(i).getQnt());
-		}
-		
+	public void setDtosIdade(List<DoencaDTO> dtosIdade) {
+		this.dtosIdade = dtosIdade;
 	}
 
-	public PieChartModel getChartDonut() {
-		return chartPie2;
+	public List<DoencaDTO> getDtosNome() {
+		return dtosNome;
 	}
 
-	public LineChartModel getChartLine() {
-		return chartLine;
+	public void setDtosNome(List<DoencaDTO> dtosNome) {
+		this.dtosNome = dtosNome;
+	}
+
+	public PieChartModel getChartGeral() {
+		return chartGeral;
+	}
+
+	public void setChartGeral(PieChartModel chartGeral) {
+		this.chartGeral = chartGeral;
+	}
+
+	public PieChartModel getChartDetalhado() {
+		return chartDetalhado;
+	}
+
+	public void setChartDetalhado(PieChartModel chartDetalhado) {
+		this.chartDetalhado = chartDetalhado;
 	}
 
 	public List<Doenca> getDoencas() {
@@ -157,12 +193,16 @@ public class ChartGerencial implements Serializable {
 		this.mostraDoencas = mostraDoencas;
 	}
 
-	public PieChartModel getChartPie() {
-		return chartPie;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
-	public PieChartModel getChartPie2() {
-		return chartPie2;
+	public LineChartModel getChartLinha() {
+		return chartLinha;
+	}
+
+	public void setChartLinha(LineChartModel chartLinha) {
+		this.chartLinha = chartLinha;
 	}
 
 }

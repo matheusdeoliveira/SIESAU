@@ -8,7 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-<title>Relatório gerencial</title>
+	<title>Relatório gerencial</title>
 </h:head>
 <h:body style=" margin:auto;border:0; background-color:#E8E8E8;">
 	<ui:insert name="header">
@@ -57,16 +57,22 @@
 				<h:outputText value="Tipo de Doença:" style="color:#000000;" />
 				<br />
 
+				<p:chart type="pie" model="#{chartGerencial.chartGeral}" />
 
-				<p:chart type="pie" model="#{chartGerencial.chartPie}" />
+				<h:outputText value="Selecione a Doença para detalhamento."
+					style="font-family: arial; font-size: 14px; color: #000000;" />
 
 				<p:selectOneMenu value="#{chartGerencial.cid}" required="true">
-				<p:ajax event="change" update="chartDescritivo" listener="#{chartGerencial.recarregaPie}" />
-					<f:selectItem itemValue="" itemLabel="Escolha"></f:selectItem>
+					<p:ajax listener="#{chartGerencial.iniciarModeloPieDetalhado}"
+						update="@all" />
+					<p:ajax listener="#{chartGerencial.iniciarModeloLinha}"
+						update="@all" />
+
 					<f:selectItems value="#{chartGerencial.mostraDoencas}"></f:selectItems>
 				</p:selectOneMenu>
-				
-				<p:chart id="chartDescritivo" type="pie" model="#{chartGerencial.chartPie2}" />
+
+				<p:chart id="chartDescritivo" type="pie"
+					model="#{chartGerencial.chartDetalhado}" />
 
 			</p:panel>
 
@@ -78,16 +84,9 @@
 					Epidemia e Endemia.</h1>
 				<h:outputText value="Tipo de doença:" style="color:#000000;" />
 				<br />
-				<p:selectOneMenu value="#{chartGerencial.cid}" required="true"
-					onchange="">
-					<f:selectItem itemValue="" itemLabel="Escolha"></f:selectItem>
+				<p:selectOneMenu value="#{chartGerencial.cid}" required="true">
 					<f:selectItems value="#{chartGerencial.mostraDoencas}"></f:selectItems>
 				</p:selectOneMenu>
-
-				<!-- 
-						<p:chart type="metergauge" model="#{chartMeter.meterGaugeModel2}"
-							style="width:400px;height:250px" />
- -->
 
 			</p:panel>
 
@@ -100,14 +99,11 @@
 				<h:outputText value="Tipo de doença:" style="color:#000000;" />
 
 				<br />
-				<p:selectOneMenu value="#{chartGerencial.cid}" required="true"
-					onchange="">
-					<f:selectItem itemValue="" itemLabel="Escolha"></f:selectItem>
+				<p:selectOneMenu value="#{chartGerencial.cid}" required="true">
 					<f:selectItems value="#{chartGerencial.mostraDoencas}"></f:selectItems>
 				</p:selectOneMenu>
-
-				<p:chart type="line" model="#{chartGerencial.chartLine}"
-					style="height:300px;" />
+				<p:chart id="chartLinha" type="line"
+					model="#{chartGerencial.chartLinha}" />
 			</p:panel>
 		</h:form>
 
