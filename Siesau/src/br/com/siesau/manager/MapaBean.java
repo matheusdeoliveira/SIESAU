@@ -1,5 +1,6 @@
 package br.com.siesau.manager;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +24,10 @@ import org.primefaces.model.chart.LegendPlacement;
 
 @ManagedBean(name = "mbMap")
 @ViewScoped
-public class MapaBean {
+public class MapaBean implements Serializable {
 
+	
+	private static final long serialVersionUID = 1L;
 	private List<String> cidades;
 	private String cidadeSelecionada;
 	private List<PacienteDTO> pacientedtoMap;

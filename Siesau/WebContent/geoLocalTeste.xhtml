@@ -139,7 +139,7 @@
 					partiallyTriggered="true" width="935" height="350">
 					<ui:repeat var="pac" value="#{mbMap.pacientedtoMap}">
 						<m:circle latitude="#{pac.latitude}" longitude="#{pac.longitude}"
-							draggable="false" submitOnValueChange="false" raduis="0.05" />
+							hexFillColor="#{pac.cor}" draggable="false" submitOnValueChange="false" raduis="0.05" />
 					</ui:repeat>
 				</m:map>
 

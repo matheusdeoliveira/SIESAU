@@ -10,11 +10,13 @@ public class PacienteDTO {
 	private Double latitude;
 	private Double longitude;
 	private Date ano;
-	
+	private String cid;
+	private String cor;
+
 	public PacienteDTO() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public PacienteDTO(String bairro, String sexo, Integer quantidade, Double latitude, Double longitude, Date ano) {
 		super();
 		this.bairro = bairro;
@@ -25,10 +27,11 @@ public class PacienteDTO {
 		this.ano = ano;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "PacienteDTO [bairro=" + bairro + ", sexo=" + sexo + ", quantidade=" + quantidade + ", latitude="
-				+ latitude + ", longitude=" + longitude + ", ano=" + ano + "]" +"\n";
+				+ latitude + ", longitude=" + longitude + ", ano=" + ano + ", cid=" + cid + ", cor=" + cor + "]"+ "\n";
 	}
 
 	public String getBairro() {
@@ -79,5 +82,21 @@ public class PacienteDTO {
 	public void setAno(Date ano) {
 		this.ano = ano;
 	}
-	
+
+	public String getCid() {
+		return cid;
+	}
+
+	public void setCid(String cid) {
+		this.cid = cid;
+	}
+
+	public String getCor() {
+		return cor;
+	}
+
+	public void setCor(String cor) {
+		this.cor = cor;
+	}
+
 }

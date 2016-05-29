@@ -185,7 +185,8 @@ public class PacienteDao extends GenericDao<Paciente> {
 		        +"p.bairro, "
 		        +"p.latitude, "
 		        +"p.longitude, "
-		        +"p.sexo "
+		        +"p.sexo,"
+		        + "d.cid "
 		        +"from  atendimento a "
 		        + "join "
 		        + "atend_doenca ad on a.cd_atend = ad.cd_atend "
@@ -209,6 +210,14 @@ public class PacienteDao extends GenericDao<Paciente> {
 			pacientedto.setLatitude(Double.parseDouble(result[1].toString()));
 			pacientedto.setLongitude(Double.parseDouble(result[2].toString()));
 			pacientedto.setSexo(result[3].toString());
+			pacientedto.setCid(result[4].toString());
+			if(result[4].toString().equalsIgnoreCase("U06")){
+				pacientedto.setCor("#FFFF00");
+			}else if(result[4].toString().equalsIgnoreCase("A92")){
+				pacientedto.setCor("#006400");
+			}else if(result[4].toString().equalsIgnoreCase("A90")){
+				pacientedto.setCor("#FF0000");
+			}
 			pacientesdto.add(pacientedto);
 			
 		}
