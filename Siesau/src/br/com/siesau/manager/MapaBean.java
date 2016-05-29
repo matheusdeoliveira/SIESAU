@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.crypto.spec.OAEPParameterSpec;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -33,6 +34,7 @@ public class MapaBean implements Serializable {
 	private List<PacienteDTO> pacientedtoMap;
 	private List<PacienteDTO> pacientesdto;
 	private List<PacienteDTO> sexodto;
+	private List<PacienteDTO> pacientedtoQtdDoenca;
 	private PieChartModel grafico;
 	private BarChartModel grafico2;
 	private List<String> doencas;
@@ -63,6 +65,8 @@ public class MapaBean implements Serializable {
 
 			sexodto = new PacienteDao(new Paciente()).pesquisaSexo(doencasSelecionadas, cidadeSelecionada);
 			
+			pacientedtoQtdDoenca = new PacienteDao(new Paciente()).pesquisaQtdDoenca(doencasSelecionadas, cidadeSelecionada);
+			
 			criargrafico();
 			criargrafico2();
 			
@@ -86,12 +90,16 @@ public class MapaBean implements Serializable {
 
 			sexodto = new ArrayList<>();
 			
+			pacientedtoQtdDoenca = new ArrayList<>();
 			
 			grafico = new PieChartModel();
 			grafico.setTitle("Aguardando Filtros");
-			grafico.set("Homens", 0);
-			grafico.set("Mulheres", 0);
-
+			grafico.setTitle("Aguardando Filtros");			
+			grafico.setLegendPosition("w");
+			grafico.set("Dengue [dengue clássico]", 0);
+			grafico.set("Doença pelo Zika virus", 0);	
+			grafico.set("Febre de Chikungunya", 0);
+			grafico.setSeriesColors("FF0000,FFFF00,006400");
 			grafico.setLegendPosition("w");
 
 			
@@ -101,7 +109,6 @@ public class MapaBean implements Serializable {
 			grafico2 = new BarChartModel();
 			grafico2.setLegendPosition("e");
 			grafico2.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
-			grafico.setSeriesColors("4876FF,FF00FF");
 			grafico2.setSeriesColors("4876FF,FF00FF");
 			grafico2.setBarWidth(30);
 			homens.setLabel("Homens");
@@ -136,22 +143,48 @@ public class MapaBean implements Serializable {
 	}
 
 	private void criargrafico() {
-
-		if(sexodto == null){
-			grafico.setTitle("Aguardando Filtros");
-			grafico.set("Homens", 0);
-			grafico.set("Mulheres", 0);
-
+		
+		grafico = new PieChartModel();
+		
+		int qtdZika =0;
+		int qtdDengue = 0;
+		int qtdChikungunya = 0;
+				
+		if(pacientedtoQtdDoenca == null){
+			grafico.setTitle("Aguardando Filtros");			
 			grafico.setLegendPosition("w");
-		}else{
-		
-		grafico.setTitle("Doenças");
-		
-		grafico.set("Homens", sexodto.get(1).getQuantidade());
-		grafico.set("Mulheres", sexodto.get(0).getQuantidade());
-
+			grafico.set("Dengue [dengue clássico]", 0);
+			grafico.set("Doença pelo Zika virus", 0);	
+			grafico.set("Febre de Chikungunya", 0);
+			grafico.setSeriesColors("FF0000,FFFF00,006400");
+			
+		}else{			
+		grafico.setTitle("Doenças");		
+			
+		for (int i = 0; i < pacientedtoQtdDoenca.size(); i++) {
+			
+			 if( pacientedtoQtdDoenca.get(i).getCid().equalsIgnoreCase("Doença pelo Zika virus")){
+				 
+				 qtdZika = pacientedtoQtdDoenca.get(i).getQuantidade();
+				 
+				}else if(pacientedtoQtdDoenca.get(i).getCid().equalsIgnoreCase("Dengue [dengue clássico]")){
+					
+					qtdDengue = pacientedtoQtdDoenca.get(i).getQuantidade();
+					 
+				}else if(pacientedtoQtdDoenca.get(i).getCid().equalsIgnoreCase("Febre de Chikungunya")){
+					
+					qtdChikungunya =  pacientedtoQtdDoenca.get(i).getQuantidade();
+					
+				}
+								
+		}			
+		grafico.set("Dengue [dengue clássico]", qtdDengue);
+		grafico.set("Doença pelo Zika virus", qtdZika);	
+		grafico.set("Febre de Chikungunya", qtdChikungunya);
 		grafico.setLegendPosition("w");
-		}
+		grafico.setSeriesColors("FF0000,FFFF00,006400");
+				
+	}	
 	}
 
 	private void criargrafico2() {
@@ -161,7 +194,6 @@ public class MapaBean implements Serializable {
 		grafico2 = new BarChartModel();
 		grafico2.setLegendPosition("e");
 		grafico2.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
-		grafico.setSeriesColors("4876FF,FF00FF");
 		grafico2.setSeriesColors("4876FF,FF00FF");
 		grafico2.setBarWidth(30);
 
@@ -276,7 +308,13 @@ public class MapaBean implements Serializable {
 	public void setDoencasSelecionadas(List<String> doencasSelecionadas) {
 		this.doencasSelecionadas = doencasSelecionadas;
 	}
-	
-	
 
+	public List<PacienteDTO> getPacientedtoQtdDoenca() {
+		return pacientedtoQtdDoenca;
+	}
+
+	public void setPacientedtoQtdDoenca(List<PacienteDTO> pacientedtoQtdDoenca) {
+		this.pacientedtoQtdDoenca = pacientedtoQtdDoenca;
+	}
+	
 }

@@ -117,8 +117,9 @@
 
 					<p:column sortBy="#{linha.dataNasc}" style="background-color:#F0F4F9;color:#000000;"
 						width="20" headerText="Data Nascimento" filterMatchMode="contains">
-						<h:outputText style="background-color:#F0F4F9;color:#000000;"
-							value="#{linha.dataNasc}" />
+						<h:outputText style="background-color:#F0F4F9;color:#000000;" value="#{linha.dataNasc}" >
+							<f:convertDateTime pattern="dd/MM/yyyy"/>
+						</h:outputText>
 					</p:column>
 
 					<f:facet name="footer">

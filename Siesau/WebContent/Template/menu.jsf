@@ -59,7 +59,7 @@
 							
 						</p:menuitem>
 
-						<p:menuitem value="Observatorio" icon="ui-icon-search" url="geoLocalTeste.jsf"
+						<p:menuitem value="Observatorio" icon="ui-icon-search" url="geoLocal.jsf"
 							style="margin-left:20px;font-size:15px;">
 							
 							

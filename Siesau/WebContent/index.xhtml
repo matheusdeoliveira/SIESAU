@@ -8,6 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+<title>Index</title>
 </h:head>
 <h:body style=" margin:auto;border:0; background-color:#E8E8E8;">
 	<ui:insert name="header">
@@ -25,7 +26,7 @@
   <p:column>
   <p:panel header="Unidade de Saude"
    style="background-color:#B0C4DE;width:300px;float:right;">
-   <h:form id="form_buscaUPA">
+   <h:form id="form_buscaUPA" target="_blank">
     <p:growl id="growl" showDetail="true" />
     <h3>
      <p:outputLabel for="cep"
@@ -35,7 +36,7 @@
     <p:inputMask id="cep" mask="99999999" placeholder="Digite seu CEP"
      value="#{mbBuscaUPA.cep}" />
     <p:commandButton actionListener="#{mbBuscaUPA.montaLink}"
-     value="Buscar" style="" />
+     value="Buscar" style="" ajax="false"/>
    </h:form>
   </p:panel><br/>
   <p:panel header="Fale Conosco"

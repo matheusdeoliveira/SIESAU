@@ -144,6 +144,43 @@ public class PacienteDao extends GenericDao<Paciente> {
 		return pacientesdto;
 	}
 	
+	public List<PacienteDTO> pesquisaQtdDoenca(List<String> doencas, String cidade) throws Exception{
+		String consulta2 = "select d.nome, "
+				+ "SUM ((select count(*) from doenca d where ad.cd_doenca = d.cd_doenca)) as quantidade, "
+				+ "date_part('year',a.data_atend) ano, "
+				+ "d.cid  "
+				+ "from atendimento a, atend_doenca ad, doenca d, paciente p where "
+				+ "a.cd_atend = ad.cd_atend and ad.cd_doenca = d.cd_doenca and a.cd_paciente = p.cd_paciente "
+				+ "and d.cid in (:doencas) and p.cidade ~* :cidade "
+				+ "GROUP BY d.nome, ano, d.cid ";
+					
+		Query query = manager.createNativeQuery(consulta2);
+		query.setParameter("doencas", doencas );
+		query.setParameter("cidade", cidade);
+		@SuppressWarnings("unchecked")
+		List<Object[]> resultados = query.getResultList();
+		List<PacienteDTO> pacientesdto = new ArrayList<>();
+		for (Object[] result : resultados) {
+			
+			PacienteDTO pacientedto = new PacienteDTO();
+			pacientedto.setCid(result[0].toString());
+			pacientedto.setQuantidade(Integer.parseInt(result[1].toString()));
+			DateFormat formatter = new SimpleDateFormat("yyyy");
+            Date date = (Date)formatter.parse(result[2].toString());
+            pacientedto.setAno(date);            
+            if(result[3].toString().equalsIgnoreCase("U06")){
+				pacientedto.setCor("#FFFF00");
+			}else if(result[3].toString().equalsIgnoreCase("A92")){
+				pacientedto.setCor("#006400");
+			}else if(result[3].toString().equalsIgnoreCase("A90")){
+				pacientedto.setCor("#FF0000");
+			}
+            pacientesdto.add(pacientedto);
+			
+		}
+		return pacientesdto;
+	}
+	
 	public List<PacienteDTO> consultaDoencasCidade(List<String> doencas, String cidade) {
 		String consulta2 = "select "
 				+"p.bairro, "
@@ -233,7 +270,7 @@ public class PacienteDao extends GenericDao<Paciente> {
 			lis.add("U06");
 			
 			
-			List<PacienteDTO> dto = new PacienteDao(new Paciente()).consultaDoencasCidadeMapa(lis, "DUQUE DE CAXIAS");
+			List<PacienteDTO> dto = new PacienteDao(new Paciente()).pesquisaQtdDoenca(lis, "DUQUE DE CAXIAS");
 			
 			
 			System.out.println(dto);
