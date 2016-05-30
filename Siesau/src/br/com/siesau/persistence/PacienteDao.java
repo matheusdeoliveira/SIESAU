@@ -121,9 +121,6 @@ public class PacienteDao extends GenericDao<Paciente> {
 				+ "and d.cid in (:doencas) and p.cidade ~* :cidade "
 				+ "GROUP BY p.sexo, ano ";
 		
-		System.out.println(consulta2);
-				
-		
 		Query query = manager.createNativeQuery(consulta2);
 		query.setParameter("doencas", doencas );
 		query.setParameter("cidade", cidade);
@@ -266,11 +263,11 @@ public class PacienteDao extends GenericDao<Paciente> {
 		try {
 			List<String> lis = new ArrayList<>();
 			lis.add("A90");
-			lis.add("A92");
+		/*	lis.add("A92");
 			lis.add("U06");
+			*/
 			
-			
-			List<PacienteDTO> dto = new PacienteDao(new Paciente()).pesquisaQtdDoenca(lis, "DUQUE DE CAXIAS");
+			List<PacienteDTO> dto = new PacienteDao(new Paciente()).pesquisaSexo(lis, "DUQUE DE CAXIAS");
 			
 			
 			System.out.println(dto);

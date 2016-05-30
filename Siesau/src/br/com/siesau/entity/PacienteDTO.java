@@ -1,6 +1,5 @@
 package br.com.siesau.entity;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class PacienteDTO {
@@ -12,7 +11,7 @@ public class PacienteDTO {
 	private Date ano;
 	private String cid;
 	private String cor;
-
+	
 	public PacienteDTO() {
 		// TODO Auto-generated constructor stub
 	}
@@ -75,7 +74,6 @@ public class PacienteDTO {
 	}
 
 	public Date getAno() {
-		new SimpleDateFormat("yyyy").format(ano);
 		return ano;
 	}
 

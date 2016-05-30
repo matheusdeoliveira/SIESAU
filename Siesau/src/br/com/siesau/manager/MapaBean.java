@@ -216,8 +216,17 @@ public class MapaBean implements Serializable {
 			grafico2.addSeries(mulheres);			
 			
 		}else{
-		homens.set(new SimpleDateFormat("yyyy").format(sexodto.get(1).getAno()), sexodto.get(1).getQuantidade());
-		mulheres.set(new SimpleDateFormat("yyyy").format(sexodto.get(0).getAno()), sexodto.get(0).getQuantidade());
+			for (int i = 0; i < sexodto.size(); i++) {
+				
+				if(sexodto.get(i).getSexo().equalsIgnoreCase("M")){
+					homens.set(new SimpleDateFormat("yyyy").format(sexodto.get(i).getAno()), sexodto.get(i).getQuantidade());
+				}else if(sexodto.get(i).getSexo().equalsIgnoreCase("F")){
+					mulheres.set(new SimpleDateFormat("yyyy").format(sexodto.get(i).getAno()), sexodto.get(i).getQuantidade());
+				}				
+			}
+			
+		
+		
 		grafico2.setTitle("Índices por Ano");
 		grafico2.addSeries(homens);
 		grafico2.addSeries(mulheres);
@@ -230,7 +239,7 @@ public class MapaBean implements Serializable {
 		Axis yAxis = grafico2.getAxis(AxisType.Y);
 		yAxis.setLabel("Sexo");
 		yAxis.setMin(0);
-		yAxis.setMax(1000);
+		yAxis.setMax(100);
 		}
 		
 	}
