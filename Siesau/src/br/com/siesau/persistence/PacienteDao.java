@@ -77,7 +77,7 @@ public class PacienteDao extends GenericDao<Paciente> {
 						+"p.latitude, "
 						+"p.longitude, "
 						+"p.sexo, "
-						+"SUM ((select count(*) from doenca d where ad.cd_doenca = d.cd_doenca)) as quantidade ,"
+						+"count(*)as quantidade ,"
 						+ "date_part('year',a.data_atend) ano "
 						+"from " 
 						+"atendimento a, " 
@@ -113,8 +113,8 @@ public class PacienteDao extends GenericDao<Paciente> {
 		return pacientesdto;
 	}
 	public List<PacienteDTO> pesquisaSexo(List<String> doencas, String cidade) throws Exception{
-		String consulta2 = "select p.sexo, SUM ((select count(*) from "
-				+ "doenca d where ad.cd_doenca = d.cd_doenca)) as quantidade, "
+		String consulta2 = "select p.sexo, "
+				+ "count(*) as quantidade, "
 				+ "date_part('year',a.data_atend) ano  "
 				+ "from atendimento a, atend_doenca ad, doenca d, paciente p where "
 				+ "a.cd_atend = ad.cd_atend and ad.cd_doenca = d.cd_doenca and a.cd_paciente = p.cd_paciente "
@@ -143,13 +143,12 @@ public class PacienteDao extends GenericDao<Paciente> {
 	
 	public List<PacienteDTO> pesquisaQtdDoenca(List<String> doencas, String cidade) throws Exception{
 		String consulta2 = "select d.nome, "
-				+ "SUM ((select count(*) from doenca d where ad.cd_doenca = d.cd_doenca)) as quantidade, "
-				+ "date_part('year',a.data_atend) ano, "
+				+ "count(*) as quantidade, "
 				+ "d.cid  "
 				+ "from atendimento a, atend_doenca ad, doenca d, paciente p where "
 				+ "a.cd_atend = ad.cd_atend and ad.cd_doenca = d.cd_doenca and a.cd_paciente = p.cd_paciente "
 				+ "and d.cid in (:doencas) and p.cidade ~* :cidade "
-				+ "GROUP BY d.nome, ano, d.cid ";
+				+ "GROUP BY d.nome, d.cid ";
 					
 		Query query = manager.createNativeQuery(consulta2);
 		query.setParameter("doencas", doencas );
@@ -161,15 +160,12 @@ public class PacienteDao extends GenericDao<Paciente> {
 			
 			PacienteDTO pacientedto = new PacienteDTO();
 			pacientedto.setCid(result[0].toString());
-			pacientedto.setQuantidade(Integer.parseInt(result[1].toString()));
-			DateFormat formatter = new SimpleDateFormat("yyyy");
-            Date date = (Date)formatter.parse(result[2].toString());
-            pacientedto.setAno(date);            
-            if(result[3].toString().equalsIgnoreCase("U06")){
+			pacientedto.setQuantidade(Integer.parseInt(result[1].toString()));			  
+            if(result[2].toString().equalsIgnoreCase("U06")){
 				pacientedto.setCor("#FFFF00");
-			}else if(result[3].toString().equalsIgnoreCase("A92")){
+			}else if(result[2].toString().equalsIgnoreCase("A92")){
 				pacientedto.setCor("#006400");
-			}else if(result[3].toString().equalsIgnoreCase("A90")){
+			}else if(result[2].toString().equalsIgnoreCase("A90")){
 				pacientedto.setCor("#FF0000");
 			}
             pacientesdto.add(pacientedto);
@@ -182,7 +178,7 @@ public class PacienteDao extends GenericDao<Paciente> {
 		String consulta2 = "select "
 				+"p.bairro, "
 				+"p.sexo, "
-				+ "SUM ((select count(*) from doenca d where ad.cd_doenca = d.cd_doenca)) as quantidade "
+				+ "count(*) as quantidade "
 				+"from " 
 				+"atendimento a "
 				+ "join " 
@@ -263,11 +259,11 @@ public class PacienteDao extends GenericDao<Paciente> {
 		try {
 			List<String> lis = new ArrayList<>();
 			lis.add("A90");
-		/*	lis.add("A92");
-			lis.add("U06");
-			*/
+//			lis.add("A92");
+//			lis.add("U06");
+//			
 			
-			List<PacienteDTO> dto = new PacienteDao(new Paciente()).pesquisaSexo(lis, "DUQUE DE CAXIAS");
+			List<PacienteDTO> dto = new PacienteDao(new Paciente()).pesquisaQtdDoenca(lis, "DUQUE DE CAXIAS");
 			
 			
 			System.out.println(dto);
