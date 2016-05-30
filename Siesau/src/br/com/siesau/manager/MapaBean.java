@@ -239,7 +239,7 @@ public class MapaBean implements Serializable {
 		Axis yAxis = grafico2.getAxis(AxisType.Y);
 		yAxis.setLabel("Sexo");
 		yAxis.setMin(0);
-		yAxis.setMax(100);
+		yAxis.setMax(1000);
 		}
 		
 	}
