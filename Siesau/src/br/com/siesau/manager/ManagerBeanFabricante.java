@@ -14,7 +14,8 @@ import org.json.JSONException;
 import br.com.siesau.control.viaCEP.ViaCEP;
 import br.com.siesau.control.viaCEP.ViaCEPException;
 import br.com.siesau.entity.Fabricante;
-import br.com.siesau.entity.FabricanteDao;
+import br.com.siesau.persistence.FabricanteDao;
+
 
 @ManagedBean(name = "mbFabricante")
 @ViewScoped

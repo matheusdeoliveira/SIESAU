@@ -1,5 +1,6 @@
-package br.com.siesau.entity;
+package br.com.siesau.persistence;
 
+import br.com.siesau.entity.UnidEspec;
 import br.com.siesau.persistence.GenericDao;
 
 public class UnidEspecDao extends GenericDao<UnidEspec> {

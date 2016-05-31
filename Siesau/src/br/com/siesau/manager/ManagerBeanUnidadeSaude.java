@@ -16,9 +16,9 @@ import br.com.siesau.control.viaCEP.ViaCEP;
 import br.com.siesau.control.viaCEP.ViaCEPException;
 import br.com.siesau.entity.Especialidade;
 import br.com.siesau.entity.UnidEspec;
-import br.com.siesau.entity.UnidEspecDao;
 import br.com.siesau.entity.UnidadeSaude;
 import br.com.siesau.persistence.EspecialidadeDao;
+import br.com.siesau.persistence.UnidEspecDao;
 import br.com.siesau.persistence.UnidadeSaudeDao;
 
 @ManagedBean(name = "mbUnidadeSaude")

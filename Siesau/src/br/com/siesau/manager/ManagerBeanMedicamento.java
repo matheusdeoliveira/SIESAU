@@ -13,8 +13,8 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.RowEditEvent;
 
 import br.com.siesau.entity.Fabricante;
-import br.com.siesau.entity.FabricanteDao;
 import br.com.siesau.entity.Medicamento;
+import br.com.siesau.persistence.FabricanteDao;
 import br.com.siesau.persistence.MedicamentoDao;
 
 /**

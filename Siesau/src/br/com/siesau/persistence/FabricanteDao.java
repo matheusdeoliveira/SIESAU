@@ -1,7 +1,8 @@
-package br.com.siesau.entity;
+package br.com.siesau.persistence;
 
 import javax.persistence.TypedQuery;
 
+import br.com.siesau.entity.Fabricante;
 import br.com.siesau.persistence.GenericDao;
 
 public class FabricanteDao extends GenericDao<Fabricante> {
