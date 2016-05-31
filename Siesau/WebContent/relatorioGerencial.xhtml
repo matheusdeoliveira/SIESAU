@@ -55,9 +55,11 @@
 					de Apresentação do Numero de Procura Referente a Idade e Tipos de
 					Doença</h1>
 				<br />
-
+				
+				<h:panelGrid columns="2">
+				<p:column>
 				<p:chart type="pie" model="#{chartGerencial.chartGeral}" />
-<br /><br /><br />
+
 
 				<h:outputText value="Selecione a Doença para detalhamento."
 					style="font-family: arial; font-size: 14px; color: #000000;" />
@@ -70,11 +72,14 @@
 
 					<f:selectItems value="#{chartGerencial.mostraDoencas}"></f:selectItems>
 				</p:selectOneMenu>
+				</p:column>
+				<p:column>
 
-<br /><br /><br />
 
 				<p:chart id="chartDescritivo" type="pie"
 					model="#{chartGerencial.chartDetalhado}" />
+				</p:column>
+				</h:panelGrid>
 			</p:panel>
 
 			<p:panel id="linha" header="Crescimento em Relação ao Tempo"
