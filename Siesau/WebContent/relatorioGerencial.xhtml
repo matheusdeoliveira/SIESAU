@@ -50,14 +50,14 @@
 
 		<h:form>
 			<p:panel id="Idade" header="Indice ou Idade"
-				style="margin-top:10px;background-color:#F0F4F9; color:#000000;width:600px;">
+				style="margin-top:10px;background-color:#F0F4F9; color:#000000;width:1100px;">
 				<h1 style="font-family: arial; font-size: 14px; color: #000000;">Relatorio
 					de Apresentação do Numero de Procura Referente a Idade e Tipos de
 					Doença</h1>
-				<h:outputText value="Tipo de Doença:" style="color:#000000;" />
 				<br />
 
 				<p:chart type="pie" model="#{chartGerencial.chartGeral}" />
+<br /><br /><br />
 
 				<h:outputText value="Selecione a Doença para detalhamento."
 					style="font-family: arial; font-size: 14px; color: #000000;" />
@@ -71,37 +71,20 @@
 					<f:selectItems value="#{chartGerencial.mostraDoencas}"></f:selectItems>
 				</p:selectOneMenu>
 
+<br /><br /><br />
+
 				<p:chart id="chartDescritivo" type="pie"
 					model="#{chartGerencial.chartDetalhado}" />
-
 			</p:panel>
 
-			<p:panel id="doenca" header="Indice de Doenças"
-				style="background-color:#F0F4F9; color:#000000;width:480px;height:460px;margin-left:610px;margin-top:-465px;">
-
-				<h1 style="font-family: arial; font-size: 14px; color: #000000;">Relatorio
-					de Apresentação do Crescimento de Doenças em Relação a Pandemia,
-					Epidemia e Endemia.</h1>
-				<h:outputText value="Tipo de doença:" style="color:#000000;" />
-				<br />
-				<p:selectOneMenu value="#{chartGerencial.cid}" required="true">
-					<f:selectItems value="#{chartGerencial.mostraDoencas}"></f:selectItems>
-				</p:selectOneMenu>
-
-			</p:panel>
-
-			<p:panel id="linha" header="crescimento em relação ao tempo"
+			<p:panel id="linha" header="Crescimento em Relação ao Tempo"
 				style="background-color:#F0F4F9; color:#000000;widht:1100px;margin-top:20px;">
 
 				<h1 style="font-family: arial; font-size: 14px; color: #000000;">Relatorio
 					de Apresentação do Crescimento de Doenças em Relação a Pandemia,
 					Epidemia e Endemia.</h1>
-				<h:outputText value="Tipo de doença:" style="color:#000000;" />
 
 				<br />
-				<p:selectOneMenu value="#{chartGerencial.cid}" required="true">
-					<f:selectItems value="#{chartGerencial.mostraDoencas}"></f:selectItems>
-				</p:selectOneMenu>
 				<p:chart id="chartLinha" type="line"
 					model="#{chartGerencial.chartLinha}" />
 			</p:panel>
