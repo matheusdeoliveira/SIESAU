@@ -8,7 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-<title>Index</title>
+	<title>Index</title>
 </h:head>
 <h:body style=" margin:auto;border:0; background-color:#E8E8E8;">
 	<ui:insert name="header">
@@ -20,109 +20,120 @@
 		<ui:include src="Template/menu.jsf" />
 	</ui:insert>
 	<div id="corpo"
-  style="min-height: 100%; position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px;">
-  
-  <h:panelGrid style="float:right;">
-  <p:column>
-  <p:panel header="Unidade de Saude"
-   style="background-color:#B0C4DE;width:300px;float:right;">
-   <h:form id="form_buscaUPA" target="_blank">
-    <p:growl id="growl" showDetail="true" />
-    <h3>
-     <p:outputLabel for="cep"
-      value="Busque a Unidade de Saude proxima a você:"
-      style="color:#000000;font-size:14px;" />
-    </h3> 
-    <p:inputMask id="cep" mask="99999999" placeholder="Digite seu CEP"
-     value="#{mbBuscaUPA.cep}" />
-    <p:commandButton actionListener="#{mbBuscaUPA.montaLink}"
-     value="Buscar" style="" ajax="false"/>
-   </h:form>
-  </p:panel><br/>
-  <p:panel header="Fale Conosco"
-   style="background-color:#B0C4DE;width:300px;height:150px;margin-top:5px;float:right;">
-   
-   <p style="color: #000000; font-size: 14px;">Esclareça suas
-    duvidas saiba qual especialidade procurar para melhor ser atendido.
-   </p>
-   <h4 style="color: #000000; font-size: 14px;">Ligue para: 0800
-    7171 7070</h4>
-  </p:panel>
-  </p:column>
-  </h:panelGrid>
-  
-  
-  <p:panel style="background-color:#F0F4F9;width:800px;margin-top:10px;">
-   <h:panelGrid columns="2">
-    <p:column>
-     <h:graphicImage value="/imagem/h1n1.jpg" width="400px;"/>
-    </p:column>
+		style="min-height: 100%; position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px;">
 
-    <p:column>
+		<h:panelGrid style="float:right;">
+			<p:column>
+				<p:panel header="Unidade de Saude"
+					style="background-color:#B0C4DE;width:300px;float:right;">
+					<h:form id="form_buscaUPA" target="_blank">
+						<p:growl id="growl" showDetail="true" />
+						<h3>
+							<p:outputLabel for="cep"
+								value="Busque a Unidade de Saude proxima a você:"
+								style="color:#000000;font-size:14px;" />
+						</h3>
+						<p:inputMask id="cep" mask="99999999" placeholder="Digite seu CEP"
+							value="#{mbBuscaUPA.cep}" />
+						<p:commandLink actionListener="#{mbBuscaUPA.montaLink}"
+							action="#{mbBuscaUPA.abrirLink}" target="_blank" value="Buscar"
+							style="" ajax="false" />
+					</h:form>
+				</p:panel>
+				<br />
+				<p:panel header="Fale Conosco"
+					style="background-color:#B0C4DE;width:300px;height:150px;margin-top:5px;float:right;">
 
-     <h1 style="color: #000000; font-size: 16px;">São João inicia campanha de vacinação contra H1N1 no dia 25</h1>
+					<p style="color: #000000; font-size: 14px;">Esclareça suas
+						duvidas saiba qual especialidade procurar para melhor ser
+						atendido.</p>
+					<h4 style="color: #000000; font-size: 14px;">Ligue para: 0800
+						7171 7070</h4>
+				</p:panel>
+			</p:column>
+		</h:panelGrid>
 
 
-     <p style="color: #000000; font-size: 14px; text-align: justify;">
-      Este ano o vírus influenza chegou mais cedo ao Rio de Janeiro e, por isso,
-       a campanha de vacinação contra o H1N1 foi antecipada em todos os municípios do Estado. 
-       A Prefeitura de São João de Meriti já definiu seu calendário e planeja vacinar um total de 105.910 pessoas. 
-       A partir do dia 25, crianças de seis meses a menores de cinco anos, grávidas em qualquer idade gestacional e grupos de pacientes renais crônicos podem se dirigir aos Postos de Saúde da cidade. Para os demais públicos, haverá uma mobilização nacional com o Dia D, no dia 30. 
-      A campanha vai até o dia 20 de maio.</p>
-    </p:column>
+		<p:panel style="background-color:#F0F4F9;width:800px;margin-top:10px;">
+			<h:panelGrid columns="2">
+				<p:column>
+					<h:graphicImage value="/imagem/h1n1.jpg" width="400px;" />
+				</p:column>
 
-   </h:panelGrid>
-   </p:panel>
-  <h:panelGrid columns="2">
-  <p:column>
-  <p:panel style="background-color:#F0F4F9;width:500px;margin-top:10px;">
-   <h:panelGrid columns="2">
-    <p:column>
-     <h:graphicImage value="/imagem/ministro.jpg" />
-    </p:column>
+				<p:column>
 
-    <p:column>
-
-     <h1 style="color: #000000; font-size: 16px;">Ministro da Saúde
-      apresenta ações para o Comitê Olímpico Internacional</h1>
+					<h1 style="color: #000000; font-size: 16px;">São João inicia
+						campanha de vacinação contra H1N1 no dia 25</h1>
 
 
-     <p style="color: #000000; font-size: 14px; text-align: justify;">
-      Em Genebra, Ricardo Barros visita sede do COI para reforçar os
-      compromissos assumidos em relação à saúde nos Jogos Olímpicos e
-      Paralímpicos do Rio</p>
-    </p:column>
+					<p style="color: #000000; font-size: 14px; text-align: justify;">
+						Este ano o vírus influenza chegou mais cedo ao Rio de Janeiro e,
+						por isso, a campanha de vacinação contra o H1N1 foi antecipada em
+						todos os municípios do Estado. A Prefeitura de São João de Meriti
+						já definiu seu calendário e planeja vacinar um total de 105.910
+						pessoas. A partir do dia 25, crianças de seis meses a menores de
+						cinco anos, grávidas em qualquer idade gestacional e grupos de
+						pacientes renais crônicos podem se dirigir aos Postos de Saúde da
+						cidade. Para os demais públicos, haverá uma mobilização nacional
+						com o Dia D, no dia 30. A campanha vai até o dia 20 de maio.</p>
+				</p:column>
 
-   </h:panelGrid>
-   </p:panel>
-   </p:column>
-   
-   <p:column>
-   <p:panel style="background-color:#F0F4F9;width:500px;margin-top:10px;">
-   <h:panelGrid columns="2">
-    <p:column>
-     <h:graphicImage value="/imagem/zika.jpg" width="200" height="150"/>
-    </p:column>
+			</h:panelGrid>
+		</p:panel>
+		<h:panelGrid columns="2">
+			<p:column>
+				<p:panel
+					style="background-color:#F0F4F9;width:500px;margin-top:10px;">
+					<h:panelGrid columns="2">
+						<p:column>
+							<h:graphicImage value="/imagem/ministro.jpg" />
+						</p:column>
 
-    <p:column>
+						<p:column>
 
-     <h1 style="color: #000000; font-size: 16px;">Epidemia de zika foi alimentada por 'falha em controle de mosquito', diz OMS</h1>
+							<h1 style="color: #000000; font-size: 16px;">Ministro da
+								Saúde apresenta ações para o Comitê Olímpico Internacional</h1>
 
 
-     <p style="color: #000000; font-size: 14px; text-align: justify;">
-      Diretora do órgão afirma que especialistas 'deixaram a peteca cair' 
-      e que falta de acesso a planejamento familiar causou emergência.</p>
-      
-      
+							<p style="color: #000000; font-size: 14px; text-align: justify;">
+								Em Genebra, Ricardo Barros visita sede do COI para reforçar os
+								compromissos assumidos em relação à saúde nos Jogos Olímpicos e
+								Paralímpicos do Rio</p>
+						</p:column>
 
-    </p:column>
+					</h:panelGrid>
+				</p:panel>
+			</p:column>
 
-   </h:panelGrid>
-  </p:panel>
-  </p:column>
-  </h:panelGrid>
-  
- </div>
+			<p:column>
+				<p:panel
+					style="background-color:#F0F4F9;width:500px;margin-top:10px;">
+					<h:panelGrid columns="2">
+						<p:column>
+							<h:graphicImage value="/imagem/zika.jpg" width="200" height="150" />
+						</p:column>
+
+						<p:column>
+
+							<h1 style="color: #000000; font-size: 16px;">Epidemia de
+								zika foi alimentada por 'falha em controle de mosquito', diz OMS</h1>
+
+
+							<p style="color: #000000; font-size: 14px; text-align: justify;">
+								Diretora do órgão afirma que especialistas 'deixaram a peteca
+								cair' e que falta de acesso a planejamento familiar causou
+								emergência.</p>
+
+
+
+						</p:column>
+
+					</h:panelGrid>
+				</p:panel>
+			</p:column>
+		</h:panelGrid>
+
+	</div>
 	<ui:insert name="footer">
 		<ui:include src="Template/footer.jsf" />
 	</ui:insert>

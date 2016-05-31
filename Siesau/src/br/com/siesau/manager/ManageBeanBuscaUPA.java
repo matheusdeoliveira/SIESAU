@@ -53,7 +53,6 @@ public class ManageBeanBuscaUPA implements Serializable {
 				builder.append(longitude + ",13z/");
 
 				link = builder.toString();
-				fc.getExternalContext().redirect(link);
 				System.out.println(link);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -66,6 +65,16 @@ public class ManageBeanBuscaUPA implements Serializable {
 
 	}
 
+	public void abrirLink(){
+		FacesContext fc =FacesContext.getCurrentInstance();
+		try{
+			fc.getExternalContext().redirect(link);
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+		
+	}
+	
 	public void buscaCep() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 
