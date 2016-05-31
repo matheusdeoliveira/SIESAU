@@ -27,7 +27,7 @@
 		<p:column>
 		<p:panel header="Unidade de Saude"
 			style="background-color:#B0C4DE;width:300px;height:300px;float:right;">
-			<h:form id="form_buscaUPA">
+			<h:form id="form_buscaUPA" target="_blank">
 				<p:growl id="growl" showDetail="true" />
 				<h3>
 				<p style="color:#000000;">   Procure uma unidade de pronto atendimento proximo a voce, vejá o local de mas facil acesso e rapido para o seu atendimento.</p>
@@ -38,7 +38,7 @@
 				<p:inputMask id="cep" mask="99999999" placeholder="Digite seu CEP"
 					value="#{mbBuscaUPA.cep}" />
 				<p:commandButton actionListener="#{mbBuscaUPA.montaLink}"
-					value="Buscar" style="" />
+					value="Buscar" style="" ajax="false" />
 			</h:form>
 		</p:panel><br/>
 		
