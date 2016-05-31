@@ -70,6 +70,7 @@ public class ChartGerencial implements Serializable {
 		chartGeral.setTitle("Casos Registrados de Doenças.");
 		chartGeral.setShowDataLabels(true);
 		chartGeral.setLegendPosition("w");
+		chartGeral.setDiameter(230);
 	}
 
 	public void iniciarModeloPieDetalhado() {
@@ -93,7 +94,7 @@ public class ChartGerencial implements Serializable {
 		}
 		chartDetalhado.setTitle("Detalhamento da Doença " + doenca);
 		chartDetalhado.setShowDataLabels(true);
-		chartDetalhado.setDiameter(250);
+		chartDetalhado.setDiameter(230);
 	}
 
 	public void iniciarModeloLinha() {
@@ -130,7 +131,7 @@ public class ChartGerencial implements Serializable {
 		chartLinha.setTitle("Evolução através do tempo");
 		chartLinha.setLegendPosition("e");
 		chartLinha.setShowPointLabels(true);
-		chartLinha.getAxes().put(AxisType.X, new CategoryAxis("Years"));
+		chartLinha.getAxes().put(AxisType.X, new CategoryAxis("Ano"));
 		Axis yAxis = chartLinha.getAxis(AxisType.Y);
 		yAxis.setLabel("Casos");
 		yAxis.setMin(0);

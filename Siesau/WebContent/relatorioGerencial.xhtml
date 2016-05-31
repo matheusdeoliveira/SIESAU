@@ -51,16 +51,15 @@
 		<h:form>
 			<p:panel id="Idade" header="Indice ou Idade"
 				style="margin-top:10px;background-color:#F0F4F9; color:#000000;width:1100px;">
+				<h:panelGrid columns="2">
+				<p:column>
 				<h1 style="font-family: arial; font-size: 14px; color: #000000;">Relatorio
 					de Apresentação do Numero de Procura Referente a Idade e Tipos de
 					Doença</h1>
-				<br />
-				
-				<h:panelGrid columns="2">
-				<p:column>
+			
 				<p:chart type="pie" model="#{chartGerencial.chartGeral}" />
-
-
+				</p:column>
+				<p:column>
 				<h:outputText value="Selecione a Doença para detalhamento."
 					style="font-family: arial; font-size: 14px; color: #000000;" />
 
@@ -72,8 +71,8 @@
 
 					<f:selectItems value="#{chartGerencial.mostraDoencas}"></f:selectItems>
 				</p:selectOneMenu>
-				</p:column>
-				<p:column>
+				
+				
 
 
 				<p:chart id="chartDescritivo" type="pie"
