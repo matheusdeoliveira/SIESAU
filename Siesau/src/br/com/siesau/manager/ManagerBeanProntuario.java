@@ -15,6 +15,7 @@ import br.com.siesau.entity.AtendDoenca;
 import br.com.siesau.entity.AtendExame;
 import br.com.siesau.entity.Atendimento;
 import br.com.siesau.entity.Doenca;
+import br.com.siesau.entity.ExamLaud;
 import br.com.siesau.entity.Exame;
 import br.com.siesau.entity.Funcionario;
 import br.com.siesau.entity.Laudo;
@@ -27,6 +28,7 @@ import br.com.siesau.persistence.AtendDoencaDao;
 import br.com.siesau.persistence.AtendExameDao;
 import br.com.siesau.persistence.AtendimentoDao;
 import br.com.siesau.persistence.DoencaDao;
+import br.com.siesau.persistence.ExamLaudDao;
 import br.com.siesau.persistence.ExameDao;
 import br.com.siesau.persistence.LaudoDao;
 import br.com.siesau.persistence.MedicamentoDao;
@@ -54,6 +56,7 @@ public class ManagerBeanProntuario implements Serializable {
 
 	private Exame exame;
 	private List<Exame> exames;
+	private List<ExamLaud> examLauds;
 
 	private Laudo laudo;
 
@@ -73,9 +76,13 @@ public class ManagerBeanProntuario implements Serializable {
 	private AtendExame atendExame;
 
 	private ReceiMedic receiMedic;
+	private ExamLaud examLaud;
+
 
 	@PostConstruct
 	public void init() {
+		examLauds = new ExamLaudDao(new ExamLaud()).lista();
+		examLaud = new ExamLaud();
 		campoAlergia = "";
 		idade = 0;
 		exames = new ExameDao(new Exame()).lista();
@@ -106,6 +113,7 @@ public class ManagerBeanProntuario implements Serializable {
 
 	public void buscaPaciente() {
 		FacesContext fc = FacesContext.getCurrentInstance();
+		atendimento = new Atendimento();
 
 		paciente = new Paciente();
 
@@ -120,10 +128,10 @@ public class ManagerBeanProntuario implements Serializable {
 				paciente = new PacienteDao(new Paciente()).pesquisaCartaoSUS(campoBusca);
 			}
 			if (itemSelecionado.equals("cdAtend")) {
-				paciente = new AtendimentoDao(new Atendimento()).pesquisaCodigoAtendimento(Integer.parseInt(campoBusca)).getPaciente();
 				atendimento = new AtendimentoDao(new Atendimento()).findByCode(Integer.parseInt(campoBusca));
+				paciente = atendimento.getPaciente();
 				atendExames = new AtendExameDao(new AtendExame()).lista(atendimento);
-				setIdade(paciente.getCdPaciente());;
+				setIdade(paciente.getCdPaciente());
 			}
 
 			atendimento.setPaciente(paciente);
@@ -161,7 +169,10 @@ public class ManagerBeanProntuario implements Serializable {
 			new ReceiMedicDao(new ReceiMedic()).salva(receiMedic);
 
 			fc.addMessage("form1", new FacesMessage("Medicamento: " + medicamento.getNomeRef() + " receitado."));
-
+			atendimento = new AtendimentoDao(new Atendimento()).findByCode(Integer.parseInt(campoBusca));
+			paciente = atendimento.getPaciente();
+			atendExames = new AtendExameDao(new AtendExame()).lista(atendimento);
+			setIdade(paciente.getCdPaciente());
 		} catch (Exception e) {
 			fc.addMessage("form1", new FacesMessage("Erro: " + e.getMessage() + "."));
 			e.printStackTrace();
@@ -184,6 +195,10 @@ public class ManagerBeanProntuario implements Serializable {
 			new AtendExameDao(new AtendExame()).salva(atendExame);
 
 			fc.addMessage("form1", new FacesMessage("Exame " + exame.getCdExame() + " salvo."));
+			atendimento = new AtendimentoDao(new Atendimento()).findByCode(Integer.parseInt(campoBusca));
+			paciente = atendimento.getPaciente();
+			atendExames = new AtendExameDao(new AtendExame()).lista(atendimento);
+			setIdade(paciente.getCdPaciente());
 		} catch (Exception e) {
 			fc.addMessage("form1", new FacesMessage("Erro: " + e.getMessage() + "."));
 			e.printStackTrace();
@@ -199,16 +214,32 @@ public class ManagerBeanProntuario implements Serializable {
 		try {
 			atendimento = new AtendimentoDao(new Atendimento()).findByCode(Integer.parseInt(campoBusca));
 			exame = new ExameDao(new Exame()).findByCode(exame.getCdExame());
-
+			laudo.setCdLaudo((int )(Math.random()*50+1));
 			new LaudoDao(new Laudo()).salva(laudo);
+			
+			examLaud.setExame1(new Exame());
+			examLaud.setExame2(new Exame());
+			
+			examLaud.setLaudo1(new Laudo());
+			examLaud.setLaudo2(new Laudo());
+			
+			examLaud.setExame1(exame);
+			examLaud.setExame2(exame);
+			examLaud.setLaudo1(laudo);
+			examLaud.setLaudo2(laudo);
+			new ExamLaudDao(new ExamLaud()).salva(examLaud);
 
 			fc.addMessage("form_laudo", new FacesMessage("Laudo " + laudo.getCdLaudo() + " salvo."));
+			atendimento = new AtendimentoDao(new Atendimento()).findByCode(Integer.parseInt(campoBusca));
+			paciente = atendimento.getPaciente();
+			atendExames = new AtendExameDao(new AtendExame()).lista(atendimento);
+			setIdade(paciente.getCdPaciente());
 
 		} catch (Exception e) {
 			fc.addMessage("form_laudo", new FacesMessage("Erro: " + e.getMessage() + "."));
 			e.printStackTrace();
 		}
-
+		examLaud = new ExamLaud();
 		laudo = new Laudo();
 		exame = new Exame();
 	}
@@ -227,6 +258,10 @@ public class ManagerBeanProntuario implements Serializable {
 			new AtendDoencaDao(new AtendDoenca()).salva(atendDoenca);
 
 			fc.addMessage("form_doenca", new FacesMessage("Doenca " + doenca.getNome() + " salva."));
+			atendimento = new AtendimentoDao(new Atendimento()).findByCode(Integer.parseInt(campoBusca));
+			paciente = atendimento.getPaciente();
+			atendExames = new AtendExameDao(new AtendExame()).lista(atendimento);
+			setIdade(paciente.getCdPaciente());
 		} catch (Exception e) {
 			fc.addMessage("form_doenca", new FacesMessage("Erro: " + e.getMessage() + "."));
 			System.out.println(e.getMessage());
@@ -255,6 +290,13 @@ public class ManagerBeanProntuario implements Serializable {
 		campoBusca = "";
 	}
 
+	public void atualizar(){
+		atendimento = new AtendimentoDao(new Atendimento()).findByCode(Integer.parseInt(campoBusca));
+		paciente = atendimento.getPaciente();
+		atendExames = new AtendExameDao(new AtendExame()).lista(atendimento);
+		setIdade(paciente.getCdPaciente());
+	}
+	
 	public Paciente getPaciente() {
 		return paciente;
 	}
@@ -449,4 +491,19 @@ public class ManagerBeanProntuario implements Serializable {
 		this.campoAlergia = campoAlergia;
 	}
 
+	public List<ExamLaud> getExamLauds() {
+		return examLauds;
+	}
+
+	public void setExamLauds(List<ExamLaud> examLauds) {
+		this.examLauds = examLauds;
+	}
+
+	public ExamLaud getExamLaud() {
+		return examLaud;
+	}
+
+	public void setExamLaud(ExamLaud examLaud) {
+		this.examLaud = examLaud;
+	}
 }

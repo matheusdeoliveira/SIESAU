@@ -8,7 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-<title>PEP-Prontuário eletrônico</title>
+	<title>PEP-Prontuário eletrônico</title>
 </h:head>
 <h:body style="margin:0px; border:0; background-color:#E8E8E8;">
 	<ui:insert name="header">
@@ -23,7 +23,7 @@
 	<p:growl id="msgs" showDetail="true" />
 
 	<div
-		style="position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px;padding-bottom:30px;">
+		style="position: relative; max-width: 1120px; margin-right: auto; margin-left: auto; font-size: 14px; padding-bottom: 30px;">
 
 		<p:panel header="Prontuário"
 			style="margin-top:20px;max-width: 1120px; margin-right: auto; margin-left: auto;background-color:#F0F4F9;">
@@ -54,14 +54,14 @@
 					<p:column>
 						<p:commandButton value="Buscar"
 							action="#{mbProntuario.buscaPaciente}" ajax="true"
-							update="form_paciente, tabView:form_laudo" />
+							update="form_paciente, tabView:form_laudo,tabView:dataTableReceita,tabView:dataTableExame,tabView:dataTableDoenca" />
 					</p:column>
 
 				</h:panelGrid>
 				<p />
 
 				<p:graphicImage height="150"
-							value="#{pageContext.servletContext.contextPath}/resources/fotos/#{mbProntuario.paciente.foto}" />
+					value="#{pageContext.servletContext.contextPath}/resources/fotos/#{mbProntuario.paciente.foto}" />
 
 				<h:outputText id="nome" value="Nome:"
 					style=" padding:10px;color:#000000;" />
@@ -82,23 +82,22 @@
 					<p:column>
 						<h:outputText id="idade" value="Idade:"
 							style=" padding:10px;color:#000000;" />
-						<p:inputText value="#{mbProntuario.idade}"
-							required="true" size="10" disabled="true" />
+						<p:inputText value="#{mbProntuario.idade}" required="true"
+							size="10" disabled="true" />
 					</p:column>
 
 					<p:column>
 
 						<h:outputLabel id="labelAlergico" for="alergico"
 							value="Alérgico ?" style=" color:#000000;" />
-						<p:inputText id="alergico"
-							value="#{mbProntuario.campoAlergia}"
+						<p:inputText id="alergico" value="#{mbProntuario.campoAlergia}"
 							required="true" disabled="true"></p:inputText>
 
 						<h:outputLabel id="labelValorAlergico" for="valorAlergico"
 							value="Informações" style=" color:#000000;" />
 						<p:inputText id="valorAlergico"
-							value="#{mbProntuario.paciente.tipoAlergia}"
-							required="true" disabled="true"></p:inputText>
+							value="#{mbProntuario.paciente.tipoAlergia}" required="true"
+							disabled="true"></p:inputText>
 
 					</p:column>
 				</h:panelGrid>
@@ -118,7 +117,7 @@
 							<p:dataTable paginator="true" rows="6" var="linha"
 								value="#{mbProntuario.medicamentos}"
 								widgetVar="tabelaMedicamentosProntuario"
-								emptyMessage="Não há doenças na base de dados.">
+								emptyMessage="Não há receitas na base de dados.">
 
 								<f:facet name="header">
 									<p:outputPanel>
@@ -185,7 +184,8 @@
 						process="@this, form_receita" />
 					<p:commandButton value="Salvar" style="float:left"
 						action="#{mbProntuario.salvarReceita}" ajax="true"
-						update="form_receita" process="@this, form_receita" />
+						update="form_receita"
+						process="@this, form_receita,tabView:dataTableReceita,tabView:dataTableExame,tabView:dataTableDoenca" />
 					<br />
 				</h:form>
 			</p:tab>
@@ -199,7 +199,7 @@
 
 							<p:dataTable var="linha" value="#{mbProntuario.exames}" rows="6"
 								paginator="true" widgetVar="tabelaExamesProntuario"
-								emptyMessage="Nenhum exame na base de dados.">
+								emptyMessage="Não há exames na base de dados.">
 
 								<f:facet name="header">
 									<p:outputPanel>
@@ -246,7 +246,8 @@
 						process="@this, form_exame" />
 					<p:commandButton value="Salvar" style="float:left"
 						action="#{mbProntuario.salvarExame}" ajax="true"
-						update="form_exame" process="@this, form_exame" />
+						update="form_exame"
+						process="@this, form_exame,tabView:form_laudo,tabView:dataTableReceita,tabView:dataTableExame,tabView:dataTableDoenca" />
 					<br />
 				</h:form>
 			</p:tab>
@@ -259,13 +260,14 @@
 
 
 						<p:row>
-							<p:dataTable var="linha" value="#{mbProntuario.atendExames}">
-								<p:column headerText="Codigo do Exame"
-									filterBy="#{linha.exame2.cdExame}" filterMatchMode="exact">
+							<p:dataTable var="linha" value="#{mbProntuario.atendExames}"
+								emptyMessage="Não há registros na base de dados.">
+								<p:column headerText="Codigo" filterBy="#{linha.exame2.cdExame}"
+									filterMatchMode="exact">
 									<h:outputText value="#{linha.exame2.cdExame}"></h:outputText>
 								</p:column>
 
-								<p:column headerText="Codigo" sortBy="#{linha.exame2.nome}">
+								<p:column headerText="Exame" sortBy="#{linha.exame2.nome}">
 									<h:outputText value="#{linha.exame2.nome}"></h:outputText>
 								</p:column>
 							</p:dataTable>
@@ -295,7 +297,8 @@
 						process="@this, form_laudo" />
 					<p:commandButton value="Salvar" style="float:left"
 						action="#{mbProntuario.salvarLaudo}" ajax="true"
-						update="form_laudo" process="@this, form_laudo" />
+						update="form_laudo"
+						process="@this, form_laudo,tabView:dataTableReceita,tabView:dataTableExame,tabView:dataTableDoenca" />
 
 					<br />
 				</h:form>
@@ -348,20 +351,107 @@
 						process="@this, form_doenca" />
 					<p:commandButton value="Salvar" style="float:left"
 						action="#{mbProntuario.salvarDoenca}" ajax="true"
-						update="form_doenca" process="@this, form_doenca" />
+						update="form_doenca"
+						process="@this, form_doenca,tabView:dataTableReceita,tabView:dataTableExame,tabView:dataTableDoenca" />
 					<br />
 				</h:form>
+			</p:tab>
+
+			<p:tab title="Informações"
+				style="background-color:#F0F4F9;position:relative;">
+
+				<h:form id="form_atualizar">
+					<p:commandButton value="Atualizar Lista" action="#{mbProntuario.atualizar}"
+						update="tabView:dataTableReceita,tabView:dataTableExame,tabView:dataTableDoenca" />
+				</h:form>
+
+				<p:dataTable id="dataTableReceita" var="linha"
+					emptyMessage="Não há registros na base de dados."
+					value="#{mbProntuario.atendimento.receitas}">
+
+					<f:facet name="header">
+						<h:outputText value="Informações Sobre Receitas" />
+					</f:facet>
+
+					<p:column headerText="Medicamento">
+						<p:dataTable var="linha2" value="#{linha.medicamentos}">
+
+							<p:column headerText="Nome Referencia">
+								<h:outputText value="#{linha2.nomeRef}" />
+							</p:column>
+
+							<p:column headerText="Concentração">
+								<h:outputText value="#{linha2.concentracao}" />
+							</p:column>
+						</p:dataTable>
+					</p:column>
+
+					<p:column headerText="Posologia">
+						<h:outputText value="#{linha.posologiaRecei}" />
+					</p:column>
+
+					<p:column headerText="Observação">
+						<h:outputText value="#{linha.obs}" />
+					</p:column>
+				</p:dataTable>
+
+				<p:dataTable id="dataTableExame" var="linha"
+					emptyMessage="Não há registros na base de dados."
+					value="#{mbProntuario.atendimento.exames}">
+
+					<f:facet name="header">
+						<h:outputText value="Informações Sobre Exames" />
+					</f:facet>
+
+					<p:column headerText="Exame">
+						<h:outputText value="#{linha.nome}" />
+					</p:column>
+
+					<p:column headerText="Observação">
+						<h:outputText value="#{linha.obs}" />
+					</p:column>
+
+					<p:column headerText="Resultado">
+						<p:dataTable var="linha2" value="#{linha.laudos}">
+							<p:column>
+								<h:outputText value="#{linha2.resultado}" />
+							</p:column>
+						</p:dataTable>
+					</p:column>
+				</p:dataTable>
+
+				<p:dataTable id="dataTableDoenca" var="linha"
+					emptyMessage="Não há registros na base de dados."
+					value="#{mbProntuario.atendimento.doencas}">
+
+					<f:facet name="header">
+						<h:outputText value="Informações Sobre Doencas" />
+					</f:facet>
+
+					<p:column headerText="CID">
+						<h:outputText value="#{linha.cid}" />
+					</p:column>
+
+					<p:column headerText="Doenca">
+						<h:outputText value="#{linha.nome}" />
+					</p:column>
+				</p:dataTable>
+
 			</p:tab>
 		</p:tabView>
 
 		<h:form id="form_pront">
-
 			<p:commandButton value="Finalizar Atendimento"
 				style="position:absolute;margin-top:-37px;margin-left:250px;"
 				action="#{mbProntuario.finalizaAtendimento}" ajax="false"
-				update="form_paciente, form_exame, form_laudo, form_doenca"
+				update="form_paciente, form_exame, form_laudo, form_doenca,tabView:dataTableReceita,tabView:dataTableExame,tabView:dataTableDoenca"
 				process="@all" />
 		</h:form>
+
+
+
+
+
 
 	</div>
 	<ui:insert name="footer">
