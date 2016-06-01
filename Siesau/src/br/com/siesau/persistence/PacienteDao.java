@@ -1,11 +1,13 @@
 package br.com.siesau.persistence;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
@@ -272,6 +274,62 @@ public class PacienteDao extends GenericDao<Paciente> {
 		e.printStackTrace();
 		}
 		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Paciente> pesquisaPaciente(Date dataInicio, Date dataFim){
 		
+			List<Paciente> lista = null;
+			
+			String consulta = " select p from Paciente p "+ 
+                " where p.dataNasc >= :dataInicio AND  p.dataNasc <= :dataFim  ";
+			
+			try {
+			
+			Query q = manager.createQuery(consulta);
+			q.setParameter("dataInicio", dataInicio);
+			q.setParameter("dataFim",  dataFim);
+			
+			lista = q.getResultList();
+			
+			} catch(NoResultException e) {
+				
+			}
+
+		return lista;
+		/*String consulta = " select nome, cartaosus, data_cad, data_nasc from paciente "+ 
+                          " where data_nasc >=  :dataInicio AND  data_nasc <= :dataFim  ";
+		
+       Query query = manager.createNativeQuery(consulta);
+       query.setParameter("dataInicio", dataInicio);
+       query.setParameter("dataFim",  dataFim);
+       
+       List<Object[]> resultados = query.getResultList();
+       List<Paciente> pacientes = new ArrayList<>();
+       for (Object[] result : resultados) {
+	Paciente paciente = new Paciente();
+	paciente.setBairro(result[0].toString());
+	paciente.setNome(result[1].toString());
+	paciente.setCartaoSus(result[2].toString());
+	DateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
+    Date data_cad ;
+    Date data_nasc ;
+	try {
+		data_cad = (Date)formatter.parse(result[3].toString());
+		paciente.setDataCad(data_cad );
+		
+		data_nasc = (Date)formatter.parse(result[4].toString());
+		paciente.setDataCad(data_nasc);
+		
+	} catch (ParseException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+    
+	pacientes.add(paciente);
+	
+    } 
+      return pacientes;
+  }	*/	
 	}
 }

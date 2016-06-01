@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -38,9 +39,11 @@ public class ManagerBeanPaciente implements Serializable {
 	private List<Paciente> pacientesFiltrados;
 	private String foto;
 	private ViaCEP viaCep;
+	private Date dataInicio;
+	private Date dataFim;
 
 	@PostConstruct
-	private void inti() {
+	private void init() {
 		paciente = new Paciente();
 		pacientes = new PacienteDao(new Paciente()).lista();
 	}
@@ -178,6 +181,22 @@ public class ManagerBeanPaciente implements Serializable {
 			new File(param).mkdirs();
 		}					
 	}
+	
+	public void pesquisarPaciente() {
+		
+		try {
+			
+			pacientes  =  new PacienteDao(new Paciente()).pesquisaPaciente(this.dataInicio, this.dataFim);
+			pacientesFiltrados = pacientes;
+
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 	public Paciente getPaciente() {
 		return paciente;
 	}
@@ -239,6 +258,25 @@ public class ManagerBeanPaciente implements Serializable {
 		this.selecionado = selecionado;
 	}
 
+	public Date getDataInicio() {
+		return dataInicio;
+	}
+
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio = dataInicio;
+	}
+
+	public Date getDataFim() {
+		return dataFim;
+	}
+
+	public void setDataFim(Date dataFim) {
+		this.dataFim = dataFim;
+	}
+
+	
+
+	
 	
 	
 }
