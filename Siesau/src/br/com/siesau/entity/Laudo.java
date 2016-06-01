@@ -16,8 +16,6 @@ public class Laudo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="LAUDO_CDLAUDO_GENERATOR", sequenceName="SEQUENCIA")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="LAUDO_CDLAUDO_GENERATOR")
 	@Column(name="cd_laudo", unique=true, nullable=false)
 	private Integer cdLaudo;
 
