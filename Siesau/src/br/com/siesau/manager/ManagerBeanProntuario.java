@@ -46,6 +46,7 @@ public class ManagerBeanProntuario implements Serializable {
 	private String itemSelecionado;
 	private String campoBusca;
 	private String campoAlergia;
+	private int cdAtendExam;
 
 	private Receita receita;
 
@@ -111,6 +112,7 @@ public class ManagerBeanProntuario implements Serializable {
 		// Atendimento()).listaPorEspecialidade(funcionario);
 	}
 
+	@SuppressWarnings("deprecation")
 	public void buscaPaciente() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		atendimento = new Atendimento();
@@ -131,7 +133,9 @@ public class ManagerBeanProntuario implements Serializable {
 				atendimento = new AtendimentoDao(new Atendimento()).findByCode(Integer.parseInt(campoBusca));
 				paciente = atendimento.getPaciente();
 				atendExames = new AtendExameDao(new AtendExame()).lista(atendimento);
-				setIdade(paciente.getCdPaciente());
+				int anos = new Date().getYear() - paciente.getDataNasc().getYear();
+				
+				setIdade(anos);
 			}
 
 			atendimento.setPaciente(paciente);
@@ -213,10 +217,11 @@ public class ManagerBeanProntuario implements Serializable {
 
 		try {
 			atendimento = new AtendimentoDao(new Atendimento()).findByCode(Integer.parseInt(campoBusca));
-			exame = new ExameDao(new Exame()).findByCode(exame.getCdExame());
+			//exame = new ExameDao(new Exame()).findByCode(exame.getCdExame());
 			laudo.setCdLaudo((int )(Math.random()*50+1));
 			new LaudoDao(new Laudo()).salva(laudo);
-			
+			String temp = atendExame.getResultadoExame();
+		/*	
 			examLaud.setExame1(new Exame());
 			examLaud.setExame2(new Exame());
 			
@@ -227,11 +232,16 @@ public class ManagerBeanProntuario implements Serializable {
 			examLaud.setExame2(exame);
 			examLaud.setLaudo1(laudo);
 			examLaud.setLaudo2(laudo);
+			
 			new ExamLaudDao(new ExamLaud()).salva(examLaud);
+			*/
+			atendExame = new AtendExameDao(new AtendExame()).findByCode(atendExame.getId());
+			atendExame.setResultadoExame(temp);
+			
+			new AtendExameDao(new AtendExame()).atualiza(atendExame);
 
 			fc.addMessage("form_laudo", new FacesMessage("Laudo " + laudo.getCdLaudo() + " salvo."));
 			atendimento = new AtendimentoDao(new Atendimento()).findByCode(Integer.parseInt(campoBusca));
-			paciente = atendimento.getPaciente();
 			atendExames = new AtendExameDao(new AtendExame()).lista(atendimento);
 			setIdade(paciente.getCdPaciente());
 
@@ -239,9 +249,12 @@ public class ManagerBeanProntuario implements Serializable {
 			fc.addMessage("form_laudo", new FacesMessage("Erro: " + e.getMessage() + "."));
 			e.printStackTrace();
 		}
+		atendExame = new AtendExame();
 		examLaud = new ExamLaud();
 		laudo = new Laudo();
 		exame = new Exame();
+		cdAtendExam = 0;
+		
 	}
 
 	public void salvarDoenca() {
@@ -292,9 +305,6 @@ public class ManagerBeanProntuario implements Serializable {
 
 	public void atualizar(){
 		atendimento = new AtendimentoDao(new Atendimento()).findByCode(Integer.parseInt(campoBusca));
-		paciente = atendimento.getPaciente();
-		atendExames = new AtendExameDao(new AtendExame()).lista(atendimento);
-		setIdade(paciente.getCdPaciente());
 	}
 	
 	public Paciente getPaciente() {
@@ -505,5 +515,13 @@ public class ManagerBeanProntuario implements Serializable {
 
 	public void setExamLaud(ExamLaud examLaud) {
 		this.examLaud = examLaud;
+	}
+
+	public int getCdAtendExam() {
+		return cdAtendExam;
+	}
+
+	public void setCdAtendExam(int cdAtendExam) {
+		this.cdAtendExam = cdAtendExam;
 	}
 }

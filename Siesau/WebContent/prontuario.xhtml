@@ -260,11 +260,13 @@
 
 
 						<p:row>
-							<p:dataTable var="linha" value="#{mbProntuario.atendExames}"
+							<p:dataTable var="linha"
+								value="#{mbProntuario.atendimento.atendExames2}"
 								emptyMessage="Não há registros na base de dados.">
-								<p:column headerText="Codigo" filterBy="#{linha.exame2.cdExame}"
-									filterMatchMode="exact">
-									<h:outputText value="#{linha.exame2.cdExame}"></h:outputText>
+
+								<p:column headerText="ID" filterBy="#{linha.id}"
+									filterMatchMode="contains">
+									<h:outputText value="#{linha.id}"></h:outputText>
 								</p:column>
 
 								<p:column headerText="Exame" sortBy="#{linha.exame2.nome}">
@@ -275,14 +277,15 @@
 
 							<h:outputText value="Codigo do Exame"
 								style=" padding:10px;color:#000000;" />
-							<p:inputText value="#{mbProntuario.exame.cdExame}"
+							<p:inputText value="#{mbProntuario.atendExame.id}"
 								required="true" size="8" />
 							<p />
 							<p:outputPanel style="float:left;margin-top: 15px">
 								<h:outputText value="Resultado : "
 									style=" color:#000000; padding:35px; float:left;margin-top: 10px " />
 								<p:column>
-									<p:inputTextarea value="#{mbProntuario.laudo.resultado}"
+									<p:inputTextarea
+										value="#{mbProntuario.atendExame.resultadoExame}"
 										required="true" rows="6" cols="60" maxlength="500"
 										autoResize="false" />
 								</p:column>
@@ -361,7 +364,8 @@
 				style="background-color:#F0F4F9;position:relative;">
 
 				<h:form id="form_atualizar">
-					<p:commandButton value="Atualizar Lista" action="#{mbProntuario.atualizar}"
+					<p:commandButton value="Atualizar Lista"
+						action="#{mbProntuario.atualizar}"
 						update="tabView:dataTableReceita,tabView:dataTableExame,tabView:dataTableDoenca" />
 				</h:form>
 
@@ -390,6 +394,12 @@
 						<h:outputText value="#{linha.posologiaRecei}" />
 					</p:column>
 
+					<p:column headerText="Data">
+						<h:outputText value="#{linha.data}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
 					<p:column headerText="Observação">
 						<h:outputText value="#{linha.obs}" />
 					</p:column>
@@ -397,27 +407,24 @@
 
 				<p:dataTable id="dataTableExame" var="linha"
 					emptyMessage="Não há registros na base de dados."
-					value="#{mbProntuario.atendimento.exames}">
+					value="#{mbProntuario.atendimento.atendExames2}">
 
 					<f:facet name="header">
 						<h:outputText value="Informações Sobre Exames" />
 					</f:facet>
 
 					<p:column headerText="Exame">
-						<h:outputText value="#{linha.nome}" />
+						<h:outputText value="#{linha.exame2.nome}" />
 					</p:column>
 
 					<p:column headerText="Observação">
-						<h:outputText value="#{linha.obs}" />
+						<h:outputText value="#{linha.exame2.obs}" />
 					</p:column>
 
-					<p:column headerText="Resultado">
-						<p:dataTable var="linha2" value="#{linha.laudos}">
-							<p:column>
-								<h:outputText value="#{linha2.resultado}" />
-							</p:column>
-						</p:dataTable>
+					<p:column>
+						<h:outputText value="#{linha.resultadoExame}" />
 					</p:column>
+
 				</p:dataTable>
 
 				<p:dataTable id="dataTableDoenca" var="linha"
