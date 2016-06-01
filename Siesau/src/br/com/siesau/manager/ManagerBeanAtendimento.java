@@ -52,7 +52,7 @@ public class ManagerBeanAtendimento implements Serializable {
 		atendimento = new Atendimento();
 		atendimento.setPaciente(new Paciente());
 		atendimento.setSituacaoAtend(new SituacaoAtend());
-		atendimentos = new AtendimentoDao(new Atendimento()).listaNaoFinalizados();
+		atendimentos = new AtendimentoDao(new Atendimento()).lista();
 
 		paciente = new Paciente();
 
@@ -113,7 +113,7 @@ public class ManagerBeanAtendimento implements Serializable {
 					new FacesMessage("Atendimento do paciente " + atendimento.getPaciente().getNome() + " agendado."));
 			atendimento = new Atendimento();
 			paciente = new Paciente();
-			atendimentos = new AtendimentoDao(new Atendimento()).listaNaoFinalizados();
+			atendimentos = new AtendimentoDao(new Atendimento()).lista();
 			itemSelecionado = "";
 			campoBusca = "";
 
