@@ -39,6 +39,8 @@ public class AtendExame implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="cd_exame")
 	private Exame exame2;
+	
+	private String resultadoExame;
 
 	public AtendExame() {
 	}
@@ -83,4 +85,15 @@ public class AtendExame implements Serializable {
 		this.exame2 = exame2;
 	}
 
+	public String getResultadoExame() {
+		return resultadoExame;
+	}
+
+	public void setResultadoExame(String resultadoExame) {
+		this.resultadoExame = resultadoExame;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 }
