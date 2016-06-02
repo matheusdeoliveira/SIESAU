@@ -42,6 +42,8 @@ public class AtendExame implements Serializable {
 	
 	private String resultadoExame;
 
+	private String observacao;
+	
 	public AtendExame() {
 	}
 
@@ -95,5 +97,13 @@ public class AtendExame implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 }

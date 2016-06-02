@@ -72,7 +72,7 @@ public class Atendimento implements Serializable {
 	private List<Exame> exames;
 
 	//bi-directional many-to-one association to Receita
-	@OneToMany(mappedBy="atendimento")
+	@OneToMany(mappedBy="atendimento", fetch=FetchType.LAZY)
 	private List<Receita> receitas;
 	
 	//bi-directional many-to-one association to Especialidade

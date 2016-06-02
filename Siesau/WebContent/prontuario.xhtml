@@ -232,7 +232,7 @@
 									style=" color:#000000; padding:26px; float:left;margin-top: 10px " />
 								<p:column>
 
-									<p:inputTextarea value="#{mbProntuario.exame.obs}"
+									<p:inputTextarea value="#{mbProntuario.atendExame.observacao}"
 										required="true" rows="6" cols="60" maxlength="500"
 										autoResize="false" />
 								</p:column>
@@ -418,10 +418,10 @@
 					</p:column>
 
 					<p:column headerText="Observação">
-						<h:outputText value="#{linha.exame2.obs}" />
+						<h:outputText value="#{linha.observacao}" />
 					</p:column>
 
-					<p:column>
+					<p:column headerText="Resultado Exame">
 						<h:outputText value="#{linha.resultadoExame}" />
 					</p:column>
 
@@ -446,7 +446,7 @@
 
 			</p:tab>
 		</p:tabView>
-
+		
 		<h:form id="form_pront">
 			<p:commandButton value="Finalizar Atendimento"
 				style="position:absolute;margin-top:-37px;margin-left:250px;"

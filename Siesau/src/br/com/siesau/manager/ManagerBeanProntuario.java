@@ -162,8 +162,10 @@ public class ManagerBeanProntuario implements Serializable {
 			receita.setData(new Date());
 
 			new ReceitaDao(receita).salva(receita);
-			receita = new ReceitaDao(new Receita()).findByAtendData(receita.getData(), atendimento);
-
+//			receita = new ReceitaDao(new Receita()).findByAtendData(receita.getData(), atendimento);
+			
+			receita = new ReceitaDao(new Receita()).findByAtendimento(receita.getData(), atendimento);
+			
 			receiMedic.setReceita1(new Receita());
 			receiMedic.setReceita1(receita);
 			receiMedic.setReceita2(receita);
