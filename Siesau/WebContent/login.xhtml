@@ -38,16 +38,6 @@
 						placeholder="Senha" required="true" label="password"
 						style="width:300px; margin-top:20px;border-radius: 5px;" />
 
-<!-- 
-					<h3>Unidade de Saúde</h3>
-					<p:selectManyCheckbox value="#{mbLogin.funcionario.unidadeSaudes}"
-						layout="grid" columns="1" required="true">
-						<f:selectItems value="#{mbLogin.unidadesDeSaude}" var="unidade"
-							itemLabel="#{unidade.fantasia}" itemValue="#{unidade}" />
-					</p:selectManyCheckbox>
- -->
-
-
 					<p:commandButton value="Acessar Sistema" ajax="true"
 						update=":form1" action="#{mbLogin.logar}"
 						style="margin-left:214px; margin-top:15px;" />

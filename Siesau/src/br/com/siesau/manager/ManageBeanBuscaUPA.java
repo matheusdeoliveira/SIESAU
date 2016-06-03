@@ -54,6 +54,7 @@ public class ManageBeanBuscaUPA implements Serializable {
 
 				link = builder.toString();
 				System.out.println(link);
+				fc.getExternalContext().redirect(link);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 				link = "";

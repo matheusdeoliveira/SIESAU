@@ -18,6 +18,11 @@
 			<h1 style="position:relative;display:block;top:15px;right:20px;float:right;padding-left:350px;font-family:arial;color:#4A708B;font-size:20px;">Sistema Estratégico de Saúde Urbana</h1>
 			
 		</div>
+		
+		
+	<f:metadata>
+		<f:event listener="#{mbLogin.filtrar}" type="preRenderView"/>
+	</f:metadata>
 	</ui:composition>
 </h:body>
 </html>

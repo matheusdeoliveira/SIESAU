@@ -29,11 +29,11 @@
 							style="margin-left:20px;font-size:16px;">
 							<p:menuitem value="Paciente" url="cadastroPaciente.jsf" icon="" />
 							
-							<p:menuitem value="Funcionario" url="cadastroFuncionario.jsf"
+							<p:menuitem value="Funcionário" url="cadastroFuncionario.jsf"
 								icon="" />
 							<p:menuitem value="Fornecedor" url="cadastroFornecedor.jsf"
 								icon="" />
-							<p:menuitem value="Unidade de Saude" url="unidadeSaude.jsf"
+							<p:menuitem value="Unidade de Saúde" url="unidadeSaude.jsf"
 								icon="" />
 							<p:menuitem value="Fabricante" url="cadastroFabricante.jsf"
 								icon="" />
@@ -44,7 +44,7 @@
 							icon="ui-icon-bookmark" style="margin-left:20px; font-size:15px;" />
 						
 						
-						<p:menuitem value="Prontuario" url="prontuario.jsf" icon="ui-icon-note"
+						<p:menuitem value="Prontuário" url="prontuario.jsf" icon="ui-icon-note"
 							style="margin-left:20px;font-size:15px;">
 							
 						</p:menuitem>
@@ -59,13 +59,13 @@
 							
 						</p:menuitem>
 
-						<p:menuitem value="Observatorio" icon="ui-icon-search" url="geoLocal.jsf"
+						<p:menuitem value="Observatório" icon="ui-icon-search" url="geoLocal.jsf"
 							style="margin-left:20px;font-size:15px;">
 							
 							
 						</p:menuitem>
 						
-						<p:submenu label="Relatorios" icon="ui-icon-image"
+						<p:submenu label="Relatórios" icon="ui-icon-image"
 							style="margin-left:20px;font-size:16px;">
 							<p:menuitem value="Operacional" url="relatorioOperacional.jsf"
 								icon="" />
@@ -77,7 +77,7 @@
 
 						<f:facet name="options">
 							
-							<p:commandButton type="button" value="Sair"
+							<p:commandButton value="Sair" action="#{mbLogin.logout}" ajax="false"
 								icon="ui-icon-extlink" />
 						</f:facet>
 

@@ -35,8 +35,7 @@ public class managerBeanLogin implements Serializable {
 	public String logar() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		try {
-			System.out.println("-----------" +funcionario.getLogin());
-			System.out.println("-----------" +funcionario.getSenha());
+			
 			logado = new FuncionarioDao(new Funcionario()).login(funcionario);
 			if (logado != null) {
 				
@@ -46,7 +45,7 @@ public class managerBeanLogin implements Serializable {
 				session.setAttribute("funcionario", logado);
 
 				fc.addMessage("form1", new FacesMessage("Usuário Logado"));
-				return "/cadastroFuncionario.jsf";
+				return "/index.jsf";
 			} else {
 				fc.addMessage("form1", new FacesMessage("Erro no login..."));
 			}
@@ -84,7 +83,7 @@ public class managerBeanLogin implements Serializable {
 			HttpSession session = request.getSession(true);
 
 			if (session.getAttribute("funcionario") == null) {
-				fc.getExternalContext().redirect("/Siesau2.1/login.jsf?erro=true");
+				fc.getExternalContext().redirect("/Siesau/login.jsf?erro=true");
 			}
 
 		} catch (Exception e) {
