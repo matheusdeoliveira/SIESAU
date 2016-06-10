@@ -48,7 +48,7 @@ public class ManageBeanBuscaUPA implements Serializable {
 				latitude = coordenadas.get(0);
 				longitude = coordenadas.get(1);
 
-				builder.append("https://www.google.com.br/maps/search/UPA+24hrs/@");
+				builder.append("https://www.google.com.br/maps/search/UPA/@");
 				builder.append(latitude + ",");
 				builder.append(longitude + ",13z/");
 

@@ -17,7 +17,7 @@ public class FabricanteDao extends GenericDao<Fabricante> {
 	
 		String consulta = "select m from Fabricante m where m.cnpj = :cnpj";
 		TypedQuery<Fabricante> query = manager.createQuery(consulta, Fabricante.class);
-		query.setParameter("cnpj", Integer.parseInt(cnpj));
+		query.setParameter("cnpj", cnpj);
 		Fabricante fabricante = query.getSingleResult();
 		return fabricante;
 	}
