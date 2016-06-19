@@ -125,7 +125,9 @@
 						headerText="Data Cadastro" filterMatchMode="contains">
 
 						<h:outputText style="background-color:#F0F4F9;color:#000000;"
-							value="#{linha.dataCad}" />
+							value="#{linha.dataCad}" >
+							<f:convertDateTime pattern="dd/MM/yyyy"/>
+						</h:outputText>
 					</p:column>
 
 

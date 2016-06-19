@@ -182,7 +182,7 @@ public class ManagerBeanFuncionario implements Serializable {
 			Funcionario temp = selecionado;
 
 			new FuncionarioDao(new Funcionario()).atualiza(selecionado);
-			fc.addMessage("form2", new FacesMessage("Funcion�rio " + temp.getNome() + " editado"));
+			fc.addMessage("form2", new FacesMessage("Funcionário " + temp.getNome() + " editado"));
 			selecionado = new Funcionario();
 			temp = new Funcionario();
 			funcionarios = new FuncionarioDao(new Funcionario()).lista();
@@ -255,7 +255,7 @@ public class ManagerBeanFuncionario implements Serializable {
 		verificaDiretorio(dir);
 
 		String caminhoFoto = diretorio + File.separator + foto;
-
+				
 		FileImageOutputStream imageOutput;
 
 		try {

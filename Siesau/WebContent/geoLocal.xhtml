@@ -9,6 +9,9 @@
 	xmlns:m="http://code.google.com/p/gmaps4jsf/">
 
 <h:head>
+<f:metadata>
+		<f:event listener="#{mbLogin.filtrar}" type="preRenderView"/>
+	</f:metadata>
 <title>Observatório</title>
 	<h:outputStylesheet library="css" name="geoLocal.css" />
 	<h:outputScript library="javascript" name="heatmap.js" />
@@ -138,6 +141,11 @@
 				<m:map id="map" latitude="-22.756132" longitude="-43.460742"
 					partiallyTriggered="true" width="935" height="350">
 					<ui:repeat var="pac" value="#{mbMap.pacientedtoMap}">
+<!-- 						<m:marker latitude="#{pac.latitude}" longitude="#{pac.longitude}"> -->
+<!-- 							<m:icon imageURL="" ></m:icon> -->
+<!-- 						</m:marker> -->
+					
+					
 						<m:circle latitude="#{pac.latitude}" longitude="#{pac.longitude}"
 							hexFillColor="#{pac.cor}" draggable="false" submitOnValueChange="false" raduis="0.05" />
 					</ui:repeat>
@@ -145,6 +153,7 @@
 
 			</h:form>
 		</div>
+		
 
 
 		<h:form id="formGraficos">
