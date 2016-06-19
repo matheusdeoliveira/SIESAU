@@ -1,6 +1,8 @@
-# siesau-test
-Repositório de teste do projeto TCC
+# SIESAU
+Repositório do projeto TCC
 
-Projeto SIESAU (Sistema de Estratégico de Saúde Urbana)
+Projeto SIESAU (Sistema Estratégico de Saúde Urbana)
 
 Estácio 2016.1
+
+
