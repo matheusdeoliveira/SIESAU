@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet library="css" name="geoLocal.css" />
+	<script type="text/javascript"
+		src="https://www.gstatic.com/charts/loader.js"></script>
+	<h:outputScript library="javascript" name="piechart.js" />
+	<h:outputScript library="javascript" name="combochart.js" />
+	
+	<ui:param name="latitude" value="#{hmaps.latitude}" />
+	<ui:param name="longitude" value="#{hmaps.longitude}" />
+	<script>
+
+	var map, heatmap;
+
+	function initMap() {
+		map = new google.maps.Map(document.getElementById('map'), {
+			zoom : 13,
+			center : {
+				lat : #{latitude},
+				lng : #{longitude}
+			},
+			mapTypeId : google.maps.MapTypeId.SATELLITE
+		});
+
+		heatmap = new google.maps.visualization.HeatmapLayer({
+			data : getPoints(),
+			map : map
+		});
+	}
+
+	function toggleHeatmap() {
+		heatmap.setMap(heatmap.getMap() ? null : map);
+	}
+
+	function changeGradient() {
+		var gradient = [ 'rgba(0, 255, 255, 0)', 'rgba(0, 255, 255, 1)',
+				'rgba(0, 191, 255, 1)', 'rgba(0, 127, 255, 1)',
+				'rgba(0, 63, 255, 1)', 'rgba(0, 0, 255, 1)', 'rgba(0, 0, 223, 1)',
+				'rgba(0, 0, 191, 1)', 'rgba(0, 0, 159, 1)', 'rgba(0, 0, 127, 1)',
+				'rgba(63, 0, 91, 1)', 'rgba(127, 0, 63, 1)', 'rgba(191, 0, 31, 1)',
+				'rgba(255, 0, 0, 1)' ]
+		heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
+	}
+
+	function changeRadius() {
+		heatmap.set('radius', heatmap.get('radius') ? null : 20);
+	}
+
+	function changeOpacity() {
+		heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
+	}
+
+	 
+	var coord=[["37.782551", "-122.445368"],["37.782745", "-122.444586"],["37.782842", "-122.443688"]];
+
+	</script>
+
+<ui:param name="latlng" value="#{hmaps.lista}" />
+<script>
+
+// Heatmap data: 500 Points
+	function getPoints() {
+	
+		return 	#{latlng};
+
+
+	}</script>
+	
+</h:head>
+
+
+<h:body style="margin:0px; border:0; background-color:#E8E8E8;">
+
+
+	<div id="wrapper" style="font-size: 12px; font-family: arial;">
+
+		<!-- "FOOTER" -->
+		<div id="top"
+			style="background-color: #B0E2FF; position: relative; max-width: 1420px; height: 80px;">
+
+			<section id="referencia" style="margin-left:20px;"> <a
+				onclick="location.href='index.xhtml'"><h:graphicImage
+					value="/imagem/logo-60.png" width="45" height="45" /></a> <!-- BOTÃO "FILTRAR POR REGIÃO" (LOCALIZADO NO CANTO SUPERIOR ESQUERDO) -->
+			<h:form>
+				<p:growl id="messages" />
+
+				<p:commandButton id="dynaButton" value="Filtrar por Região" />
+				<p:menu overlay="true" trigger="dynaButton" my="left top"
+					at="left bottom">
+					<p:submenu label="Selecione a Região">
+						<p:menuitem value="Pais" actionListener="#{menuView.select}"
+							update="messages" />
+						<p:menuitem value="Estado" actionListener="#{menuView.select}"
+							update="messages" />
+						<p:menuitem value="Cidade" actionListener="#{menuView.select}"
+							update="messages" />
+						<p:menuitem value="Municipio" actionListener="#{menuView.select}"
+							update="messages" />
+						<p:menuitem value="Bairro" actionListener="#{menuView.select}"
+							update="messages" />
+					</p:submenu>
+				</p:menu>
+			</h:form> </section>
+
+			<!-- BOTÕES "AJUDA E IMPRIMIR" (LOCALIZADOS NO CANTO SUPERIOR DIREITO)-->
+			<section id="btn"
+				style="float:right;margin-top:-60px; margin-right:30px;">
+			<p:commandButton value="Ajuda" id="Ajuda" update=""
+				actionListener="#{buttonView.buttonAction}"
+				styleClass="ui-priority-primary" /> <p:commandButton
+				value="Imprimir" id="imprimir" update=""
+				actionListener="#{buttonView.buttonAction}"
+				styleClass="ui-priority-primary" /> </section>
+
+
+		</div>
+
+		<!-- TABELA -->
+		<div id="tabela"
+			style="float: left; margin-top: 0px; background-color: blue; max-width: 400px; height: 80px;">
+
+			<h:form id="form">
+
+				<p:growl id="msgs" showDetail="true" />
+
+
+				<!-- DATA TABLE -->
+				<p:dataTable id="multipleDT" var="car"
+					value="#{dtSelectionView.cars4}" selectionMode="multiple"
+					selection="#{dtSelectionView.selectedCars}" rowKey="#{car.id}"
+					resizableColumns="true">
+
+					<f:facet name="header">Tabela</f:facet>
+
+					<p:column headerText="Cidade">
+						<h:outputText value="#{car.id}" />
+					</p:column>
+					<p:column headerText="Percentual(%)">
+						<h:outputText value="#{car.year}" />
+					</p:column>
+					<p:column headerText="Data(ano)">
+						<h:outputText value="#{car.brand}" />
+					</p:column>
+
+					<f:facet name="footer">
+						<p:commandButton process="multipleDT" update=":form"
+							icon="ui-icon-closethick" value="Limpar" />
+						<p:commandButton process="multipleDT" update=":form"
+							icon="ui-icon-closethick" value="Filtrar" />
+					</f:facet>
+				</p:dataTable>
+
+
+				<p:dialog header="Car Info" widgetVar="carDialog" modal="true"
+					showEffect="fade" hideEffect="fade" resizable="false">
+					<p:outputPanel id="carDetail" style="text-align:center;">
+						<p:panelGrid columns="2" rendered="#{dtSelectionView.selectedCar}"
+							columnClasses="label,value">
+							<f:facet name="header">
+								<p:graphicImage
+									name="demo/images/car/#{dtSelectionView.selectedCar.brand}-big.gif" />
+							</f:facet>
+
+							<h:outputText value="Id:" />
+							<h:outputText value="#{dtSelectionView.selectedCar.id}" />
+
+							<h:outputText value="Year" />
+							<h:outputText value="#{dtSelectionView.selectedCar.year}" />
+
+							<h:outputText value="Color:" />
+							<h:outputText value="#{dtSelectionView.selectedCar.color}"
+								style="color:#{dtSelectionView.selectedCar.color}" />
+
+							<h:outputText value="Price" />
+							<h:outputText value="$#{dtSelectionView.selectedCar.price}" />
+						</p:panelGrid>
+					</p:outputPanel>
+				</p:dialog>
+
+				<p:dialog header="Selected Cars" widgetVar="multiCarDialog"
+					modal="true" showEffect="fade" hideEffect="fade" resizable="false"
+					width="200">
+					<p:outputPanel id="multiCarDetail" style="text-align:center;">
+						<ui:repeat value="#{dtSelectionView.selectedCars}" var="car">
+							<h:outputText value="#{car.id} - #{car.brand}"
+								style="display:block" />
+						</ui:repeat>
+					</p:outputPanel>
+				</p:dialog>
+
+			</h:form>
+		</div>
+
+
+
+		<!-- mapa atual (em desenvolvimento) -->
+		<f:view contentType="text/html" encoding="UTF-8">
+
+			
+			<div id="floating-panel">
+				
+				<h:commandButton type="button" onclick="toggleHeatmap()" value="Toggle Heatmap" />
+				<h:commandButton type="button" onclick="changeGradient()" value="Change gradient" />
+				<h:commandButton type="button" onclick="changeRadius()" value="Change radius" />
+				<h:commandButton type="button" onclick="changeOpacity()" value="Change opacity" />
+			</div>
+
+			<!-- container que contém o mapa -->
+			<div class="inset" id="map" >
+				
+			</div>
+
+			<div class="inset" id="piechart_3d">pieChart</div>
+
+			<div id="chart_div">comboChart</div>
+
+
+
+			<script type="text/javascript"
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAB4587fj1P5xJ6VSfeaGCgXugnJ-skaog&amp;signed_in=true&amp;libraries=visualization&amp;callback=initMap">
+				/* libraries=visualization&amp;callback=initMap */
+	</script>
+		</f:view>
+	</div>
+</h:body>
+</html>
