@@ -59,11 +59,21 @@
 							
 						</p:menuitem>
 
-						<p:menuitem value="Observatório" icon="ui-icon-search" url="geoLocal.jsf"
-							style="margin-left:20px;font-size:15px;">
+
+						<p:submenu label="Mapas" icon="ui-icon-search"
+							style="margin-left:20px;font-size:16px;">
+							
+							<p:menuitem value="Observatório" url="geoLocal.jsf"
+							 icon=""  />
+
+							<p:menuitem value="Mapa de Calor" url="mapadecalor.jsf"
+								icon=""  />
+
+						</p:submenu>
+						
 							
 							
-						</p:menuitem>
+						
 						
 						<p:submenu label="Relatórios" icon="ui-icon-image"
 							style="margin-left:20px;font-size:16px;">

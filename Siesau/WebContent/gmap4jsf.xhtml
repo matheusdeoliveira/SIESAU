@@ -11,19 +11,35 @@
 <h:head>
 
 	<script type="text/javascript"
-				src="https://maps.googleapis.com/maps/api/js?libraries=visualization&amp;callback=initMap ">
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAB4587fj1P5xJ6VSfeaGCgXugnJ-skaog&amp;signed_in=true&amp;libraries=visualization&amp;callback=initMap">
 				/* libraries=visualization&amp;callback=initMap */
-			</script>	
-	
+	</script>
+
+	  
 </h:head>
 <f:view>
-<h:body style="margin:0px; border:0; background-color:#E8E8E8;">
+<h:body >
 			<h:form>
-			 <m:map width="500px" height="500px" latitude="30.01" longitude="31.14" jsVariable="map1" debug="true">
+			
+				<div id="floating-panel">
+				
+				<h:commandButton type="button" onclick="toggleHeatmap()" value="Toggle Heatmap" />
+				<h:commandButton type="button" onclick="changeGradient()" value="Change gradient" />
+				<h:commandButton type="button" onclick="changeRadius()" value="Change radius" />
+				<h:commandButton type="button" onclick="changeOpacity()" value="Change opacity" />
+			</div>
+			 <m:map jsVariable="map" id="map"  >
+			 	<m:point latitude="37.782551" longitude="-122.445368"></m:point>
+			 	<m:point latitude="37.782745" longitude="-122.444586"></m:point>
+			 	<m:point latitude="37.782842" longitude="-122.443688"></m:point>
+			 	<m:point latitude="37.782919" longitude="-122.442815"></m:point>
+			 	<m:point latitude="37.782992" longitude="-122.442112"></m:point>
+			 	<m:point latitude="37.783100" longitude="-122.441461"></m:point>
 			</m:map>
 		</h:form>
 		
 	
 </h:body>
 </f:view>
+<h:outputScript library="javascript" name="heatmap.js" />
 </html>

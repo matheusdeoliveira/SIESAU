@@ -5,11 +5,9 @@ html, body {
 }
 
 #map {
-	position: relative;
-	margin-left: 400px;
-	margin-top: 0px;
-	max-width: 957px;
-	height: 350px;
+	position: relative;		
+	height: 720px;
+	width: 1024;
 }
 
 #floating-panel {

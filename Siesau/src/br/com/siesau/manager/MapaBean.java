@@ -39,6 +39,8 @@ public class MapaBean implements Serializable {
 	private BarChartModel grafico2;
 	private List<String> doencas;
 	private List<String> doencasSelecionadas;
+	private List<String> lista;
+	
 
 
 	@PostConstruct
@@ -47,6 +49,7 @@ public class MapaBean implements Serializable {
 			cidades = new ArrayList<>();			
 			doencas = new ArrayList<>();	
 			grafico = new PieChartModel();
+			lista = new ArrayList<>();
 			criargrafico();
 			grafico2 = new BarChartModel();
 			criargrafico2();
@@ -242,6 +245,16 @@ public class MapaBean implements Serializable {
 		yAxis.setMax(1000);
 		}
 		
+	}
+	
+
+	private String conversorParaLatLng(Double lat, Double lgn){
+		String conversor = new String();
+		
+		conversor = "new google.maps.LatLng("+String.valueOf(lat)+","+String.valueOf(lgn)+")"; 
+		
+		
+		return conversor;
 	}
 
 

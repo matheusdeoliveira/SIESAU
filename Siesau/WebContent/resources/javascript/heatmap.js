@@ -11,7 +11,7 @@ function initMap() {
 	});
 
 	heatmap = new google.maps.visualization.HeatmapLayer({
-		//data : getPoints(),
+		data : getPoints(),
 		map : map
 	});
 }
@@ -42,14 +42,22 @@ function changeOpacity() {
 var coord=[["37.782551", "-122.445368"],["37.782745", "-122.444586"],["37.782842", "-122.443688"]];
 
 // Heatmap data: 500 Points
-/*function getPoints() {
-	
-	return [ 
-			new google.maps.LatLng(37.782551, -122.445368),
-			new google.maps.LatLng(37.782745, -122.444586),
-			new google.maps.LatLng(37.782842, -122.443688),
-	        new google.maps.LatLng(37.782919, -122.442815),
-			new google.maps.LatLng(37.782992, -122.442112),
-			new google.maps.LatLng(37.770992, -122.410477)
-	];*/
+	function getPoints() {
+		
+		return [ 
+				new google.maps.LatLng(37.782551, -122.445368),
+				new google.maps.LatLng(37.782745, -122.444586),
+				new google.maps.LatLng(37.782842, -122.443688),
+		        new google.maps.LatLng(37.782919, -122.442815),
+				new google.maps.LatLng(37.782992, -122.442112),
+				new google.maps.LatLng(37.770992, -122.410477)
+		];
+	}
+
+ 
+
+
+
+
+
 

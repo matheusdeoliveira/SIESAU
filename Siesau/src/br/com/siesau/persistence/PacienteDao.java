@@ -73,7 +73,7 @@ public class PacienteDao extends GenericDao<Paciente> {
 		return paciente;
 	}
 	
-	public List<PacienteDTO> pesquisaDoencaCidade(String cidade) throws Exception{
+	public List<PacienteDTO> pesquisaDoencaCidade(String cidade, String doenca) throws Exception{
 		String consulta = "select "
 						+"p.bairro, "
 						+"p.latitude, "
@@ -90,12 +90,13 @@ public class PacienteDao extends GenericDao<Paciente> {
 						+"a.cd_atend = ad.cd_atend and "
 						+"ad.cd_doenca = d.cd_doenca and "
 						+"a.cd_paciente = p.cd_paciente " 
-						+"and p.cidade = :param "
-						+"and d.cid = 'A90' "
+						+"and p.cidade = :cidade "
+						+"and d.cid = :doenca "
 						+"GROUP BY p.bairro, p.sexo, p.latitude, p.longitude, d.cid, ano";
 				
 		Query query = manager.createNativeQuery(consulta);
-		query.setParameter("param", cidade);
+		query.setParameter("cidade", cidade);
+		query.setParameter("doenca", doenca);
 		@SuppressWarnings("unchecked")
 		List<Object[]> resultados = query.getResultList();
 		List<PacienteDTO> pacientesdto = new ArrayList<>();
